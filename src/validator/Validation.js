@@ -22,10 +22,14 @@ export const signUpValidation = yup.object().shape({
 });
 
 export const loginValidation = yup.object().shape({
-  name: yup.string().required("Field is required"),
+  name: yup.string().required("Please Enter userName, Phone or Email"),
   password: yup
     .string()
     .min(5, "Password contains atleast 5 charactors")
     .max(20, "Password contains atmost 20 charactors")
     .required("password is required"),
+});
+
+export const ForgetPasswordValidation = yup.object().shape({
+  name: yup.string().required("Please Enter userName, Phone or Email"),
 });

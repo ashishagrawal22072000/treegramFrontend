@@ -17,9 +17,9 @@ const Signup = () => {
             <button className="social_btn">login with facebook</button>
             <br />
             <div className="divider">
-              <hr className="line" />
+              <div className="line"></div>
               <p>OR</p>
-              <hr className="line" />
+              <div className="line"></div>
             </div>
             <Formik
               initialValues={{

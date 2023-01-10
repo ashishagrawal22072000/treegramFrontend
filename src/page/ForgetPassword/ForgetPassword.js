@@ -1,10 +1,10 @@
 import React from "react";
+import "./ForgetPassword.css";
 import { Formik, Form, Field } from "formik";
-import { loginValidation } from "../../validator/Validation";
-import "./Login.css";
+import { ForgetPasswordValidation } from "../../validator/Validation";
 import { NavLink } from "react-router-dom";
 import Footer from "../../core/footer/Footer";
-const Login = () => {
+const ForgetPassword = () => {
   return (
     <>
       <section className="login">
@@ -12,12 +12,15 @@ const Login = () => {
           <div className="content">
             <h1 className="heading">Treegram</h1>
             <br />
+            <p>
+              Enter Your Email, Phone or Username and we'll send you a link to
+              get back into your account
+            </p>
             <Formik
               initialValues={{
                 name: "",
-                password: "",
               }}
-              validationSchema={loginValidation}
+              validationSchema={ForgetPasswordValidation}
               onSubmit={(values) => {
                 console.log(values);
               }}
@@ -34,21 +37,10 @@ const Login = () => {
                       <span className="error">{errors.name}</span>
                     ) : null}
                   </div>
-                  <div className="field">
-                    <Field
-                      name="password"
-                      type="password"
-                      className="input-field"
-                      placeholder="Password"
-                    />
-                    {errors.password && touched.password ? (
-                      <span className="error">{errors.password}</span>
-                    ) : null}
-                  </div>
                   <br />
                   <div className="btn_container">
                     <button className="normal_btn" type="submit">
-                      Log in
+                      Set login link
                     </button>
                   </div>
                 </Form>
@@ -62,16 +54,14 @@ const Login = () => {
               {/* <div className="line"></div> */}
               <div className="line"></div>
             </div>
-            <br />
-            <button className="social_btn">login with facebook</button>
-            <br />
+            {/*  */}
             <p>
-              <NavLink to="/forget-password">Forget Password?</NavLink>
+              <NavLink to="/signup">Create new account</NavLink>
             </p>
             <br />
-            <p>
-              Don't have an account? <NavLink to="/signup">Signup</NavLink>
-            </p>
+            <button className="normal_btn">
+              <NavLink to="/login">Back to login</NavLink>
+            </button>
           </div>
         </div>
       </section>
@@ -79,5 +69,4 @@ const Login = () => {
     </>
   );
 };
-
-export default Login;
+export default ForgetPassword;
