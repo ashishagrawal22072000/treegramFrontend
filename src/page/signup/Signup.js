@@ -17,10 +17,8 @@ const Signup = () => {
             <button className="social_btn">login with facebook</button>
             <br />
             <div className="divider">
-              {/* <div className="line"></div> */}
               <hr className="line" />
               <p>OR</p>
-              {/* <div className="line"></div> */}
               <hr className="line" />
             </div>
             <Formik

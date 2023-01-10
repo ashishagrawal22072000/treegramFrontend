@@ -16,7 +16,16 @@ export const signUpValidation = yup.object().shape({
     .required("Phone number is required"),
   password: yup
     .string()
-    .min(5, "Username contains atleast 5 charactors")
-    .max(20, "Username contains atmost 20 charactors")
+    .min(5, "Password contains atleast 5 charactors")
+    .max(20, "Password contains atmost 20 charactors")
+    .required("password is required"),
+});
+
+export const loginValidation = yup.object().shape({
+  name: yup.string().required("Field is required"),
+  password: yup
+    .string()
+    .min(5, "Password contains atleast 5 charactors")
+    .max(20, "Password contains atmost 20 charactors")
     .required("password is required"),
 });
