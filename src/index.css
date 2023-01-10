@@ -38,6 +38,8 @@ h1{
 }
 p{
   font-family: 'Rowdies', cursive;
+  color: gray;
+  font-weight: 400;
 }
 button{
   font-family: 'Rubik', sans-serif;

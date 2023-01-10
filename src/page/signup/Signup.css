@@ -24,7 +24,9 @@
 .field{
     width: 100%;
 }
-
+p{
+    text-align: center;
+}
 .input-field{
     height: 50px;
     margin-top: 20px;

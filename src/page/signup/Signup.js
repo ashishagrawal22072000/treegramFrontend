@@ -3,6 +3,7 @@ import { Formik, Form, Field } from "formik";
 import { signUpValidation } from "../../validator/Validation";
 import "./Signup.css";
 import { NavLink } from "react-router-dom";
+import Footer from "../../core/footer/Footer";
 const Signup = () => {
   return (
     <>
@@ -98,9 +99,14 @@ const Signup = () => {
                 </Form>
               )}
             </Formik>
+            <br />
+            <p>
+              Have an account? <NavLink to="/login">Login</NavLink>
+            </p>
           </div>
         </div>
       </section>
+      <Footer />
     </>
   );
 };
