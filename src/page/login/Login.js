@@ -4,6 +4,9 @@ import { loginValidation } from "../../validator/Validation";
 import "./Login.css";
 import { NavLink } from "react-router-dom";
 import Footer from "../../core/footer/Footer";
+import { AiFillFacebook } from "react-icons/ai";
+import { ImCross } from "react-icons/im";
+import { TiTick } from "react-icons/ti";
 const Login = () => {
   return (
     <>
@@ -22,7 +25,7 @@ const Login = () => {
                 console.log(values);
               }}
             >
-              {({ errors, touched }) => (
+              {({ errors, touched, values }) => (
                 <Form className="form">
                   <div className="field">
                     <Field
@@ -31,9 +34,24 @@ const Login = () => {
                       placeholder="Username, email, phone"
                     />
                     {errors.name && touched.name ? (
-                      <span className="error">{errors.name}</span>
-                    ) : null}
+                      <div className="error_sign">
+                        <ImCross color="red" />
+                      </div>
+                    ) : (
+                      <div className="error_sign">
+                        <TiTick
+                          color="green"
+                          size={30}
+                          style={{
+                            display: values.name.length > 1 ? "block" : "none",
+                          }}
+                        />
+                      </div>
+                    )}
                   </div>
+                  {errors.name && touched.name ? (
+                    <span className="error">{errors.name}</span>
+                  ) : null}
                   <div className="field">
                     <Field
                       name="password"
@@ -42,13 +60,32 @@ const Login = () => {
                       placeholder="Password"
                     />
                     {errors.password && touched.password ? (
-                      <span className="error">{errors.password}</span>
-                    ) : null}
+                      <div className="error_sign">
+                        <ImCross color="red" />
+                      </div>
+                    ) : (
+                      <div className="error_sign">
+                        <TiTick
+                          color="green"
+                          size={30}
+                          style={{
+                            display:
+                              values.password.length > 1 ? "block" : "none",
+                          }}
+                        />
+                      </div>
+                    )}
                   </div>
+                  {errors.password && touched.password ? (
+                    <span className="error">{errors.password}</span>
+                  ) : null}
                   <br />
                   <div className="btn_container">
-                    <button className="normal_btn" type="submit">
-                      Log in
+                    <button type="submit">
+                      Login
+                      <div class="arrow-wrapper">
+                        <div class="arrow"></div>
+                      </div>
                     </button>
                   </div>
                 </Form>
@@ -63,7 +100,10 @@ const Login = () => {
               <div className="line"></div>
             </div>
             <br />
-            <button className="social_btn">login with facebook</button>
+            <button className="social_btn">
+              <AiFillFacebook />
+              login with facebook
+            </button>
             <br />
             <p>
               <NavLink to="/forget-password">Forget Password?</NavLink>

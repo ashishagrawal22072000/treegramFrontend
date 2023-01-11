@@ -1,5 +1,6 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
+import Birthday from "../page/birthday/Birthday";
 import ForgetPassword from "../page/ForgetPassword/ForgetPassword";
 import Login from "../page/login/Login";
 import Signup from "../page/signup/Signup";
@@ -11,6 +12,7 @@ const Router = () => {
         <Route path={RouteName.SIGNUP} element={<Signup />} />
         <Route path={RouteName.LOGIN} element={<Login />} />
         <Route path={RouteName.FORGET_PASSWORD} element={<ForgetPassword />} />
+        <Route path={RouteName.BIRTHDAY} element={<Birthday />} />
       </Routes>
     </div>
   );

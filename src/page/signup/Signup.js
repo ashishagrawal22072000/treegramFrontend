@@ -1,10 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import { Formik, Form, Field } from "formik";
 import { signUpValidation } from "../../validator/Validation";
 import "./Signup.css";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import Footer from "../../core/footer/Footer";
+import { AiFillFacebook } from "react-icons/ai";
+import { ImCross } from "react-icons/im";
+import { TiTick } from "react-icons/ti";
+import Birthday from "../birthday/Birthday";
+import { signupActions } from "../.././store/slice/SignupSlice";
+import { useDispatch, useSelector } from "react-redux";
 const Signup = () => {
+  // const [next, setNext] = useState(false);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   return (
     <>
       <section className="signup">
@@ -14,7 +23,9 @@ const Signup = () => {
             <p className="paragraph">
               Sign up to see photos and videos from your friends.
             </p>
-            <button className="social_btn">login with facebook</button>
+            <button className="social_btn">
+              <AiFillFacebook /> login with facebook
+            </button>
             <br />
             <div className="divider">
               <div className="line"></div>
@@ -30,10 +41,11 @@ const Signup = () => {
               }}
               validationSchema={signUpValidation}
               onSubmit={(values) => {
-                console.log(values);
+                dispatch(signupActions.signup(values));
+                navigate("/set-birthday");
               }}
             >
-              {({ errors, touched }) => (
+              {({ errors, touched, values }) => (
                 <Form className="form">
                   <div className="field">
                     <Field
@@ -42,9 +54,26 @@ const Signup = () => {
                       placeholder="Username"
                     />
                     {errors.userName && touched.userName ? (
-                      <p className="error">{errors.userName}</p>
-                    ) : null}
+                      <div className="error_sign">
+                        <ImCross color="red" />
+                      </div>
+                    ) : (
+                      <div className="error_sign">
+                        <TiTick
+                          color="green"
+                          size={30}
+                          style={{
+                            display:
+                              values.userName.length > 1 ? "block" : "none",
+                          }}
+                        />
+                      </div>
+                    )}
                   </div>
+                  {errors.userName && touched.userName ? (
+                    <span className="error">{errors.userName}</span>
+                  ) : null}
+
                   <div className="field">
                     <Field
                       name="phone"
@@ -52,9 +81,25 @@ const Signup = () => {
                       placeholder="Phone"
                     />
                     {errors.phone && touched.phone ? (
-                      <p className="error">{errors.phone}</p>
-                    ) : null}
+                      <div className="error_sign">
+                        <ImCross color="red" />
+                      </div>
+                    ) : (
+                      <div className="error_sign">
+                        <TiTick
+                          color="green"
+                          size={30}
+                          style={{
+                            display: values.phone.length > 1 ? "block" : "none",
+                          }}
+                        />
+                      </div>
+                    )}
                   </div>
+                  {errors.phone && touched.phone ? (
+                    <span className="error">{errors.phone}</span>
+                  ) : null}
+
                   <div className="field">
                     <Field
                       name="email"
@@ -63,9 +108,25 @@ const Signup = () => {
                       placeholder="Email Address"
                     />
                     {errors.email && touched.email ? (
-                      <p className="error">{errors.email}</p>
-                    ) : null}
+                      <div className="error_sign">
+                        <ImCross color="red" />
+                      </div>
+                    ) : (
+                      <div className="error_sign">
+                        <TiTick
+                          color="green"
+                          size={30}
+                          style={{
+                            display: values.email.length > 1 ? "block" : "none",
+                          }}
+                        />
+                      </div>
+                    )}
                   </div>
+                  {errors.email && touched.email ? (
+                    <span className="error">{errors.email}</span>
+                  ) : null}
+
                   <div className="field">
                     <Field
                       name="password"
@@ -74,9 +135,25 @@ const Signup = () => {
                       placeholder="Password"
                     />
                     {errors.password && touched.password ? (
-                      <p className="error">{errors.password}</p>
-                    ) : null}
+                      <div className="error_sign">
+                        <ImCross color="red" />
+                      </div>
+                    ) : (
+                      <div className="error_sign">
+                        <TiTick
+                          color="green"
+                          size={30}
+                          style={{
+                            display:
+                              values.password.length > 1 ? "block" : "none",
+                          }}
+                        />
+                      </div>
+                    )}
                   </div>
+                  {errors.password && touched.password ? (
+                    <span className="error">{errors.password}</span>
+                  ) : null}
                   <br />
                   <p>
                     People who use our service may have uploaded your contact
@@ -90,8 +167,11 @@ const Signup = () => {
                     <NavLink to="/">Cookies Policy</NavLink> .
                   </p>
                   <div className="btn_container">
-                    <button className="normal_btn" type="submit">
-                      Sign up
+                    <button type="submit">
+                      Sign Up
+                      <div class="arrow-wrapper">
+                        <div class="arrow"></div>
+                      </div>
                     </button>
                   </div>
                 </Form>
@@ -105,6 +185,11 @@ const Signup = () => {
         </div>
       </section>
       <Footer />
+      {/* {next && (
+        <>
+          <Birthday />
+        </>
+      )} */}
     </>
   );
 };

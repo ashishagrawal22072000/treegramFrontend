@@ -1,0 +1,21 @@
+.dropdown_select{
+    height: 50px;
+    width: 110px;
+    margin: 20px;
+    border: 0;
+    outline: none;
+    overflow-y: hidden;
+    font-weight: 500;
+    padding: 10px;
+
+}
+.dropdown_option{
+    color: black;
+    font-weight: 500;
+    font-size: 15px;
+    background: #645bff;
+}
+.dropdown_option:hover{
+    background-color: #7b75fc;
+    color: red;
+}

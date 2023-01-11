@@ -4,6 +4,7 @@ import { Formik, Form, Field } from "formik";
 import { ForgetPasswordValidation } from "../../validator/Validation";
 import { NavLink } from "react-router-dom";
 import Footer from "../../core/footer/Footer";
+import { AiFillLock } from "react-icons/ai";
 const ForgetPassword = () => {
   return (
     <>
@@ -11,6 +12,9 @@ const ForgetPassword = () => {
         <div className="container">
           <div className="content">
             <h1 className="heading">Treegram</h1>
+            <div className="icon_container">
+              <AiFillLock className="icons" size={100} />
+            </div>
             <br />
             <p>
               Enter Your Email, Phone or Username and we'll send you a link to
