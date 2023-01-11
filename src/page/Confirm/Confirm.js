@@ -9,25 +9,6 @@ import { useSelector } from "react-redux";
 import "./Confirm.css";
 const Confirm = () => {
   const signupData = useSelector((state) => state.signup.signupData);
-  //   console.log(signupData);
-  const [inp, setInp] = useState({
-    inp1: "",
-    inp2: "",
-    inp3: "",
-    inp4: "",
-  });
-
-  //   const textInput1 = useRef("");
-  //   const textInput2 = useRef("");
-  //   const textInput3 = useRef("");
-  //   const textInput4 = useRef("");
-
-  //   const handleKeyPress = (e, field) => {
-  //     e.preventDefault();
-  //     console.log(e, field.current.nextSibling);
-  //     let next = field.current.nextSibling;
-  //     field.current.nextSibling.focus();
-  //   };
 
   const [otp, setOtp] = useState(new Array(4).fill(""));
 
@@ -64,7 +45,7 @@ const Confirm = () => {
                       <div className="field">
                         <input
                           type="text"
-                          className=""
+                          className="confirm_input"
                           onChange={(e) => handleChange(e.target, index)}
                           maxLength="1"
                           name="otp"
@@ -76,67 +57,6 @@ const Confirm = () => {
                     </>
                   );
                 })}
-                {/* <div className="field">
-                  <input
-                    type="text"
-                    className=""
-                    // name={textInput1}
-                    onChange={(e) => {
-                      setInp({ ...inp, inp1: e.target.value });
-                    }}
-                    value={inp.inp1}
-                    maxLength="1"
-                    name="inp1"
-                    // ref={textInput1}
-                    // onKeyPress={(e) => handleKeyPress(e, textInput1)}
-                  />
-                </div>
-                <div className="field">
-                  <input
-                    type="text"
-                    className=""
-                    // name={textInput2}
-                    onChange={(e) => {
-                      setInp({ ...inp, inp2: e.target.value });
-                      console.log(e);
-                    }}
-                    name="inp2"
-                    value={inp.inp2}
-                    maxLength="1"
-                    // ref={textInput2}
-                    // onKeyPress={(e) => handleKeyPress(e, textInput2)}
-                  />
-                </div>
-                <div className="field">
-                  <input
-                    type="text"
-                    className=""
-                    // name={textInput3}
-                    onChange={(e) => {
-                      setInp({ ...inp, inp3: e.target.value });
-                    }}
-                    value={inp.inp3}
-                    maxLength="1"
-                    name="inp3"
-                    // ref={textInput3}
-                    // onKeyPress={(e) => handleKeyPress(e, textInput3)}
-                  />
-                </div>
-                <div className="field">
-                  <input
-                    type="text"
-                    className=""
-                    // name={textInput4}
-                    onChange={(e) => {
-                      setInp({ ...inp, inp4: e.target.value });
-                    }}
-                    value={inp.inp4}
-                    maxLength="1"
-                    name="inp4"
-                    // ref={textInput4}
-                    // onKeyPress={(e) => handleKeyPress(e, textInput4)}
-                  />
-                </div> */}
               </div>
             </form>
             <br />

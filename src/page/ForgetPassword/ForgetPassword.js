@@ -43,8 +43,11 @@ const ForgetPassword = () => {
                   </div>
                   <br />
                   <div className="btn_container">
-                    <button className="normal_btn" type="submit">
+                    <button type="submit">
                       Set login link
+                      <div class="arrow-wrapper">
+                        <div class="arrow"></div>
+                      </div>
                     </button>
                   </div>
                 </Form>
@@ -63,9 +66,14 @@ const ForgetPassword = () => {
               <NavLink to="/signup">Create new account</NavLink>
             </p>
             <br />
-            <button className="normal_btn">
-              <NavLink to="/login">Back to login</NavLink>
-            </button>
+            <div className="btn_container">
+              <button type="submit">
+                <div class="arrow-wrapper">
+                  <div class="arrow"></div>
+                </div>
+                <NavLink to="/login">Back to login</NavLink>
+              </button>
+            </div>
           </div>
         </div>
       </section>
