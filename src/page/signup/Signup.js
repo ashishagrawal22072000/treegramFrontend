@@ -7,7 +7,6 @@ import Footer from "../../core/footer/Footer";
 import { AiFillFacebook } from "react-icons/ai";
 import { ImCross } from "react-icons/im";
 import { TiTick } from "react-icons/ti";
-import Birthday from "../birthday/Birthday";
 import { signupActions } from "../.././store/slice/SignupSlice";
 import { useDispatch, useSelector } from "react-redux";
 const Signup = () => {

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Formik, Form, Field } from "formik";
 import { dateOfBirthValidation } from "../../validator/Validation";
-import { NavLink, useParams } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import Footer from "../../core/footer/Footer";
 import { FaBirthdayCake } from "react-icons/fa";
 import { useSelector } from "react-redux";
@@ -10,6 +10,7 @@ import Loader from "../../core/loader/Loader";
 import "./Birthday.css";
 const Birthday = () => {
   const signupData = useSelector((state) => state.signup.signupData);
+  const navigate = useNavigate();
   const month = [
     "Janurary",
     "Februar",
@@ -55,7 +56,7 @@ const Birthday = () => {
               }}
               validationSchema={dateOfBirthValidation}
               onSubmit={(values) => {
-                console.log(values);
+                navigate("/confirmation", { replace: true });
               }}
             >
               {({ errors, touched, values }) => (
@@ -143,12 +144,6 @@ const Birthday = () => {
               <p>OR</p>
               <div className="line"></div>
             </div>
-            {/*  */}
-            <p>
-              <NavLink to="/signup" style={{ color: "black" }}>
-                Create new account
-              </NavLink>
-            </p>
             <br />
             <div className="btn_container">
               <button>

@@ -48,7 +48,7 @@ export const ForgetPasswordValidation = yup.object().shape({
 });
 
 export const dateOfBirthValidation = yup.object().shape({
-  month: yup.string().required("Required"),
-  day: yup.number().required("Required"),
-  year: yup.number().required("Required"),
+  month: yup.string().required("Required").default("July"),
+  day: yup.number().required("Required").default(21),
+  year: yup.number().required("Required").default(2000),
 });
