@@ -9,8 +9,9 @@ import { ImCross } from "react-icons/im";
 import { TiTick } from "react-icons/ti";
 import { signupActions } from "../.././store/slice/SignupSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { TbEyeglass, TbEyeglassOff } from "react-icons/tb";
 const Signup = () => {
-  // const [next, setNext] = useState(false);
+  const [show, setShow] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   return (
@@ -129,7 +130,7 @@ const Signup = () => {
                   <div className="field">
                     <Field
                       name="password"
-                      type="password"
+                      type={show ? "text" : "password"}
                       className="input-field"
                       placeholder="Password"
                     />
@@ -146,6 +147,18 @@ const Signup = () => {
                             display:
                               values.password.length > 1 ? "block" : "none",
                           }}
+                        />
+                      </div>
+                    )}
+                    {show ? (
+                      <div className="error_sign eye_sign">
+                        <TbEyeglass size={25} onClick={() => setShow(false)} />
+                      </div>
+                    ) : (
+                      <div className="error_sign  eye_sign">
+                        <TbEyeglassOff
+                          size={25}
+                          onClick={() => setShow(true)}
                         />
                       </div>
                     )}

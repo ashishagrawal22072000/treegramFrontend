@@ -5,5 +5,6 @@ const RouterName = {
   BIRTHDAY: "/set-birthday",
   COMFIRM: "/confirmation",
   HOME: "/",
+  RESET_PASSWORD: "/reset-password/:token",
 };
 export default RouterName;

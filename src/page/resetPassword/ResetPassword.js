@@ -1,15 +1,12 @@
 import React, { useState } from "react";
-import { Formik, Form, Field } from "formik";
-import { loginValidation } from "../../validator/Validation";
-import "./Login.css";
-import { NavLink } from "react-router-dom";
-import Footer from "../../core/footer/Footer";
-import { AiFillFacebook } from "react-icons/ai";
+import { resetPassword } from "../../validator/Validation";
 import { ImCross } from "react-icons/im";
 import { TiTick } from "react-icons/ti";
+import { Formik, Form, Field } from "formik";
+import { NavLink } from "react-router-dom";
 import { TbEyeglass, TbEyeglassOff } from "react-icons/tb";
 
-const Login = () => {
+const ResetPassword = () => {
   const [show, setShow] = useState(false);
 
   return (
@@ -21,41 +18,16 @@ const Login = () => {
             <br />
             <Formik
               initialValues={{
-                name: "",
                 password: "",
+                confirmPassword: "",
               }}
-              validationSchema={loginValidation}
+              validationSchema={resetPassword}
               onSubmit={(values) => {
                 console.log(values);
               }}
             >
               {({ errors, touched, values }) => (
                 <Form className="form">
-                  <div className="field">
-                    <Field
-                      name="name"
-                      className="input-field"
-                      placeholder="Username, email, phone"
-                    />
-                    {errors.name && touched.name ? (
-                      <div className="error_sign">
-                        <ImCross color="red" />
-                      </div>
-                    ) : (
-                      <div className="error_sign">
-                        <TiTick
-                          color="green"
-                          size={30}
-                          style={{
-                            display: values.name.length > 1 ? "block" : "none",
-                          }}
-                        />
-                      </div>
-                    )}
-                  </div>
-                  {errors.name && touched.name ? (
-                    <span className="error">{errors.name}</span>
-                  ) : null}
                   <div className="field">
                     <Field
                       name="password"
@@ -96,6 +68,48 @@ const Login = () => {
                     <span className="error">{errors.password}</span>
                   ) : null}
                   <br />
+                  <div className="field">
+                    <Field
+                      name="confirmPassword"
+                      type={show ? "text" : "password"}
+                      className="input-field"
+                      placeholder="Confirm Password"
+                    />
+                    {errors.confirmPassword && touched.confirmPassword ? (
+                      <div className="error_sign">
+                        <ImCross color="red" />
+                      </div>
+                    ) : (
+                      <div className="error_sign">
+                        <TiTick
+                          color="green"
+                          size={30}
+                          style={{
+                            display:
+                              values.confirmPassword.length > 1
+                                ? "block"
+                                : "none",
+                          }}
+                        />
+                      </div>
+                    )}
+                    {show ? (
+                      <div className="error_sign eye_sign">
+                        <TbEyeglass size={25} onClick={() => setShow(false)} />
+                      </div>
+                    ) : (
+                      <div className="error_sign  eye_sign">
+                        <TbEyeglassOff
+                          size={25}
+                          onClick={() => setShow(true)}
+                        />
+                      </div>
+                    )}
+                  </div>
+                  {errors.confirmPassword && touched.confirmPassword ? (
+                    <span className="error">{errors.confirmPassword}</span>
+                  ) : null}
+                  <br />
                   <div className="btn_container">
                     <button type="submit">
                       Login
@@ -116,11 +130,6 @@ const Login = () => {
               <div className="line"></div>
             </div>
             <br />
-            <button className="social_btn">
-              <AiFillFacebook />
-              login with facebook
-            </button>
-            <br />
             <p>
               <NavLink to="/forget-password">Forget Password?</NavLink>
             </p>
@@ -131,9 +140,8 @@ const Login = () => {
           </div>
         </div>
       </section>
-      <Footer />
     </>
   );
 };
 
-export default Login;
+export default ResetPassword;

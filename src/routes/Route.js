@@ -4,6 +4,7 @@ import Birthday from "../page/birthday/Birthday";
 import Confirm from "../page/Confirm/Confirm";
 import ForgetPassword from "../page/ForgetPassword/ForgetPassword";
 import Login from "../page/login/Login";
+import ResetPassword from "../page/resetPassword/ResetPassword";
 import Signup from "../page/signup/Signup";
 import RouteName from "./RouteName";
 const Router = () => {
@@ -15,6 +16,7 @@ const Router = () => {
         <Route path={RouteName.FORGET_PASSWORD} element={<ForgetPassword />} />
         <Route path={RouteName.BIRTHDAY} element={<Birthday />} />
         <Route path={RouteName.COMFIRM} element={<Confirm />} />
+        <Route path={RouteName.RESET_PASSWORD} element={<ResetPassword />} />
       </Routes>
     </div>
   );

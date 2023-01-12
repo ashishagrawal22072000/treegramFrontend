@@ -15,7 +15,6 @@ const Confirm = () => {
   const handleChange = (element, index) => {
     if (isNaN(element.value)) return false;
     setOtp([...otp.map((d, ind) => (ind === index ? element.value : d))]);
-    console.log(element);
 
     if (element.nextElementSibling) {
       element.nextElementSibling.focus();
@@ -42,18 +41,16 @@ const Confirm = () => {
                 {otp.map((ele, index) => {
                   return (
                     <>
-                      <div className="field">
-                        <input
-                          type="text"
-                          className="confirm_input"
-                          onChange={(e) => handleChange(e.target, index)}
-                          maxLength="1"
-                          name="otp"
-                          key={index}
-                          value={ele}
-                          onSelect={(e) => e.target.select()}
-                        />
-                      </div>
+                      <input
+                        type="text"
+                        className="confirm_input"
+                        onChange={(e) => handleChange(e.target, index)}
+                        maxLength="1"
+                        name="otp"
+                        key={index}
+                        value={ele}
+                        onSelect={(e) => e.target.select()}
+                      />
                     </>
                   );
                 })}

@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import DropDown from "../../core/dropdown/DropDown";
 import Loader from "../../core/loader/Loader";
 import "./Birthday.css";
+import Notify from "../../core/Toast";
 const Birthday = () => {
   const signupData = useSelector((state) => state.signup.signupData);
   const navigate = useNavigate();
@@ -56,7 +57,8 @@ const Birthday = () => {
               }}
               validationSchema={dateOfBirthValidation}
               onSubmit={(values) => {
-                navigate("/confirmation", { replace: true });
+                Notify("success", "Confirmation mail send successfully");
+                // navigate("/confirmation", { replace: true });
               }}
             >
               {({ errors, touched, values }) => (

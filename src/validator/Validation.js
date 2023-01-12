@@ -52,3 +52,23 @@ export const dateOfBirthValidation = yup.object().shape({
   day: yup.number().required("Required").default(21),
   year: yup.number().required("Required").default(2000),
 });
+
+export const resetPassword = yup.object().shape({
+  password: yup
+    .string()
+    .min(8, "Password contains atleast 5 charactors")
+    .max(20, "Password contains atmost 20 charactors")
+    .trim()
+    .matches(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,10}$/,
+      "Minimum eight characters, at least one letter and one number"
+    )
+    .required("password is required"),
+  confirmPassword: yup
+    .string()
+    .required("confirm password is required")
+    .when("password", (password, schema) => {
+      if (password) return schema.required("Confirm Password is required");
+    })
+    .oneOf([yup.ref("password")], "Confirm Password must match to Password"),
+});
