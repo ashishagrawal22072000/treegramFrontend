@@ -1,26 +1,23 @@
 import * as yup from "yup";
 
 export const signUpValidation = yup.object().shape({
-  userName: yup
+  username: yup
     .string()
     .min(5, "Username contains atleast 5 charactors")
     .max(20, "Username contains atmost 20 charactors")
     .matches(
       /^[a-zA-Z0-9]+([._]?[a-zA-Z0-9]+)*$/,
-      "Username Only contains alphanumeric characters, underscore and dot"
+      "Username Only contains alphanumeric characters, _ or ."
     )
-    .default("ash_ish123")
     .required("username is required"),
   email: yup
     .string()
     .email("Invalid email address")
-    .required("Email is required")
-    .default("ashish.agrawal1@mail.vinove.com"),
+    .required("Email is required"),
   phone: yup
     .string()
     .min(10, "Phone should atleast 10 charactors long")
     .matches(/^[6-9]{1}[0-9]{9}$/, "Invalid Phone number")
-    .default("9999999999")
     .required("Phone number is required"),
   password: yup
     .string()
@@ -30,7 +27,6 @@ export const signUpValidation = yup.object().shape({
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,10}$/,
       "Minimum eight characters, at least one letter and one number"
     )
-    .default("ASH@ish123")
     .required("password is required"),
 });
 
@@ -48,9 +44,9 @@ export const ForgetPasswordValidation = yup.object().shape({
 });
 
 export const dateOfBirthValidation = yup.object().shape({
-  month: yup.string().required("Required").default("July"),
-  day: yup.number().required("Required").default(21),
-  year: yup.number().required("Required").default(2000),
+  month: yup.string().required("Required"),
+  day: yup.number().required("Required"),
+  year: yup.number().required("Required"),
 });
 
 export const resetPassword = yup.object().shape({

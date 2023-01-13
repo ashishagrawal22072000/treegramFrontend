@@ -1,16 +1,23 @@
-import "react-notifications-component/dist/theme.css";
-import { Store } from "react-notifications-component";
+import { toast } from "react-toastify";
 export default function Notify(type, message) {
-  Store.addNotification({
-    title: "",
-    message,
-    type,
-    insert: "top",
-    container: "top-right",
-    animationIn: ["animate__animated", "animate__jackInTheBox"],
-    animationOut: ["animate__animated", "animate__fadeOut"],
-    dismiss: {
-      duration: 1000,
-    },
-  });
+  const toastConfigure = {
+    position: "top-center",
+    autoClose: 3000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: 0,
+    theme: "colored",
+  };
+  switch (type) {
+    case "success":
+      return toast.success(message, toastConfigure);
+    case "warning":
+      return toast.warning(message, toastConfigure);
+    case "error":
+      return toast.error(message, toastConfigure);
+    default:
+      return null;
+  }
 }

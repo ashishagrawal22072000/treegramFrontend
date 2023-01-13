@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Formik, Form, Field } from "formik";
 import { dateOfBirthValidation } from "../../validator/Validation";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
@@ -9,8 +9,14 @@ import DropDown from "../../core/dropdown/DropDown";
 import Loader from "../../core/loader/Loader";
 import "./Birthday.css";
 import Notify from "../../core/Toast";
+import Authapi from "../../api/Authapi";
 const Birthday = () => {
   const signupData = useSelector((state) => state.signup.signupData);
+  console.log(signupData);
+  useEffect(() => {
+    if (Object.keys(signupData).length === 0)
+      navigate("/signup", { replace: true });
+  }, []);
   const navigate = useNavigate();
   const month = [
     "Janurary",
@@ -56,9 +62,19 @@ const Birthday = () => {
                 year: "",
               }}
               validationSchema={dateOfBirthValidation}
-              onSubmit={(values) => {
-                Notify("success", "Confirmation mail send successfully");
-                // navigate("/confirmation", { replace: true });
+              onSubmit={async (values) => {
+                const data = {
+                  ...signupData,
+                  dateOfBirth: `${values.day}-${values.month}-${values.year}`,
+                };
+                console.log(data);
+                const response = await Authapi.signup(data);
+                if (response.status == 200) {
+                  Notify("success", response.data.message);
+                  navigate("/confirmation", { replace: true });
+                } else {
+                  Notify("error", response.data.message);
+                }
               }}
             >
               {({ errors, touched, values }) => (

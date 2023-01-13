@@ -1,12 +1,13 @@
 import { BrowserRouter } from "react-router-dom";
 import Router from "./routes/Route";
-import { ReactNotifications } from "react-notifications-component";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 function App() {
   return (
     <>
       <BrowserRouter>
-        <ReactNotifications />
         <Router />
+        <ToastContainer />
       </BrowserRouter>
     </>
   );

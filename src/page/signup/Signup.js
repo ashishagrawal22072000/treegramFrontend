@@ -10,6 +10,8 @@ import { TiTick } from "react-icons/ti";
 import { signupActions } from "../.././store/slice/SignupSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { TbEyeglass, TbEyeglassOff } from "react-icons/tb";
+import Authapi from "../../api/Authapi";
+import Notify from "../../core/Toast";
 const Signup = () => {
   const [show, setShow] = useState(false);
   const navigate = useNavigate();
@@ -34,26 +36,31 @@ const Signup = () => {
             </div>
             <Formik
               initialValues={{
-                userName: "",
+                username: "",
                 email: "",
                 phone: "",
                 password: "",
               }}
               validationSchema={signUpValidation}
-              onSubmit={(values) => {
-                dispatch(signupActions.signup(values));
-                navigate("/set-birthday");
+              onSubmit={async (values) => {
+                const response = await Authapi.checkusername(values.username);
+                if (response.status == 200) {
+                  dispatch(signupActions.signup(values));
+                  navigate("/set-birthday");
+                } else {
+                  Notify("error", response.data.message);
+                }
               }}
             >
               {({ errors, touched, values }) => (
                 <Form className="form">
                   <div className="field">
                     <Field
-                      name="userName"
+                      name="username"
                       className="input-field"
                       placeholder="Username"
                     />
-                    {errors.userName && touched.userName ? (
+                    {errors.username && touched.username ? (
                       <div className="error_sign">
                         <ImCross color="red" />
                       </div>
@@ -64,14 +71,14 @@ const Signup = () => {
                           size={30}
                           style={{
                             display:
-                              values.userName.length > 1 ? "block" : "none",
+                              values.username.length > 1 ? "block" : "none",
                           }}
                         />
                       </div>
                     )}
                   </div>
-                  {errors.userName && touched.userName ? (
-                    <span className="error">{errors.userName}</span>
+                  {errors.username && touched.username ? (
+                    <span className="error">{errors.username}</span>
                   ) : null}
 
                   <div className="field">

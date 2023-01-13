@@ -1,15 +1,21 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Formik, Form, Field } from "formik";
 // import { dateOfBirthValidation } from "../../validator/Validation";
-import { NavLink, useParams } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import Footer from "../../core/footer/Footer";
 import { TfiEmail } from "react-icons/tfi";
 import { useSelector } from "react-redux";
 
 import "./Confirm.css";
+import Authapi from "../../api/Authapi";
+import Notify from "../../core/Toast";
 const Confirm = () => {
   const signupData = useSelector((state) => state.signup.signupData);
-
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (Object.keys(signupData).length === 0)
+      navigate("/signup", { replace: true });
+  });
   const [otp, setOtp] = useState(new Array(4).fill(""));
 
   const handleChange = (element, index) => {
@@ -18,6 +24,17 @@ const Confirm = () => {
 
     if (element.nextElementSibling) {
       element.nextElementSibling.focus();
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log("handleSubmit", otp.join(""));
+    const response = await Authapi.verifyEmail(signupData?.email, otp.join(""));
+    if (response.status == 200) {
+      Notify("success", response.data.message);
+    } else {
+      Notify("error", response.data.message);
     }
   };
 
@@ -54,6 +71,14 @@ const Confirm = () => {
                     </>
                   );
                 })}
+              </div>
+              <div className="btn_container">
+                <button type="submit" onClick={handleSubmit}>
+                  Send
+                  <div class="arrow-wrapper">
+                    <div class="arrow"></div>
+                  </div>
+                </button>
               </div>
             </form>
             <br />
