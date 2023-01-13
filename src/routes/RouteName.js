@@ -6,5 +6,6 @@ const RouterName = {
   COMFIRM: "/confirmation",
   HOME: "/",
   RESET_PASSWORD: "/reset-password/:token",
+  ERROR_404: "*",
 };
 export default RouterName;

@@ -33,6 +33,8 @@ const Confirm = () => {
     const response = await Authapi.verifyEmail(signupData?.email, otp.join(""));
     if (response.status == 200) {
       Notify("success", response.data.message);
+    } else if (response.status == 500) {
+      Notify("warning", response.statusText);
     } else {
       Notify("error", response.data.message);
     }

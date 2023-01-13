@@ -3,12 +3,15 @@ import { resetPassword } from "../../validator/Validation";
 import { ImCross } from "react-icons/im";
 import { TiTick } from "react-icons/ti";
 import { Formik, Form, Field } from "formik";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { TbEyeglass, TbEyeglassOff } from "react-icons/tb";
+import Authapi from "../../api/Authapi";
+import Notify from "../../core/Toast";
 
 const ResetPassword = () => {
   const [show, setShow] = useState(false);
-
+  const param = useParams();
+  const navigate = useNavigate();
   return (
     <>
       <section className="login">
@@ -22,8 +25,20 @@ const ResetPassword = () => {
                 confirmPassword: "",
               }}
               validationSchema={resetPassword}
-              onSubmit={(values) => {
-                console.log(values);
+              onSubmit={async (values) => {
+                const response = await Authapi.resetPassword(
+                  param.token,
+                  values.password,
+                  values.confirmPassword
+                );
+                if (response.status == 200) {
+                  Notify("success", response.data.message);
+                  navigate("/login");
+                } else if (response.status == 500) {
+                  Notify("warning", response.statusText);
+                } else {
+                  Notify("error", response.data.message);
+                }
               }}
             >
               {({ errors, touched, values }) => (

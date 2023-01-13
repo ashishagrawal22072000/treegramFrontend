@@ -2,6 +2,7 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Birthday from "../page/birthday/Birthday";
 import Confirm from "../page/Confirm/Confirm";
+import Error404 from "../page/Error404/Error404";
 import ForgetPassword from "../page/ForgetPassword/ForgetPassword";
 import Login from "../page/login/Login";
 import ResetPassword from "../page/resetPassword/ResetPassword";
@@ -17,6 +18,7 @@ const Router = () => {
         <Route path={RouteName.BIRTHDAY} element={<Birthday />} />
         <Route path={RouteName.COMFIRM} element={<Confirm />} />
         <Route path={RouteName.RESET_PASSWORD} element={<ResetPassword />} />
+        <Route exact path={RouteName.ERROR_404} element={<Error404 />} />
       </Routes>
     </div>
   );

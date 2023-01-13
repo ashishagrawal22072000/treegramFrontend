@@ -5,6 +5,10 @@ import { ForgetPasswordValidation } from "../../validator/Validation";
 import { NavLink } from "react-router-dom";
 import Footer from "../../core/footer/Footer";
 import { AiFillLock } from "react-icons/ai";
+import Authapi from "../../api/Authapi";
+import Notify from "../../core/Toast";
+import { TiTick } from "react-icons/ti";
+import { ImCross } from "react-icons/im";
 const ForgetPassword = () => {
   return (
     <>
@@ -25,11 +29,18 @@ const ForgetPassword = () => {
                 name: "",
               }}
               validationSchema={ForgetPasswordValidation}
-              onSubmit={(values) => {
-                console.log(values);
+              onSubmit={async (values) => {
+                const response = await Authapi.forgetPassword(values.name);
+                if (response.status == 200) {
+                  Notify("success", response.data.message);
+                } else if (response.status == 500) {
+                  Notify("warning", response.statusText);
+                } else {
+                  Notify("error", response.data.message);
+                }
               }}
             >
-              {({ errors, touched }) => (
+              {({ errors, touched, values }) => (
                 <Form className="form">
                   <div className="field">
                     <Field
@@ -38,9 +49,24 @@ const ForgetPassword = () => {
                       placeholder="Username, email, phone"
                     />
                     {errors.name && touched.name ? (
-                      <span className="error">{errors.name}</span>
-                    ) : null}
+                      <div className="error_sign">
+                        <ImCross color="red" />
+                      </div>
+                    ) : (
+                      <div className="error_sign">
+                        <TiTick
+                          color="green"
+                          size={30}
+                          style={{
+                            display: values.name.length > 1 ? "block" : "none",
+                          }}
+                        />
+                      </div>
+                    )}
                   </div>
+                  {errors.name && touched.name ? (
+                    <span className="error">{errors.name}</span>
+                  ) : null}
                   <br />
                   <div className="btn_container">
                     <button type="submit">

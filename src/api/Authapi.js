@@ -37,6 +37,44 @@ class AuthApi {
       });
     return response;
   }
+  async login(name, password) {
+    const response = await Axios.post("api/v1/auth/login", {
+      name,
+      password,
+    })
+      .then((res) => {
+        return res;
+      })
+      .catch((err) => {
+        return err.response;
+      });
+    return response;
+  }
+  async forgetPassword(name) {
+    const response = await Axios.post("api/v1/auth/forget-password", {
+      name,
+    })
+      .then((res) => {
+        return res;
+      })
+      .catch((err) => {
+        return err.response;
+      });
+    return response;
+  }
+  async resetPassword(token, password, confirmPassword) {
+    const response = await Axios.patch(`/api/v1/auth/reset-password/${token}`, {
+      password,
+      confirmPassword,
+    })
+      .then((res) => {
+        return res;
+      })
+      .catch((err) => {
+        return err.response;
+      });
+    return response;
+  }
 }
 
 export default new AuthApi();

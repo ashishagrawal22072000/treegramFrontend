@@ -8,6 +8,8 @@ import { AiFillFacebook } from "react-icons/ai";
 import { ImCross } from "react-icons/im";
 import { TiTick } from "react-icons/ti";
 import { TbEyeglass, TbEyeglassOff } from "react-icons/tb";
+import Authapi from "../../api/Authapi";
+import Notify from "../../core/Toast";
 
 const Login = () => {
   const [show, setShow] = useState(false);
@@ -25,8 +27,19 @@ const Login = () => {
                 password: "",
               }}
               validationSchema={loginValidation}
-              onSubmit={(values) => {
-                console.log(values);
+              onSubmit={async (values) => {
+                const response = await Authapi.login(
+                  values.name,
+                  values.password
+                );
+                console.log(response);
+                if (response.status == 200) {
+                  Notify("success", response.data.message);
+                } else if (response.status == 500) {
+                  Notify("warning", response.statusText);
+                } else {
+                  Notify("error", response.data.message);
+                }
               }}
             >
               {({ errors, touched, values }) => (

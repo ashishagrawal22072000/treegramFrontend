@@ -72,6 +72,8 @@ const Birthday = () => {
                 if (response.status == 200) {
                   Notify("success", response.data.message);
                   navigate("/confirmation", { replace: true });
+                } else if (response.status == 500) {
+                  Notify("warning", response.statusText);
                 } else {
                   Notify("error", response.data.message);
                 }

@@ -47,6 +47,8 @@ const Signup = () => {
                 if (response.status == 200) {
                   dispatch(signupActions.signup(values));
                   navigate("/set-birthday");
+                } else if (response.status == 500) {
+                  Notify("warning", response.statusText);
                 } else {
                   Notify("error", response.data.message);
                 }
