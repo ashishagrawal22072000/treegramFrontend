@@ -75,6 +75,18 @@ class AuthApi {
       });
     return response;
   }
+  async resendOtp(email) {
+    const response = await Axios.post(`/api/v1/auth/resend-otp`, {
+      email,
+    })
+      .then((res) => {
+        return res;
+      })
+      .catch((err) => {
+        return err.response;
+      });
+    return response;
+  }
 }
 
 export default new AuthApi();

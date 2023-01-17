@@ -10,9 +10,11 @@ import Loader from "../../core/loader/Loader";
 import "./Birthday.css";
 import Notify from "../../core/Toast";
 import Authapi from "../../api/Authapi";
+import ButtonLoader from "../../core/button-loader/ButtonLoader";
 const Birthday = () => {
   const signupData = useSelector((state) => state.signup.signupData);
   console.log(signupData);
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     if (Object.keys(signupData).length === 0)
       navigate("/signup", { replace: true });
@@ -63,6 +65,7 @@ const Birthday = () => {
               }}
               validationSchema={dateOfBirthValidation}
               onSubmit={async (values) => {
+                setLoading(true);
                 const data = {
                   ...signupData,
                   dateOfBirth: `${values.day}-${values.month}-${values.year}`,
@@ -70,11 +73,14 @@ const Birthday = () => {
                 console.log(data);
                 const response = await Authapi.signup(data);
                 if (response.status == 200) {
+                  setLoading(false);
                   Notify("success", response.data.message);
                   navigate("/confirmation", { replace: true });
                 } else if (response.status == 500) {
+                  setLoading(false);
                   Notify("warning", response.statusText);
                 } else {
+                  setLoading(false);
                   Notify("error", response.data.message);
                 }
               }}
@@ -149,7 +155,7 @@ const Birthday = () => {
                   <br />
                   <div className="btn_container">
                     <button type="submit">
-                      Next
+                      {loading ? <ButtonLoader /> : "Next"}
                       <div class="arrow-wrapper">
                         <div class="arrow"></div>
                       </div>

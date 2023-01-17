@@ -7,5 +7,6 @@ const RouterName = {
   HOME: "/",
   RESET_PASSWORD: "/reset-password/:token",
   ERROR_404: "*",
+  ACCOUNT_PRIVACY: "/account-privacy",
 };
 export default RouterName;

@@ -10,9 +10,11 @@ import { TiTick } from "react-icons/ti";
 import { TbEyeglass, TbEyeglassOff } from "react-icons/tb";
 import Authapi from "../../api/Authapi";
 import Notify from "../../core/Toast";
+import ButtonLoader from "../../core/button-loader/ButtonLoader";
 
 const Login = () => {
   const [show, setShow] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   return (
     <>
@@ -28,16 +30,20 @@ const Login = () => {
               }}
               validationSchema={loginValidation}
               onSubmit={async (values) => {
+                setLoading(true);
                 const response = await Authapi.login(
                   values.name,
                   values.password
                 );
                 console.log(response);
                 if (response.status == 200) {
+                  setLoading(false);
                   Notify("success", response.data.message);
                 } else if (response.status == 500) {
+                  setLoading(false);
                   Notify("warning", response.statusText);
                 } else {
+                  setLoading(false);
                   Notify("error", response.data.message);
                 }
               }}
@@ -111,7 +117,7 @@ const Login = () => {
                   <br />
                   <div className="btn_container">
                     <button type="submit">
-                      Login
+                      {loading ? <ButtonLoader /> : "Login"}
                       <div class="arrow-wrapper">
                         <div class="arrow"></div>
                       </div>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./ForgetPassword.css";
 import { Formik, Form, Field } from "formik";
 import { ForgetPasswordValidation } from "../../validator/Validation";
@@ -9,7 +9,9 @@ import Authapi from "../../api/Authapi";
 import Notify from "../../core/Toast";
 import { TiTick } from "react-icons/ti";
 import { ImCross } from "react-icons/im";
+import ButtonLoader from "../../core/button-loader/ButtonLoader";
 const ForgetPassword = () => {
+  const [loading, setLoading] = useState(false);
   return (
     <>
       <section className="login">
@@ -30,12 +32,19 @@ const ForgetPassword = () => {
               }}
               validationSchema={ForgetPasswordValidation}
               onSubmit={async (values) => {
+                setLoading(true);
                 const response = await Authapi.forgetPassword(values.name);
                 if (response.status == 200) {
+                  setLoading(false);
+
                   Notify("success", response.data.message);
                 } else if (response.status == 500) {
+                  setLoading(false);
+
                   Notify("warning", response.statusText);
                 } else {
+                  setLoading(false);
+
                   Notify("error", response.data.message);
                 }
               }}
@@ -70,7 +79,7 @@ const ForgetPassword = () => {
                   <br />
                   <div className="btn_container">
                     <button type="submit">
-                      Set login link
+                      {loading ? <ButtonLoader /> : "Set login link"}
                       <div class="arrow-wrapper">
                         <div class="arrow"></div>
                       </div>

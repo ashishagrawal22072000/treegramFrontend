@@ -9,9 +9,11 @@ import { useSelector } from "react-redux";
 import "./Confirm.css";
 import Authapi from "../../api/Authapi";
 import Notify from "../../core/Toast";
+import ButtonLoader from "../../core/button-loader/ButtonLoader";
 const Confirm = () => {
   const signupData = useSelector((state) => state.signup.signupData);
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     if (Object.keys(signupData).length === 0)
       navigate("/signup", { replace: true });
@@ -29,10 +31,26 @@ const Confirm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     console.log("handleSubmit", otp.join(""));
     const response = await Authapi.verifyEmail(signupData?.email, otp.join(""));
     if (response.status == 200) {
+      setLoading(false);
       Notify("success", response.data.message);
+    } else if (response.status == 500) {
+      setLoading(false);
+      Notify("warning", response.statusText);
+    } else {
+      setLoading(false);
+      Notify("error", response.data.message);
+    }
+  };
+
+  const ResendOtp = async () => {
+    const response = await Authapi.resendOtp(signupData?.email);
+    if (response.status == 200) {
+      Notify("success", response.data.message);
+      navigate("/account-privacy");
     } else if (response.status == 500) {
       Notify("warning", response.statusText);
     } else {
@@ -52,7 +70,8 @@ const Confirm = () => {
             <br />
             <p>
               Enter the confirmation code we sent to{" "}
-              {signupData && signupData?.email}. <NavLink>Resend Code</NavLink>
+              {signupData && signupData?.email}.{" "}
+              <NavLink onClick={ResendOtp}>Resend Code</NavLink>
             </p>
             <br />
             <form>
@@ -76,7 +95,7 @@ const Confirm = () => {
               </div>
               <div className="btn_container">
                 <button type="submit" onClick={handleSubmit}>
-                  Send
+                  {loading ? <ButtonLoader /> : "Send"}
                   <div class="arrow-wrapper">
                     <div class="arrow"></div>
                   </div>

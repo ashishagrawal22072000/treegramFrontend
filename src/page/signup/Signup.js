@@ -12,10 +12,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { TbEyeglass, TbEyeglassOff } from "react-icons/tb";
 import Authapi from "../../api/Authapi";
 import Notify from "../../core/Toast";
+import Loader from "../../core/loader/Loader";
+import ButtonLoader from "../../core/button-loader/ButtonLoader";
 const Signup = () => {
   const [show, setShow] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
   return (
     <>
       <section className="signup">
@@ -43,13 +46,19 @@ const Signup = () => {
               }}
               validationSchema={signUpValidation}
               onSubmit={async (values) => {
+                setLoading(true);
                 const response = await Authapi.checkusername(values.username);
                 if (response.status == 200) {
+                  setLoading(false);
                   dispatch(signupActions.signup(values));
                   navigate("/set-birthday");
                 } else if (response.status == 500) {
+                  setLoading(false);
+
                   Notify("warning", response.statusText);
                 } else {
+                  setLoading(false);
+
                   Notify("error", response.data.message);
                 }
               }}
@@ -176,12 +185,13 @@ const Signup = () => {
                     <span className="error">{errors.password}</span>
                   ) : null}
                   <br />
-                  <p>
+                  <p className="paragraph">
                     People who use our service may have uploaded your contact
                     information to Treegram.{" "}
                     <NavLink to="/">Learn More</NavLink>
                   </p>
-                  <p>
+                  <ButtonLoader />
+                  <p className="paragraph">
                     By signing up, you agree to our{" "}
                     <NavLink to="/">Terms</NavLink> ,{" "}
                     <NavLink to="/">Privacy Policy</NavLink> and{" "}
@@ -189,7 +199,7 @@ const Signup = () => {
                   </p>
                   <div className="btn_container">
                     <button type="submit">
-                      Sign Up
+                      {loading ? <ButtonLoader /> : "Sign Up"}
                       <div class="arrow-wrapper">
                         <div class="arrow"></div>
                       </div>

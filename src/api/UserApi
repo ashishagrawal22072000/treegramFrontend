@@ -1,0 +1,22 @@
+import Axios from "axios";
+
+class UserApi {
+  async AccountPrivacy(token, privacy_id) {
+    const data = await Axios.post("api/v1/user/privacy", {
+      data: { privacy_id },
+      headers: {
+        "Content-Type": "application/json",
+        authorization: token ? `Bearer ${token}` : "",
+      },
+    })
+      .then((res) => {
+        return res;
+      })
+      .catch((err) => {
+        return err.response;
+      });
+    return data;
+  }
+}
+
+export default new UserApi();
