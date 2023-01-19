@@ -17,10 +17,10 @@ class AuthApi {
       ...data,
     })
       .then((res) => {
-        return res;
+        return res.data;
       })
       .catch((err) => {
-        return err.response;
+        return err.response.data;
       });
     return response;
   }
@@ -43,10 +43,10 @@ class AuthApi {
       password,
     })
       .then((res) => {
-        return res;
+        return res.data;
       })
       .catch((err) => {
-        return err.response;
+        return err.response.data;
       });
     return response;
   }

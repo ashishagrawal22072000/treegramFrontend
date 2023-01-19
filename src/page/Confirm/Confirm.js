@@ -11,7 +11,8 @@ import Authapi from "../../api/Authapi";
 import Notify from "../../core/Toast";
 import ButtonLoader from "../../core/button-loader/ButtonLoader";
 const Confirm = () => {
-  const signupData = useSelector((state) => state.signup.signupData);
+  const signupData = useSelector((state) => state.signupSlice.signupData);
+  console.log(signupData);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   useEffect(() => {
@@ -19,7 +20,7 @@ const Confirm = () => {
       navigate("/signup", { replace: true });
   });
   const [otp, setOtp] = useState(new Array(4).fill(""));
-
+  console.log(otp);
   const handleChange = (element, index) => {
     if (isNaN(element.value)) return false;
     setOtp([...otp.map((d, ind) => (ind === index ? element.value : d))]);
@@ -37,6 +38,7 @@ const Confirm = () => {
     if (response.status == 200) {
       setLoading(false);
       Notify("success", response.data.message);
+      navigate("/");
     } else if (response.status == 500) {
       setLoading(false);
       Notify("warning", response.statusText);

@@ -4,17 +4,18 @@ import { dateOfBirthValidation } from "../../validator/Validation";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
 import Footer from "../../core/footer/Footer";
 import { FaBirthdayCake } from "react-icons/fa";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import DropDown from "../../core/dropdown/DropDown";
 import Loader from "../../core/loader/Loader";
 import "./Birthday.css";
 import Notify from "../../core/Toast";
 import Authapi from "../../api/Authapi";
 import ButtonLoader from "../../core/button-loader/ButtonLoader";
+import { authActions } from "../../store/slice/AuthSlice";
 const Birthday = () => {
-  const signupData = useSelector((state) => state.signup.signupData);
-  console.log(signupData);
+  const signupData = useSelector((state) => state.signupSlice.signupData);
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
   useEffect(() => {
     if (Object.keys(signupData).length === 0)
       navigate("/signup", { replace: true });
@@ -72,9 +73,16 @@ const Birthday = () => {
                 };
                 console.log(data);
                 const response = await Authapi.signup(data);
-                if (response.status == 200) {
+                if (response.success) {
                   setLoading(false);
                   Notify("success", response.data.message);
+                  dispatch(
+                    authActions.auth({
+                      username: response.data.user.username,
+                      email: response.data.user.email,
+                      token: response.data.token,
+                    })
+                  );
                   navigate("/confirmation", { replace: true });
                 } else if (response.status == 500) {
                   setLoading(false);

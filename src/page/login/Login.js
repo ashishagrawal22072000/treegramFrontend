@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Formik, Form, Field } from "formik";
 import { loginValidation } from "../../validator/Validation";
 import "./Login.css";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import Footer from "../../core/footer/Footer";
 import { AiFillFacebook } from "react-icons/ai";
 import { ImCross } from "react-icons/im";
@@ -11,11 +11,14 @@ import { TbEyeglass, TbEyeglassOff } from "react-icons/tb";
 import Authapi from "../../api/Authapi";
 import Notify from "../../core/Toast";
 import ButtonLoader from "../../core/button-loader/ButtonLoader";
+import { useDispatch } from "react-redux";
+import { authActions } from "../../store/slice/AuthSlice";
 
 const Login = () => {
   const [show, setShow] = useState(false);
-  const [loading, setLoading] = useState(true);
-
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   return (
     <>
       <section className="login">
@@ -36,15 +39,23 @@ const Login = () => {
                   values.password
                 );
                 console.log(response);
-                if (response.status == 200) {
+                if (response.success) {
                   setLoading(false);
-                  Notify("success", response.data.message);
+                  Notify("success", response.message);
+                  dispatch(
+                    authActions.auth({
+                      username: response.data.user.username,
+                      email: response.data.user.email,
+                      token: response.data.token,
+                    })
+                  );
+                  navigate("/");
                 } else if (response.status == 500) {
                   setLoading(false);
                   Notify("warning", response.statusText);
                 } else {
                   setLoading(false);
-                  Notify("error", response.data.message);
+                  Notify("error", response.message);
                 }
               }}
             >
