@@ -18,7 +18,7 @@ const Confirm = () => {
   useEffect(() => {
     if (Object.keys(signupData).length === 0)
       navigate("/signup", { replace: true });
-  });
+  }, []);
   const [otp, setOtp] = useState(new Array(4).fill(""));
   console.log(otp);
   const handleChange = (element, index) => {
@@ -38,7 +38,7 @@ const Confirm = () => {
     if (response.status == 200) {
       setLoading(false);
       Notify("success", response.data.message);
-      navigate("/");
+      navigate("/account-privacy");
     } else if (response.status == 500) {
       setLoading(false);
       Notify("warning", response.statusText);
@@ -52,7 +52,6 @@ const Confirm = () => {
     const response = await Authapi.resendOtp(signupData?.email);
     if (response.status == 200) {
       Notify("success", response.data.message);
-      navigate("/account-privacy");
     } else if (response.status == 500) {
       Notify("warning", response.statusText);
     } else {

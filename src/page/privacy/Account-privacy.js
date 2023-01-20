@@ -1,15 +1,18 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { AiFillLock } from "react-icons/ai";
 import { useSelector } from "react-redux";
-import { Navigate, NavLink } from "react-router-dom";
+import { Navigate, NavLink, useNavigate } from "react-router-dom";
 import UserApi from "../../api/UserApi";
 import ButtonLoader from "../../core/button-loader/ButtonLoader";
 import Notify from "../../core/Toast";
 import "./Account-privacy.css";
 const Account_Privacy = () => {
   const [privacy_id, setPrivacy_id] = useState(null);
-  const { token } = useSelector((state) => state.auth);
+  const { auth } = useSelector((state) => state.authSlice);
+  console.log(auth);
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+
   return (
     <>
       <section className="login">
@@ -61,14 +64,14 @@ const Account_Privacy = () => {
                   onClick={async (e) => {
                     e.preventDefault();
                     setLoading(true);
-                    const response = await UserApi.Account_Privacy(
-                      token,
+                    const response = await UserApi.AccountPrivacy(
+                      auth.token,
                       privacy_id
                     );
                     if (response.status == 200) {
                       setLoading(false);
                       Notify("success", response.data.message);
-                      Navigate("/login");
+                      Navigate("/");
                     } else if (response.status == 500) {
                       setLoading(false);
                       Notify("warning", response.statusText);
