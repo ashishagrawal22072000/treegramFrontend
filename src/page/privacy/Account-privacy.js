@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { AiFillLock } from "react-icons/ai";
 import { useSelector } from "react-redux";
 import { Navigate, NavLink, useNavigate } from "react-router-dom";
-import UserApi from "../../api/UserApi";
+import UserApi from "../../api/UserApi.js";
 import ButtonLoader from "../../core/button-loader/ButtonLoader";
 import Notify from "../../core/Toast";
 import "./Account-privacy.css";
@@ -38,7 +38,7 @@ const Account_Privacy = () => {
                   onChange={(e) => {
                     setPrivacy_id(e.target.value);
                   }}
-                  //   className="input-field"
+                //   className="input-field"
                 />
                 <label for="account_privacy">Public</label>
               </div>
@@ -52,7 +52,7 @@ const Account_Privacy = () => {
                   onChange={(e) => {
                     setPrivacy_id(e.target.value);
                   }}
-                  //   className="input-field"
+                //   className="input-field"
                 />
                 <label for="account_privacy">Private</label>
               </div>

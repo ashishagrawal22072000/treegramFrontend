@@ -4,6 +4,7 @@ import Birthday from "../page/birthday/Birthday";
 import Confirm from "../page/Confirm/Confirm";
 import Error404 from "../page/Error404/Error404";
 import ForgetPassword from "../page/ForgetPassword/ForgetPassword";
+import Home from "../page/home/Home";
 import Login from "../page/login/Login";
 import Account_Privacy from "../page/privacy/Account-privacy";
 import ResetPassword from "../page/resetPassword/ResetPassword";
@@ -22,6 +23,7 @@ const Router = () => {
             // </PrivateRouter>
           }
         />
+        <Route path={RouteName.HOME} element={<Home />} />
         <Route path={RouteName.SIGNUP} element={<Signup />} />
         <Route path={RouteName.LOGIN} element={<Login />} />
         <Route path={RouteName.FORGET_PASSWORD} element={<ForgetPassword />} />
