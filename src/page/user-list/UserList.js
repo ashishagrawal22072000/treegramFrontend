@@ -6,6 +6,8 @@ import Loader from '../../core/loader/Loader';
 import "./UserList.css"
 import { HiBadgeCheck } from "react-icons/hi"
 import ButtonLoader from '../../core/button-loader/ButtonLoader';
+import Notify from "../../core/Toast"
+import { RiArrowDropDownLine } from "react-icons/ri"
 const UserList = () => {
     const [userList, setUserList] = useState([]);
     const [followingList, setFollowingList] = useState([])
@@ -13,6 +15,7 @@ const UserList = () => {
     const [loading, setLoading] = useState(true)
     const [btnLoading, setBtnLoading] = useState(false)
     const [btnText, setBtnText] = useState('Follow')
+    const [page, setPage] = useState(10)
     const navigate = useNavigate();
     useEffect(() => {
         async function followers() {
@@ -22,27 +25,46 @@ const UserList = () => {
         }
         followers();
     }, [])
-
+    const handleScrollEffect = () => {
+        console.log(document.documentElement.scrollHeight, "scrollheight")
+        console.log(window.innerHeight, "innerheight")
+        console.log(document.documentElement.scrollTop, "scrollTop")
+        try {
+            if (window.innerHeight + document.documentElement.scrollHeight + 1 >= document.documentElement.scrollTop) {
+                setPage(page + 5)
+            }
+        } catch (err) {
+            console.log(err)
+        }
+    }
     useEffect(() => {
         console.log(followingList, "followewew")
         if (followingList.length) {
             navigate("/")
         } else {
+            window.addEventListener("scroll", handleScrollEffect)
             async function users() {
-                const users = await UserApi.getUserList(auth.token)
+                const users = await UserApi.getUserList(auth.token, page, 0)
                 setLoading(false)
                 setUserList(users.data.data)
             }
             users()
         }
 
-    }, [followingList])
+    }, [followingList, page])
 
     const handleFollowing = async (following_id) => {
         console.log(following_id, "handleFollower")
         setBtnLoading(true);
         const response = await UserApi.followUser(auth.token, following_id)
-        console.log(response);
+        if (response.status == 200) {
+            setBtnText("Following")
+            setBtnLoading(false)
+            Notify("success", response.data.message)
+        } else {
+            setBtnLoading(false)
+            Notify("error", response.data.message)
+        }
     }
 
     return (
@@ -79,9 +101,8 @@ const UserList = () => {
                                                             </div>
                                                             <button onClick={() => handleFollowing(ele._id)}>
                                                                 {btnLoading ? <ButtonLoader /> : btnText}
-                                                                <div class="arrow-wrapper">
-                                                                    <div class="arrow"></div>
-                                                                </div>
+                                                                {btnText == "Following" ? <RiArrowDropDownLine />
+                                                                    : ''}
                                                             </button>
 
                                                         </div>
@@ -94,6 +115,9 @@ const UserList = () => {
                                 <div className="btn_container">
                                     <button className="submit">Get Started</button>
                                 </div>
+
+
+
 
                             </>
                     }

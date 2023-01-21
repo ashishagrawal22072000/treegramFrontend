@@ -47,8 +47,8 @@ class UserApi {
             });
         return data;
     }
-    async getUserList(token) {
-        const data = await Axios.get("api/v1/user/user-list", {
+    async getUserList(token, limit, skip) {
+        const data = await Axios.get(`api/v1/user/user-list?limit=${limit}&&skip=${skip}`, {
             headers: {
                 "Content-Type": "application/json",
                 "authorization": token ? `Bearer ${token}` : "",
