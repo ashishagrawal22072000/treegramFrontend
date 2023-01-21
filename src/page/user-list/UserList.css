@@ -1,0 +1,37 @@
+.userlist{
+    width: 768px;
+    margin : 0 auto;
+}
+.userlist .container{
+    display: flex;
+    justify-content : space-between;
+    align-items : center;
+    margin-top: 20px;
+}
+.userlist .user_content{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.user_profile{
+    height: 50px;
+    width: 50px;
+    border: 1px solid;
+    border-radius : 50%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.user_profile img{
+    width: 100px;
+}
+.user_content .user_detail{
+    margin-left: 20px;
+    line-height: 10px;
+}
+p{
+    color: black;
+    font-weight: 300;
+    text-align: left;
+}

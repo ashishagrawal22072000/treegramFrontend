@@ -49,7 +49,7 @@ const Login = () => {
                       token: response.data.token,
                     })
                   );
-                  navigate("/");
+                  navigate("/add-user");
                 } else if (response.status == 500) {
                   setLoading(false);
                   Notify("warning", response.statusText);

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import UserApi from "../../api/UserApi";
-import UserList from "../../core/user-list/UserList";
+// import UserList from "../../core/user-list/UserList";
 
 const Home = () => {
     const { auth } = useSelector(state => state.authSlice)
@@ -16,7 +16,7 @@ const Home = () => {
     return (
 
         <>
-            <UserList />
+            {/* <UserList /> */}
         </>
     )
 };

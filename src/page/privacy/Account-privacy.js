@@ -12,7 +12,6 @@ const Account_Privacy = () => {
   console.log(auth);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-
   return (
     <>
       <section className="login">
@@ -71,7 +70,7 @@ const Account_Privacy = () => {
                     if (response.status == 200) {
                       setLoading(false);
                       Notify("success", response.data.message);
-                      Navigate("/");
+                      Navigate("/add-user");
                     } else if (response.status == 500) {
                       setLoading(false);
                       Notify("warning", response.statusText);

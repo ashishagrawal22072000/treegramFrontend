@@ -32,12 +32,47 @@ class UserApi {
             });
         return data;
     }
+    async getFollowingList(token) {
+        const data = await Axios.get("api/v1/user/following-list", {
+            headers: {
+                "Content-Type": "application/json",
+                "authorization": token ? `Bearer ${token}` : "",
+            },
+        })
+            .then((res) => {
+                return res;
+            })
+            .catch((err) => {
+                return err.response;
+            });
+        return data;
+    }
     async getUserList(token) {
         const data = await Axios.get("api/v1/user/user-list", {
             headers: {
                 "Content-Type": "application/json",
                 "authorization": token ? `Bearer ${token}` : "",
             },
+        })
+            .then((res) => {
+                return res;
+            })
+            .catch((err) => {
+                return err.response;
+            });
+        return data;
+    }
+    async followUser(token, follower_id) {
+        console.log(token, "follow token")
+        const data = await Axios.post("api/v1/user/follow",
+            {
+                follower_id
+            }, {
+            headers: {
+                "Content-Type": "application/json",
+                "authorization": token ? `Bearer ${token}` : "",
+            },
+
         })
             .then((res) => {
                 return res;
