@@ -76,6 +76,7 @@ const Birthday = () => {
                 if (response.success) {
                   setLoading(false);
                   Notify("success", response.data.message);
+                  localStorage.setItem("auth-token", response.data.token);
                   dispatch(
                     authActions.auth({
                       username: response.data.user.username,

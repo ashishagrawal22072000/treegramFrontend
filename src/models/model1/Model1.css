@@ -1,0 +1,33 @@
+.model{
+    width: 50%;
+position: relative;
+margin: 0 auto;
+margin-top: -50%;
+display: flex;
+justify-content: center;
+align-items: center;
+position: relative;
+background: rgb(223, 223, 223);
+}
+.model .model_container{
+    width: 100%;
+}
+.model .model_body{
+    padding: 20px;
+}
+.model button{
+    background-color: transparent;
+    float: right;
+}
+.model .model_header{
+    margin-top: 50px;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+}
+.model_item{
+    display: flex;
+justify-content: space-between;
+align-items: baseline;
+}

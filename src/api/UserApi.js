@@ -82,6 +82,37 @@ class UserApi {
             });
         return data;
     }
+
+    async getUserBySearch(token, username) {
+        const data = await Axios.get(`api/v1/user?search=${username}`, {
+            headers: {
+                "Content-Type": "application/json",
+                "authorization": token ? `Bearer ${token}` : "",
+            },
+        })
+            .then((res) => {
+                return res;
+            })
+            .catch((err) => {
+                return err.response;
+            });
+        return data;
+    }
+    async getAuthUserdetail(token) {
+        const data = await Axios.get(`api/v1/user/authuser`, {
+            headers: {
+                "Content-Type": "application/json",
+                "authorization": token ? `Bearer ${token}` : "",
+            },
+        })
+            .then((res) => {
+                return res;
+            })
+            .catch((err) => {
+                return err.response;
+            });
+        return data;
+    }
 }
 
 export default new UserApi();

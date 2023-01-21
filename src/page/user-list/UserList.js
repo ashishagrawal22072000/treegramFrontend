@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import UserApi from '../../api/UserApi';
 import Loader from '../../core/loader/Loader';
 import "./UserList.css"
@@ -8,10 +8,16 @@ import { HiBadgeCheck } from "react-icons/hi"
 import ButtonLoader from '../../core/button-loader/ButtonLoader';
 import Notify from "../../core/Toast"
 import { RiArrowDropDownLine } from "react-icons/ri"
+import Model1 from '../../models/model1/Model1';
 const UserList = () => {
+    const [id, setId] = useState('');
+    console.log(id, "ffbfbfbf")
+    const [model, setModel] = useState(false)
     const [userList, setUserList] = useState([]);
     const [followingList, setFollowingList] = useState([])
     const { auth } = useSelector(state => state.authSlice);
+    const auth_token = localStorage.getItem("auth-token")
+    console.log("auth token: " + auth_token)
     const [loading, setLoading] = useState(true)
     const [btnLoading, setBtnLoading] = useState(false)
     const [btnText, setBtnText] = useState('Follow')
@@ -19,7 +25,7 @@ const UserList = () => {
     const navigate = useNavigate();
     useEffect(() => {
         async function followers() {
-            const following = await UserApi.getFollowingList(auth.token)
+            const following = await UserApi.getFollowingList(auth_token)
             console.log("bfbfbfbf", following)
             setFollowingList(following.data.data)
         }
@@ -44,7 +50,7 @@ const UserList = () => {
         } else {
             window.addEventListener("scroll", handleScrollEffect)
             async function users() {
-                const users = await UserApi.getUserList(auth.token, page, 0)
+                const users = await UserApi.getUserList(auth_token, page, 0)
                 setLoading(false)
                 setUserList(users.data.data)
             }
@@ -56,7 +62,7 @@ const UserList = () => {
     const handleFollowing = async (following_id) => {
         console.log(following_id, "handleFollower")
         setBtnLoading(true);
-        const response = await UserApi.followUser(auth.token, following_id)
+        const response = await UserApi.followUser(auth_token, following_id)
         if (response.status == 200) {
             setBtnText("Following")
             setBtnLoading(false)
@@ -85,10 +91,10 @@ const UserList = () => {
                                         <div className="user-content">
                                             <p>Suggestions For You</p>
                                             <hr />
-                                            {userList.map((ele) => {
+                                            {userList.map((ele, i) => {
                                                 return (
                                                     <>
-                                                        <div class="container">
+                                                        <div class="container" key={ele._id}>
                                                             <div class="user_content">
                                                                 <div class="user_profile">
                                                                     <img src={ele.profile} height="50" width="50" />
@@ -99,11 +105,13 @@ const UserList = () => {
                                                                     <p className="paragraph">{ele.email}</p>
                                                                 </div>
                                                             </div>
-                                                            <button onClick={() => handleFollowing(ele._id)}>
-                                                                {btnLoading ? <ButtonLoader /> : btnText}
-                                                                {btnText == "Following" ? <RiArrowDropDownLine />
-                                                                    : ''}
-                                                            </button>
+                                                            {btnText != "Following" ? <button onClick={() => handleFollowing(ele._id)}>
+                                                                {btnLoading ? <ButtonLoader /> : "Follow"}
+
+                                                            </button> : <button onClick={() => {
+                                                                setId(ele.username);
+                                                                setModel(true)
+                                                            }} >Following <RiArrowDropDownLine size={20} /></button>}
 
                                                         </div>
                                                     </>
@@ -113,7 +121,7 @@ const UserList = () => {
                                     </div>
                                 </section>
                                 <div className="btn_container">
-                                    <button className="submit">Get Started</button>
+                                    <button className="submit"><NavLink to="/">Get Started</NavLink></button>
                                 </div>
 
 
@@ -124,6 +132,11 @@ const UserList = () => {
 
                 </div>
             </section>
+
+            {model && <>
+                <Model1 username={id} />
+            </>}
+
         </>
     )
 }
