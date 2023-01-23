@@ -84,6 +84,7 @@ class UserApi {
     }
 
     async getUserBySearch(token, username) {
+        console.log(username, "search token")
         const data = await Axios.get(`api/v1/user?search=${username}`, {
             headers: {
                 "Content-Type": "application/json",
@@ -100,6 +101,40 @@ class UserApi {
     }
     async getAuthUserdetail(token) {
         const data = await Axios.get(`api/v1/user/authuser`, {
+            headers: {
+                "Content-Type": "application/json",
+                "authorization": token ? `Bearer ${token}` : "",
+            },
+        })
+            .then((res) => {
+                return res;
+            })
+            .catch((err) => {
+                return err.response;
+            });
+        return data;
+    }
+    async AddCloseFriend(token, follower_id) {
+        const data = await Axios.post(`api/v1/user/close-friend`, {
+            follower_id
+        }, {
+            headers: {
+                "Content-Type": "application/json",
+                "authorization": token ? `Bearer ${token}` : "",
+            },
+        })
+            .then((res) => {
+                return res;
+            })
+            .catch((err) => {
+                return err.response;
+            });
+        return data;
+    }
+    async AddFavouriate(token, follower_id) {
+        const data = await Axios.post(`api/v1/user/favouriate`, {
+            follower_id
+        }, {
             headers: {
                 "Content-Type": "application/json",
                 "authorization": token ? `Bearer ${token}` : "",

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import UserApi from "../../api/UserApi";
+import InnerNavbar from "../../core/innerNavbar/InnerNavbar";
 // import UserList from "../../core/user-list/UserList";
 
 const Home = () => {
@@ -17,6 +18,7 @@ const Home = () => {
 
         <>
             {/* <UserList /> */}
+            <InnerNavbar />
         </>
     )
 };

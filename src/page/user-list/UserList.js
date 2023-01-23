@@ -20,7 +20,8 @@ const UserList = () => {
     console.log("auth token: " + auth_token)
     const [loading, setLoading] = useState(true)
     const [btnLoading, setBtnLoading] = useState(false)
-    const [btnText, setBtnText] = useState('Follow')
+    // const [btnText, setBtnText] = useState('Follow')
+    // const [followList, setFollowerList] = useState([])
     const [page, setPage] = useState(10)
     const navigate = useNavigate();
     useEffect(() => {
@@ -52,7 +53,10 @@ const UserList = () => {
             async function users() {
                 const users = await UserApi.getUserList(auth_token, page, 0)
                 setLoading(false)
-                setUserList(users.data.data)
+                const data = users.data.data.map((ele) => {
+                    return { ...ele, isFollow: false }
+                })
+                setUserList(data)
             }
             users()
         }
@@ -62,17 +66,24 @@ const UserList = () => {
     const handleFollowing = async (following_id) => {
         console.log(following_id, "handleFollower")
         setBtnLoading(true);
+
         const response = await UserApi.followUser(auth_token, following_id)
         if (response.status == 200) {
-            setBtnText("Following")
+            // setBtnText("Following")
             setBtnLoading(false)
+            userList.map((user) => {
+                if (user._id == following_id) return user.isFollow = true
+            })
+            // console.log(data)
+            // setFollowerList([...followList, following_id])
             Notify("success", response.data.message)
         } else {
             setBtnLoading(false)
             Notify("error", response.data.message)
         }
     }
-
+    const [modalIsOpen, setIsOpen] = useState(false);
+    console.log(userList, "usususus")
     return (
         <>
             <section class="userlist">
@@ -105,12 +116,12 @@ const UserList = () => {
                                                                     <p className="paragraph">{ele.email}</p>
                                                                 </div>
                                                             </div>
-                                                            {btnText != "Following" ? <button onClick={() => handleFollowing(ele._id)}>
-                                                                {btnLoading ? <ButtonLoader /> : "Follow"}
+                                                            {!ele.isFollow ? <button onClick={() => handleFollowing(ele._id)}>
+                                                                Follow
 
                                                             </button> : <button onClick={() => {
                                                                 setId(ele.username);
-                                                                setModel(true)
+                                                                setIsOpen(true)
                                                             }} >Following <RiArrowDropDownLine size={20} /></button>}
 
                                                         </div>
@@ -133,9 +144,9 @@ const UserList = () => {
                 </div>
             </section>
 
-            {model && <>
-                <Model1 username={id} />
-            </>}
+
+            <Model1 username={id} modalIsOpen={modalIsOpen} setIsOpen={setIsOpen} />
+
 
         </>
     )

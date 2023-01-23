@@ -43,10 +43,12 @@ const Login = () => {
                   setLoading(false);
                   Notify("success", response.message);
                   localStorage.setItem("auth-token", response.data.token);
+                  localStorage.setItem("profile", response.data.user.profile);
                   dispatch(
                     authActions.auth({
                       username: response.data.user.username,
                       email: response.data.user.email,
+                      profile: response.data.user.profile,
                       token: response.data.token,
                     })
                   );
