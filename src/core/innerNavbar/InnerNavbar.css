@@ -3,6 +3,7 @@ header{
     bottom: 0;
     width: 100%;
     padding: 20px;
+    background: white;
 }
 ul{
     display: flex;

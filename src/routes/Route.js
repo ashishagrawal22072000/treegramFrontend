@@ -7,6 +7,7 @@ import ForgetPassword from "../page/ForgetPassword/ForgetPassword";
 import Home from "../page/home/Home";
 import Login from "../page/login/Login";
 import Account_Privacy from "../page/privacy/Account-privacy";
+import Profile from "../page/profile/Profile";
 import ResetPassword from "../page/resetPassword/ResetPassword";
 import Signup from "../page/signup/Signup";
 import UserList from "../page/user-list/UserList";
@@ -26,6 +27,7 @@ const Router = () => {
         />
         <Route path={RouteName.ADD_USER} element={<UserList />} />
         <Route path={RouteName.HOME} element={<Home />} />
+        <Route path={RouteName.PROFILE} element={<Profile />} />
         <Route path={RouteName.SIGNUP} element={<Signup />} />
         <Route path={RouteName.LOGIN} element={<Login />} />
         <Route path={RouteName.FORGET_PASSWORD} element={<ForgetPassword />} />

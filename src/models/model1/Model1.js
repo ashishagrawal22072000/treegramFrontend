@@ -4,7 +4,7 @@ import { AiTwotoneStar, AiFillCloseCircle } from "react-icons/ai"
 import "./Model1.css"
 import Modal from 'react-modal';
 import Notify from "../../core/Toast";
-const Model1 = ({ modalIsOpen, setIsOpen, username }) => {
+const Model1 = ({ modalIsOpen, setIsOpen, username, setUserList, userList }) => {
     console.log(username, "modal");
     const [userDetail, setUserDetail] = useState({})
     const [close, setClose] = useState('block')
@@ -64,6 +64,18 @@ const Model1 = ({ modalIsOpen, setIsOpen, username }) => {
             Notify("error", response.data.message)
         }
     }
+    const AddToUnfollow = async () => {
+        const response = await UserApi.followUser(auth_token, userDetail._id)
+        if (response.status == 200) {
+            Notify("success", response.data.message)
+            closeModal()
+            userList.map((user) => {
+                if (user._id == userDetail._id) return user.isFollow = false
+            })
+        } else {
+            Notify("error", response.data.message)
+        }
+    }
     return (
         <>
             {/* <div className="model" style={{ "display": `${close}` }}>
@@ -118,7 +130,7 @@ const Model1 = ({ modalIsOpen, setIsOpen, username }) => {
                                 <AiTwotoneStar />
                             </div>
                             <div className="model_item">
-                                <p>unfollow</p>
+                                <p onClick={AddToUnfollow}>unfollow</p>
                             </div>
                         </div>
                     </div>

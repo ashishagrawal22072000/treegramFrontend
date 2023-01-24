@@ -7,6 +7,7 @@ import "./InnerNavbar.css"
 import { NavLink } from 'react-router-dom';
 const InnerNavbar = () => {
     const profile = localStorage.getItem('profile');
+    const user = localStorage.getItem('user');
     return (
         <>
             <div className="container">
@@ -18,7 +19,7 @@ const InnerNavbar = () => {
                             <NavLink to="/search"><li><BsSearch size={20} color="#645bff" /></li></NavLink>
                             <NavLink to="/reels"><li><FiYoutube size={20} color="#645bff" /></li></NavLink>
                             <NavLink to="/message"><li><MdMessage size={20} color="#645bff" /></li></NavLink>
-                            <NavLink to="/porfile"><li>{profile ? <img src={profile} height="30" width="30" /> : <ImUser size={20} color="#645bff" />}</li></NavLink>
+                            <NavLink to={`/profile/${user}`}><li>{profile ? <img src={profile} height="30" width="30" /> : <ImUser size={20} color="#645bff" />}</li></NavLink>
                         </ul>
                     </nav>
 

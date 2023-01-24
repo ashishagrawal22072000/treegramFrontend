@@ -145,7 +145,7 @@ const UserList = () => {
             </section>
 
 
-            <Model1 username={id} modalIsOpen={modalIsOpen} setIsOpen={setIsOpen} />
+            <Model1 username={id} modalIsOpen={modalIsOpen} setIsOpen={setIsOpen} setUserList={setUserList} userList={userList} />
 
 
         </>

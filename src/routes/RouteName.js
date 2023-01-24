@@ -8,6 +8,7 @@ const RouterName = {
   RESET_PASSWORD: "/reset-password/:token",
   ERROR_404: "*",
   ACCOUNT_PRIVACY: "/account-privacy",
-  ADD_USER: "/add-user"
+  ADD_USER: "/add-user",
+  PROFILE: "/profile/:username"
 };
 export default RouterName;

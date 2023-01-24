@@ -1,0 +1,17 @@
+.posts{
+    display: grid;
+    grid-template-columns: auto auto auto;
+    justify-content: space-around;
+    overflow-y: scroll;
+    height: 400px;
+}
+.post_content{
+    border: 1px solid;
+    height: 200px;
+    width: 200px;
+}
+
+.post_content img{
+    height: 100%;
+    width: 100%;
+}

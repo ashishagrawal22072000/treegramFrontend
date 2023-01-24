@@ -44,6 +44,7 @@ const Login = () => {
                   Notify("success", response.message);
                   localStorage.setItem("auth-token", response.data.token);
                   localStorage.setItem("profile", response.data.user.profile);
+                  localStorage.setItem("user", response.data.user.username);
                   dispatch(
                     authActions.auth({
                       username: response.data.user.username,
