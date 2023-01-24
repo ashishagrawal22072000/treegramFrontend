@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import InnerNavbar from '../../core/innerNavbar/InnerNavbar';
 import "./Profile.css";
 import { RiGridFill, RiVideoFill, RiBookmarkFill } from "react-icons/ri"
@@ -21,7 +21,11 @@ const Profile = () => {
 
         showTab();
     }, [tab])
+
+    // const location = useLocation()
+    console.log(window.location.pathname + "/edit")
     return (
+
         <>
 
             <div className="container">
@@ -32,7 +36,7 @@ const Profile = () => {
                             <div className="profile_content">
                                 <h2>_user1</h2>
                                 <br />
-                                <button>Edit Profile</button>
+                                <NavLink to={`${window.location.pathname}/edit`}><button>Edit Profile</button></NavLink>
                             </div>
                         </div>
                         <div className="profile_content">

@@ -29,8 +29,8 @@ const Model1 = ({ modalIsOpen, setIsOpen, username, setUserList, userList }) => 
             bottom: 'auto',
             marginRight: '-50%',
             transform: 'translate(-50%, -50%)',
-            height: "400px",
-            width: "400px"
+            height: "350px",
+            width: "350px"
         },
     };
 
@@ -78,31 +78,6 @@ const Model1 = ({ modalIsOpen, setIsOpen, username, setUserList, userList }) => 
     }
     return (
         <>
-            {/* <div className="model" style={{ "display": `${close}` }}>
-                <div className="model_container">
-                    <button><AiFillCloseCircle size={20} color="black" onClick={() => { setClose('none') }} /></button>
-                    <div className="model_header">
-                        <div>
-                            <img src={userDetail.profile} height="50" width="50" />
-                        </div>
-                        <p>{userDetail.username}</p>
-                    </div>
-                    <hr />
-                    <div className="model_body">
-                        <div className="model_item">
-                            <p>Add to close friend list</p>
-                            <AiTwotoneStar />
-                        </div>
-                        <div className="model_item">
-                            <p>Add to favouriate</p>
-                            <AiTwotoneStar />
-                        </div>
-                        <div className="model_item">
-                            <p>unfollow</p>
-                        </div>
-                    </div>
-                </div>
-            </div> */}
             <Modal
                 isOpen={modalIsOpen}
                 onAfterOpen={afterOpenModal}

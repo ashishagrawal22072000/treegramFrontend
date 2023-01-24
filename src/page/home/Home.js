@@ -18,9 +18,9 @@ const Home = () => {
         }
         followers()
     }, [])
-    useEffect(() => {
-        if (!followerList.length) navigate("/add-user")
-    }, [followerList])
+    // useEffect(() => {
+    //     if (!followerList.length) navigate("/add-user")
+    // }, [followerList])
     return (
 
         <>

@@ -1,0 +1,16 @@
+.edit_profile .user{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.edit_profile .user img{
+    height: 200px;
+    width: 200px;
+}
+.edit_profile .user p{
+    position: absolute;
+    top: 125px;
+}
+.field{
+display: block ! important;
+}

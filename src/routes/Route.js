@@ -7,6 +7,7 @@ import ForgetPassword from "../page/ForgetPassword/ForgetPassword";
 import Home from "../page/home/Home";
 import Login from "../page/login/Login";
 import Account_Privacy from "../page/privacy/Account-privacy";
+import EditProfile from "../page/profile/edit-profile/EditProfile";
 import Profile from "../page/profile/Profile";
 import ResetPassword from "../page/resetPassword/ResetPassword";
 import Signup from "../page/signup/Signup";
@@ -25,6 +26,7 @@ const Router = () => {
             // </PrivateRouter>
           }
         />
+        <Route path={RouteName.EDITPROFILE} element={<EditProfile />} />
         <Route path={RouteName.ADD_USER} element={<UserList />} />
         <Route path={RouteName.HOME} element={<Home />} />
         <Route path={RouteName.PROFILE} element={<Profile />} />

@@ -9,6 +9,7 @@ const RouterName = {
   ERROR_404: "*",
   ACCOUNT_PRIVACY: "/account-privacy",
   ADD_USER: "/add-user",
-  PROFILE: "/profile/:username"
+  PROFILE: "/profile/:username",
+  EDITPROFILE: "profile/:username/edit"
 };
 export default RouterName;
