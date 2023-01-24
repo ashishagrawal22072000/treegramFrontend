@@ -18,26 +18,30 @@ const Router = () => {
   return (
     <div>
       <Routes>
-        <Route
+        {/* <Route
           path={RouteName.ACCOUNT_PRIVACY}
           element={
             // <PrivateRouter>
             <Account_Privacy />
             // </PrivateRouter>
           }
-        />
-        <Route path={RouteName.EDITPROFILE} element={<EditProfile />} />
-        <Route path={RouteName.ADD_USER} element={<UserList />} />
+        /> */}
+        <Route element={<PrivateRouter />}>
+          <Route path={RouteName.PROFILE} element={<Profile />} />
+          <Route path={RouteName.COMFIRM} element={<Confirm />} />
+          <Route path={RouteName.ACCOUNT_PRIVACY} element={<Account_Privacy />} />
+          <Route path={RouteName.ADD_USER} element={<UserList />} />
+          <Route path={RouteName.EDITPROFILE} element={<EditProfile />} />
+
+        </Route>
         <Route path={RouteName.HOME} element={<Home />} />
-        <Route path={RouteName.PROFILE} element={<Profile />} />
+
         <Route path={RouteName.SIGNUP} element={<Signup />} />
         <Route path={RouteName.LOGIN} element={<Login />} />
         <Route path={RouteName.FORGET_PASSWORD} element={<ForgetPassword />} />
         <Route path={RouteName.BIRTHDAY} element={<Birthday />} />
-        <Route path={RouteName.COMFIRM} element={<Confirm />} />
         <Route path={RouteName.RESET_PASSWORD} element={<ResetPassword />} />
         <Route exact path={RouteName.ERROR_404} element={<Error404 />} />
-        <Route path={RouteName.ACCOUNT_PRIVACY} element={<Account_Privacy />} />
       </Routes>
     </div>
   );
