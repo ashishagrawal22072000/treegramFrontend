@@ -47,19 +47,19 @@ const Profile = () => {
 
                     <hr />
                     <div className="user_detail2">
-                        <NavLink to="/post" className={(nav) => nav.isActive ? '.link' : ''}>
+                        <NavLink to={`${window.location.pathname}/post`} className={(nav) => nav.isActive ? '.link' : ''}>
                             <div>
                                 <p>0</p>
                                 <p>Post</p>
                             </div>
                         </NavLink>
-                        <NavLink to="/follower" className={(nav) => nav.isActive ? '.link' : ''}>
+                        <NavLink to={`${window.location.pathname}/follower`} className={(nav) => nav.isActive ? '.link' : ''}>
                             <div>
                                 <p>0</p>
                                 <p>Follower</p>
                             </div>
                         </NavLink>
-                        <NavLink to="/following" className={(nav) => nav.isActive ? '.link' : ''}>
+                        <NavLink to={`${window.location.pathname}/following`} className={(nav) => nav.isActive ? '.link' : ''}>
                             <div>
                                 <p>0</p>
                                 <p>Following</p>

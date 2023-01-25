@@ -8,6 +8,7 @@ import Home from "../page/home/Home";
 import Login from "../page/login/Login";
 import Account_Privacy from "../page/privacy/Account-privacy";
 import EditProfile from "../page/profile/edit-profile/EditProfile";
+import Follower from "../page/profile/follower/Follower";
 import Profile from "../page/profile/Profile";
 import ResetPassword from "../page/resetPassword/ResetPassword";
 import Signup from "../page/signup/Signup";
@@ -32,7 +33,7 @@ const Router = () => {
           <Route path={RouteName.ACCOUNT_PRIVACY} element={<Account_Privacy />} />
           <Route path={RouteName.ADD_USER} element={<UserList />} />
           <Route path={RouteName.EDITPROFILE} element={<EditProfile />} />
-
+          <Route path={RouteName.FOLLOWER} element={<Follower />} />
         </Route>
         <Route path={RouteName.HOME} element={<Home />} />
 

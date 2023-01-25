@@ -1,0 +1,15 @@
+.follower_container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+}
+.follower{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.follower .follower_profile img{
+    height: 100px;
+    width: 100px;
+}

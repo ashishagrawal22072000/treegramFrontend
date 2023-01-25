@@ -15,10 +15,6 @@ const Confirm = () => {
   console.log(signupData);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  useEffect(() => {
-    if (Object.keys(signupData).length === 0)
-      navigate("/signup", { replace: true });
-  }, []);
   const [otp, setOtp] = useState(new Array(4).fill(""));
   console.log(otp);
   const handleChange = (element, index) => {

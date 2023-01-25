@@ -81,6 +81,7 @@ const Birthday = () => {
                     authActions.auth({
                       username: response.data.user.username,
                       email: response.data.user.email,
+                      profile: response.data.user.profile,
                       token: response.data.token,
                     })
                   );

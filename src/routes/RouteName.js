@@ -10,6 +10,8 @@ const RouterName = {
   ACCOUNT_PRIVACY: "/account-privacy",
   ADD_USER: "/add-user",
   PROFILE: "/profile/:username",
-  EDITPROFILE: "profile/:username/edit"
+  EDITPROFILE: "profile/:username/edit",
+  FOLLOWER: "profile/:username/follower",
+  FOLLOWING: "profile/:username/following",
 };
 export default RouterName;
