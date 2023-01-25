@@ -3,7 +3,9 @@ import Axios from "axios";
 class UserApi {
     async AccountPrivacy(token, privacy_id) {
         const data = await Axios.patch("api/v1/user/privacy", {
-            data: { privacy_id },
+            privacy_id
+        }, {
+
             headers: {
                 "Content-Type": "application/json",
                 "authorization": token ? `Bearer ${token}` : "",
@@ -17,8 +19,8 @@ class UserApi {
             });
         return data;
     }
-    async getFollowerList(token) {
-        const data = await Axios.get("api/v1/user/follower-list", {
+    async getFollowerList(token, username) {
+        const data = await Axios.get(`api/v1/user/follower-list?username=${username}`, {
             headers: {
                 "Content-Type": "application/json",
                 "authorization": token ? `Bearer ${token}` : "",
@@ -32,8 +34,8 @@ class UserApi {
             });
         return data;
     }
-    async getFollowingList(token) {
-        const data = await Axios.get("api/v1/user/following-list", {
+    async getFollowingList(token, username) {
+        const data = await Axios.get(`api/v1/user/following-list?username=${username}`, {
             headers: {
                 "Content-Type": "application/json",
                 "authorization": token ? `Bearer ${token}` : "",

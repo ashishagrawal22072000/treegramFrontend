@@ -1,7 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
+import UserApi from "../../api/UserApi";
 
 const initialState = {
   auth: {},
+  // followerList: []
 };
 
 const authSlice = createSlice({
@@ -9,10 +11,14 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     auth: (state, action) => {
-      console.log(action.payload, "authreducer");
       state.auth = action.payload;
-      console.log(state.auth, "fugfuyr4fuf4rhfifh4ifh4");
     },
+    // getFollowerList: async (state, action) => {
+    //   const followerList = await UserApi.getFollowingList(state.auth.token, state.auth.username)
+    //   if (followerList.status == 200) {
+    //     state.followerList = followerList
+    //   }
+    // }
   },
 });
 

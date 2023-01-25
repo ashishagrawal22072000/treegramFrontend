@@ -11,22 +11,17 @@ import { RiArrowDropDownLine } from "react-icons/ri"
 import Model1 from '../../models/model1/Model1';
 const UserList = () => {
     const [id, setId] = useState('');
-    console.log(id, "ffbfbfbf")
     const [model, setModel] = useState(false)
     const [userList, setUserList] = useState([]);
     const [followingList, setFollowingList] = useState([])
     const { auth } = useSelector(state => state.authSlice);
-    const auth_token = localStorage.getItem("auth-token")
-    console.log("auth token: " + auth_token)
     const [loading, setLoading] = useState(true)
     const [btnLoading, setBtnLoading] = useState(false)
-    // const [btnText, setBtnText] = useState('Follow')
-    // const [followList, setFollowerList] = useState([])
     const [page, setPage] = useState(10)
     const navigate = useNavigate();
     useEffect(() => {
         async function followers() {
-            const following = await UserApi.getFollowingList(auth_token)
+            const following = await UserApi.getFollowingList(auth?.token, auth?.username)
             console.log("bfbfbfbf", following)
             setFollowingList(following.data.data)
         }
@@ -51,7 +46,7 @@ const UserList = () => {
         } else {
             window.addEventListener("scroll", handleScrollEffect)
             async function users() {
-                const users = await UserApi.getUserList(auth_token, page, 0)
+                const users = await UserApi.getUserList(auth?.token, page, 0)
                 setLoading(false)
                 const data = users.data.data.map((ele) => {
                     return { ...ele, isFollow: false }
@@ -61,21 +56,20 @@ const UserList = () => {
             users()
         }
 
-    }, [followingList, page])
+    }, [page])
 
     const handleFollowing = async (following_id) => {
         console.log(following_id, "handleFollower")
         setBtnLoading(true);
 
-        const response = await UserApi.followUser(auth_token, following_id)
+        const response = await UserApi.followUser(auth?.token, following_id)
         if (response.status == 200) {
-            // setBtnText("Following")
+
             setBtnLoading(false)
             userList.map((user) => {
                 if (user._id == following_id) return user.isFollow = true
             })
-            // console.log(data)
-            // setFollowerList([...followList, following_id])
+
             Notify("success", response.data.message)
         } else {
             setBtnLoading(false)

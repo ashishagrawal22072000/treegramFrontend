@@ -42,9 +42,7 @@ const Login = () => {
                 if (response.success) {
                   setLoading(false);
                   Notify("success", response.message);
-                  localStorage.setItem("auth-token", response.data.token);
-                  localStorage.setItem("profile", response.data.user.profile);
-                  localStorage.setItem("user", response.data.user.username);
+
                   dispatch(
                     authActions.auth({
                       username: response.data.user.username,
@@ -53,7 +51,7 @@ const Login = () => {
                       token: response.data.token,
                     })
                   );
-                  navigate("/add-user");
+                  navigate("/");
                 } else if (response.status == 500) {
                   setLoading(false);
                   Notify("warning", response.statusText);
