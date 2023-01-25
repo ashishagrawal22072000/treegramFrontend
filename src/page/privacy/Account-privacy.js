@@ -73,7 +73,7 @@ const Account_Privacy = () => {
                     if (response.status == 200) {
                       setLoading(false);
                       Notify("success", response.data.message);
-                      navigate("/add-user", { replace: true });
+                      navigate("/", { replace: true });
                     } else if (response.status == 500) {
                       setLoading(false);
                       Notify("warning", response.statusText);

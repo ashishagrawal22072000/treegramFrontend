@@ -9,7 +9,7 @@ import ButtonLoader from '../../core/button-loader/ButtonLoader';
 import Notify from "../../core/Toast"
 import { RiArrowDropDownLine } from "react-icons/ri"
 import Model1 from '../../models/model1/Model1';
-const UserList = () => {
+const UserList = ({ setFollowerList }) => {
     const [id, setId] = useState('');
     const [model, setModel] = useState(false)
     const [userList, setUserList] = useState([]);
@@ -24,6 +24,7 @@ const UserList = () => {
             const following = await UserApi.getFollowingList(auth?.token, auth?.username)
             console.log("bfbfbfbf", following)
             setFollowingList(following.data.data)
+            if (following.data.data.length) setFollowerList(true)
         }
         followers();
     }, [])
@@ -40,21 +41,17 @@ const UserList = () => {
         }
     }
     useEffect(() => {
-        console.log(followingList, "followewew")
-        if (followingList.length) {
-            navigate("/")
-        } else {
-            window.addEventListener("scroll", handleScrollEffect)
-            async function users() {
-                const users = await UserApi.getUserList(auth?.token, page, 0)
-                setLoading(false)
-                const data = users.data.data.map((ele) => {
-                    return { ...ele, isFollow: false }
-                })
-                setUserList(data)
-            }
-            users()
+        window.addEventListener("scroll", handleScrollEffect)
+        async function users() {
+            const users = await UserApi.getUserList(auth?.token, page, 0)
+            setLoading(false)
+            const data = users.data.data.map((ele) => {
+                return { ...ele, isFollow: false }
+            })
+            setUserList(data)
         }
+        users()
+
 
     }, [page])
 
@@ -80,19 +77,20 @@ const UserList = () => {
     console.log(userList, "usususus")
     return (
         <>
-            <section class="userlist">
-                <div class="userlist_content">
-                    {
-                        loading ?
-                            <>
-                                <div className="">
-                                    <Loader />
-                                </div>
-                            </>
-                            :
-                            <>
-                                <section className="userList">
-                                    <div className="container">
+            <div className="container">
+
+                <section class="userlist">
+                    <div class="userlist_content">
+                        {
+                            loading ?
+                                <>
+                                    <div className="">
+                                        <Loader />
+                                    </div>
+                                </>
+                                :
+                                <>
+                                    <section className="userList">
                                         <div className="user-content">
                                             <p>Suggestions For You</p>
                                             <hr />
@@ -123,21 +121,22 @@ const UserList = () => {
                                                 )
                                             })}
                                         </div>
+                                    </section>
+                                    <div className="btn_container">
+                                        <button className="submit" onClick={() => {
+                                            setFollowerList(true)
+                                        }}>Get Started</button>
                                     </div>
-                                </section>
-                                <div className="btn_container">
-                                    <button className="submit"><NavLink to="/">Get Started</NavLink></button>
-                                </div>
 
 
 
 
-                            </>
-                    }
+                                </>
+                        }
 
-                </div>
-            </section>
-
+                    </div>
+                </section>
+            </div>
 
             <Model1 username={id} modalIsOpen={modalIsOpen} setIsOpen={setIsOpen} setUserList={setUserList} userList={userList} />
 

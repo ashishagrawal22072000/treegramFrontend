@@ -9,26 +9,17 @@ import UserList from "../user-list/UserList";
 
 const Home = () => {
     const { auth } = useSelector(state => state.authSlice)
-    const [followerList, setFollowerList] = useState([])
+    const [followerList, setFollowerList] = useState(false)
     const navigate = useNavigate()
-    // useEffect(() => {
-    //     async function followers() {
-    //         const follower = await UserApi.getFollowerList(auth?.token, auth?.username)
-    //         setFollowerList(follower.data.data)
-    //     }
-    //     followers()
-    // }, [])
-    // console.log(followerList, "fhfhfhfhfh")
-    // useEffect(() => {
-    //     if (!followerList.length) navigate("/add-user")
-    // }, [followerList])
     return (
 
         <>
             {!auth?.token ? <>
                 <Login /> </> : <>
-                <UserList />
-                <InnerNavbar />
+                {!followerList ? <UserList setFollowerList={setFollowerList} /> :
+                    <InnerNavbar />
+
+                }
 
             </>
             }
