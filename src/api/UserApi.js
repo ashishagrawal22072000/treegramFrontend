@@ -2,7 +2,7 @@ import Axios from "axios";
 
 class UserApi {
     async AccountPrivacy(token, privacy_id) {
-        const data = await Axios.patch("api/v1/user/privacy", {
+        const data = await Axios.patch(`${process.env.REACT_APP_BASE_URL}api/v1/user/privacy`, {
             privacy_id
         }, {
 
@@ -20,7 +20,7 @@ class UserApi {
         return data;
     }
     async getFollowerList(token, username) {
-        const data = await Axios.get(`api/v1/user/follower-list?username=${username}`, {
+        const data = await Axios.get(`${process.env.REACT_APP_BASE_URL}api/v1/user/follower-list?username=${username}`, {
             headers: {
                 "Content-Type": "application/json",
                 "authorization": token ? `Bearer ${token}` : "",
@@ -35,7 +35,7 @@ class UserApi {
         return data;
     }
     async getFollowingList(token, username) {
-        const data = await Axios.get(`api/v1/user/following-list?username=${username}`, {
+        const data = await Axios.get(`${process.env.REACT_APP_BASE_URL}api/v1/user/following-list?username=${username}`, {
             headers: {
                 "Content-Type": "application/json",
                 "authorization": token ? `Bearer ${token}` : "",
@@ -50,7 +50,7 @@ class UserApi {
         return data;
     }
     async getUserList(token, limit, skip) {
-        const data = await Axios.get(`api/v1/user/user-list?limit=${limit}&&skip=${skip}`, {
+        const data = await Axios.get(`${process.env.REACT_APP_BASE_URL}api/v1/user/user-list?limit=${limit}&&skip=${skip}`, {
             headers: {
                 "Content-Type": "application/json",
                 "authorization": token ? `Bearer ${token}` : "",
@@ -66,7 +66,7 @@ class UserApi {
     }
     async followUser(token, follower_id) {
         console.log(token, "follow token")
-        const data = await Axios.post("api/v1/user/follow",
+        const data = await Axios.post(`${process.env.REACT_APP_BASE_URL}api/v1/user/follow`,
             {
                 follower_id
             }, {
@@ -87,7 +87,7 @@ class UserApi {
 
     async getUserBySearch(token, username) {
         console.log(username, "search token")
-        const data = await Axios.get(`api/v1/user?search=${username}`, {
+        const data = await Axios.get(`${process.env.REACT_APP_BASE_URL}api/v1/user?search=${username}`, {
             headers: {
                 "Content-Type": "application/json",
                 "authorization": token ? `Bearer ${token}` : "",
@@ -102,7 +102,7 @@ class UserApi {
         return data;
     }
     async getAuthUserdetail(token) {
-        const data = await Axios.get(`api/v1/user/authuser`, {
+        const data = await Axios.get(`${process.env.REACT_APP_BASE_URL}api/v1/user/authuser`, {
             headers: {
                 "Content-Type": "application/json",
                 "authorization": token ? `Bearer ${token}` : "",
@@ -117,7 +117,7 @@ class UserApi {
         return data;
     }
     async AddCloseFriend(token, follower_id) {
-        const data = await Axios.post(`api/v1/user/close-friend`, {
+        const data = await Axios.post(`${process.env.REACT_APP_BASE_URL}api/v1/user/close-friend`, {
             follower_id
         }, {
             headers: {
@@ -134,7 +134,7 @@ class UserApi {
         return data;
     }
     async AddFavouriate(token, follower_id) {
-        const data = await Axios.post(`api/v1/user/favouriate`, {
+        const data = await Axios.post(`${process.env.REACT_APP_BASE_URL}api/v1/user/favouriate`, {
             follower_id
         }, {
             headers: {
@@ -142,6 +142,24 @@ class UserApi {
                 "authorization": token ? `Bearer ${token}` : "",
             },
         })
+            .then((res) => {
+                return res;
+            })
+            .catch((err) => {
+                return err.response;
+            });
+        return data;
+    }
+
+    async getUserProfileDetail(token, username) {
+        console.log(token)
+        const data = await Axios.get(`${process.env.REACT_APP_BASE_URL}api/v1/user/view-profile?username=${username}`,
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    "authorization": token ? `Bearer ${token}` : "",
+                },
+            })
             .then((res) => {
                 return res;
             })

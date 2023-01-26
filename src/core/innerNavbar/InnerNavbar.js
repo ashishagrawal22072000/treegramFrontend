@@ -8,8 +8,8 @@ import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 const InnerNavbar = () => {
     const profile = localStorage.getItem('profile');
-    const user = JSON.parse(localStorage.getItem('user'));
-    console.log(user, "abc")
+    // const user = JSON.parse(localStorage.getItem('user'));
+    // console.log(user, "abc")
     const { auth } = useSelector((state) => state.authSlice);
     const auth_token = localStorage.getItem('auth-token')
     return (
@@ -23,7 +23,7 @@ const InnerNavbar = () => {
                             <NavLink to="/search"><li><BsSearch size={20} color="#645bff" /></li></NavLink>
                             <NavLink to="/reels"><li><FiYoutube size={20} color="#645bff" /></li></NavLink>
                             <NavLink to="/message"><li><MdMessage size={20} color="#645bff" /></li></NavLink>
-                            <NavLink to={`/profile/${user.username}`}><li>{user ? <img src={user.profile} height="30" width="30" /> : <ImUser size={20} color="#645bff" />}</li></NavLink>
+                            <NavLink to={`/profile/${auth.username}`}><li>{auth && auth.profile ? <img src={auth.profile} height="30" width="30" /> : <ImUser size={20} color="#645bff" />}</li></NavLink>
                         </ul>
                     </nav>
 

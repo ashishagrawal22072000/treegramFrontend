@@ -10,6 +10,7 @@ import UserList from "../user-list/UserList";
 const Home = () => {
     const { auth } = useSelector(state => state.authSlice)
     const [followerList, setFollowerList] = useState(false)
+    console.log(process.env)
     const navigate = useNavigate()
     return (
 
