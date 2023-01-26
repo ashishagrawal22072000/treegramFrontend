@@ -58,7 +58,7 @@ const Profile = () => {
                         <section className="profile">
                             <div className="user_detail1">
                                 <div className="profile">
-                                    <img src={user_profile} height={150} width={150} alt="" />
+                                    <img src={userData?.user?.profile} height={150} width={150} alt="" />
                                     <div className="profile_content">
                                         <h2>{userData?.user?.username}</h2>
                                         <br />
