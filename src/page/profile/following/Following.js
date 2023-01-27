@@ -78,9 +78,9 @@ const Following = () => {
                                             </div>
 
                                             <button onClick={() => {
-                                                // setId(ele.follow_to.username);
-                                                // setIsOpen(true)
-                                            }}>Remove</button>
+                                                setId(ele.follow_to.username);
+                                                setIsOpen(true)
+                                            }}>Following</button>
 
                                         </div>
                                     </>
@@ -142,7 +142,7 @@ const Following = () => {
 
 
             </div>
-            {/* <Model2 username={id} modalIsOpen={modalIsOpen} setIsOpen={setIsOpen} /> */}
+            <Model2 username={id} modalIsOpen={modalIsOpen} setIsOpen={setIsOpen} />
         </>
 
     )

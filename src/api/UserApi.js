@@ -168,6 +168,22 @@ class UserApi {
             });
         return data;
     }
+
+    async DeleteFollower(token, id) {
+        const data = await Axios.delete(`${process.env.REACT_APP_BASE_URL}api/v1/user/follower/${id}`, {
+            headers: {
+                "Content-Type": "application/json",
+                "authorization": token ? `Bearer ${token}` : "",
+            },
+        })
+            .then((res) => {
+                return res.data;
+            })
+            .catch((err) => {
+                return err.response.data;
+            });
+        return data;
+    }
 }
 
 export default new UserApi();

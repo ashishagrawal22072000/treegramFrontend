@@ -58,7 +58,7 @@ const Follower = () => {
                                             <button onClick={async () => {
                                                 // setId(ele.follow_from?.username);
                                                 // setIsOpen(true)
-                                                const response = await UserApi.followUser(auth?.token, ele.follow_from?._id)
+                                                const response = await UserApi.DeleteFollower(auth?.token, ele._id)
                                                 if (response.success) {
                                                     Notify("success", response.message)
                                                     dispatch(updateFollowerList(ele.follow_from?._id))
