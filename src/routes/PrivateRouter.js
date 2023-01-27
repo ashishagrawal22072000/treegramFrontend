@@ -6,7 +6,7 @@ const PrivateRouter = ({ children, ...rest }) => {
   // console.log(authData?.authSlice?.auth?.token)
   // const auth_token = localStorage.getItem('auth-token');
   // const user = JSON.parse(localStorage.getItem('user'));
-  const { auth } = useSelector(state => state.authSlice)
+  const { auth } = useSelector(state => state.AuthReducer)
   return auth && auth.token ? <Outlet /> : <Navigate to="/" />
 };
 export default PrivateRouter;

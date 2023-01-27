@@ -11,8 +11,8 @@ import Authapi from "../../api/Authapi";
 import Notify from "../../core/Toast";
 import ButtonLoader from "../../core/button-loader/ButtonLoader";
 const Confirm = () => {
-  const signupData = useSelector((state) => state.signupSlice.signupData);
-  console.log(signupData);
+  const { signup } = useSelector((state) => state.AuthReducer);
+
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [otp, setOtp] = useState(new Array(4).fill(""));
@@ -26,26 +26,27 @@ const Confirm = () => {
     }
   };
 
+  useEffect(() => {
+    if (!Object.keys(signup).length) navigate("/")
+  }, [])
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     console.log("handleSubmit", otp.join(""));
-    const response = await Authapi.verifyEmail(signupData?.email, otp.join(""));
-    if (response.status == 200) {
+    const response = await Authapi.verifyEmail(signup?.email, otp.join(""));
+    if (response.success) {
       setLoading(false);
-      Notify("success", response.data.message);
+      Notify("success", response.message);
       navigate("/account-privacy");
-    } else if (response.status == 500) {
-      setLoading(false);
-      Notify("warning", response.statusText);
     } else {
       setLoading(false);
-      Notify("error", response.data.message);
+      Notify("error", response.message);
     }
   };
 
   const ResendOtp = async () => {
-    const response = await Authapi.resendOtp(signupData?.email);
+    const response = await Authapi.resendOtp(signup?.email);
     if (response.status == 200) {
       Notify("success", response.data.message);
     } else if (response.status == 500) {
@@ -67,7 +68,7 @@ const Confirm = () => {
             <br />
             <p>
               Enter the confirmation code we sent to{" "}
-              {signupData && signupData?.email}.{" "}
+              {signup && signup?.email}.{" "}
               <NavLink onClick={ResendOtp}>Resend Code</NavLink>
             </p>
             <br />

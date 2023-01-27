@@ -10,7 +10,7 @@ const InnerNavbar = () => {
     const profile = localStorage.getItem('profile');
     // const user = JSON.parse(localStorage.getItem('user'));
     // console.log(user, "abc")
-    const { auth } = useSelector((state) => state.authSlice);
+    const { auth } = useSelector((state) => state.AuthReducer);
     const auth_token = localStorage.getItem('auth-token')
     return (
         <>

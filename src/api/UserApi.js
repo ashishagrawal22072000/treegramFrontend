@@ -12,10 +12,10 @@ class UserApi {
             },
         })
             .then((res) => {
-                return res;
+                return res.data;
             })
             .catch((err) => {
-                return err.response;
+                return err.response.data;
             });
         return data;
     }
@@ -27,10 +27,10 @@ class UserApi {
             },
         })
             .then((res) => {
-                return res;
+                return res.data;
             })
             .catch((err) => {
-                return err.response;
+                return err.response.data;
             });
         return data;
     }
@@ -42,10 +42,10 @@ class UserApi {
             },
         })
             .then((res) => {
-                return res;
+                return res.data;
             })
             .catch((err) => {
-                return err.response;
+                return err.response.data;
             });
         return data;
     }
@@ -57,10 +57,10 @@ class UserApi {
             },
         })
             .then((res) => {
-                return res;
+                return res.data;
             })
             .catch((err) => {
-                return err.response;
+                return err.response.data;
             });
         return data;
     }
@@ -77,10 +77,10 @@ class UserApi {
 
         })
             .then((res) => {
-                return res;
+                return res.data;
             })
             .catch((err) => {
-                return err.response;
+                return err.response.data;
             });
         return data;
     }
@@ -94,10 +94,10 @@ class UserApi {
             },
         })
             .then((res) => {
-                return res;
+                return res.data;
             })
             .catch((err) => {
-                return err.response;
+                return err.response.data;
             });
         return data;
     }
@@ -161,10 +161,10 @@ class UserApi {
                 },
             })
             .then((res) => {
-                return res;
+                return res.data;
             })
             .catch((err) => {
-                return err.response;
+                return err.response.data;
             });
         return data;
     }

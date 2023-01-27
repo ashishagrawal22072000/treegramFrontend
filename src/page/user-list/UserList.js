@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
 import UserApi from '../../api/UserApi';
 import Loader from '../../core/loader/Loader';
@@ -9,22 +9,30 @@ import ButtonLoader from '../../core/button-loader/ButtonLoader';
 import Notify from "../../core/Toast"
 import { RiArrowDropDownLine } from "react-icons/ri"
 import Model1 from '../../models/model1/Model1';
+import { getFollowingList, getUserList, updateUserList } from '../../store/list/ListAction';
 const UserList = ({ setFollowerList }) => {
     const [id, setId] = useState('');
     const [model, setModel] = useState(false)
     const [userList, setUserList] = useState([]);
     const [followingList, setFollowingList] = useState([])
-    const { auth } = useSelector(state => state.authSlice);
+    const { auth } = useSelector(state => state.AuthReducer);
     const [loading, setLoading] = useState(true)
     const [btnLoading, setBtnLoading] = useState(false)
     const [page, setPage] = useState(10)
     const navigate = useNavigate();
+    const dispatch = useDispatch()
+    const { user } = useSelector(state => state.ListReducer)
+    console.log(user)
     useEffect(() => {
         async function followers() {
             const following = await UserApi.getFollowingList(auth?.token, auth?.username)
             console.log("bfbfbfbf", following)
-            setFollowingList(following.data.data)
-            if (following.data.data.length) setFollowerList(true)
+            if (following.success) {
+                // setFollowingList(following.data)
+                // dispatch(setFollowingList(following.data))
+                if (following.data.length) setFollowerList(true)
+            }
+
         }
         followers();
     }, [])
@@ -44,11 +52,17 @@ const UserList = ({ setFollowerList }) => {
         window.addEventListener("scroll", handleScrollEffect)
         async function users() {
             const users = await UserApi.getUserList(auth?.token, page, 0)
-            setLoading(false)
-            const data = users.data.data.map((ele) => {
-                return { ...ele, isFollow: false }
-            })
-            setUserList(data)
+            if (users.success) {
+                setLoading(false)
+                const data = users.data.map((ele) => {
+                    return { ...ele, isFollow: false }
+                })
+                dispatch(getUserList(data))
+            }
+            // const data = users.data.data.map((ele) => {
+            //     return { ...ele, isFollow: false }
+            // })
+            // setUserList(data)
         }
         users()
 
@@ -60,17 +74,18 @@ const UserList = ({ setFollowerList }) => {
         setBtnLoading(true);
 
         const response = await UserApi.followUser(auth?.token, following_id)
-        if (response.status == 200) {
+        if (response.success) {
 
             setBtnLoading(false)
-            userList.map((user) => {
-                if (user._id == following_id) return user.isFollow = true
-            })
+            // userList.map((user) => {
+            //     if (user._id == following_id) return user.isFollow = true
+            // })
+            dispatch(updateUserList(following_id, true))
 
-            Notify("success", response.data.message)
+            Notify("success", response.message)
         } else {
             setBtnLoading(false)
-            Notify("error", response.data.message)
+            Notify("error", response.message)
         }
     }
     const [modalIsOpen, setIsOpen] = useState(false);
@@ -94,7 +109,7 @@ const UserList = ({ setFollowerList }) => {
                                         <div className="user-content">
                                             <p>Suggestions For You</p>
                                             <hr />
-                                            {userList.map((ele, i) => {
+                                            {user.map((ele, i) => {
                                                 return (
                                                     <>
                                                         <div class="container" key={ele._id}>
@@ -124,7 +139,13 @@ const UserList = ({ setFollowerList }) => {
                                     </section>
                                     <div className="btn_container">
                                         <button className="submit" onClick={() => {
-                                            setFollowerList(true)
+                                            const users = user.some((ele) => {
+                                                return ele.isFollow = true
+                                            })
+                                            console.log(users)
+                                            if (users) {
+                                                setFollowerList(true)
+                                            }
                                         }}>Get Started</button>
                                     </div>
 

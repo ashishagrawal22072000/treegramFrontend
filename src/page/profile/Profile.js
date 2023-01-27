@@ -10,13 +10,11 @@ import { useSelector } from 'react-redux';
 import UserApi from '../../api/UserApi';
 import Loader from '../../core/loader/Loader';
 const Profile = () => {
-    const user_profile = localStorage.getItem('profile');
-    const { auth } = useSelector(state => state.authSlice)
+    const { auth } = useSelector(state => state.AuthReducer)
     const [userData, setUserData] = useState({})
     const [tab, setTab] = useState(1);
     const { username } = useParams()
     const [loading, setLoading] = useState(true);
-    console.log(username, "username")
     const showTab = () => {
         switch (tab) {
             case 1: return <Post />
@@ -28,9 +26,9 @@ const Profile = () => {
     useEffect(() => {
         async function getUserData() {
             const user = await UserApi.getUserProfileDetail(auth?.token, username)
-            if (user.status == 200) {
+            if (user.success) {
                 setLoading(false);
-                setUserData(user.data.data)
+                setUserData(user.data)
             } else {
                 setLoading(false);
             }

@@ -5,12 +5,12 @@ import { Navigate, NavLink, useNavigate } from "react-router-dom";
 import UserApi from "../../api/UserApi.js";
 import ButtonLoader from "../../core/button-loader/ButtonLoader";
 import Notify from "../../core/Toast";
-import { authActions } from "../../store/slice/AuthSlice.js";
+import { deleteSignup } from "../../store/auth/AuthAction.js";
+// import { authActions } from "../../store/slice/AuthSlice.js";
 import "./Account-privacy.css";
 const Account_Privacy = () => {
   const [privacy_id, setPrivacy_id] = useState(null);
-  const { auth } = useSelector((state) => state.authSlice);
-  console.log(auth);
+  const { auth } = useSelector((state) => state.AuthReducer);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch()
@@ -70,16 +70,14 @@ const Account_Privacy = () => {
                       privacy_id
                     );
                     console.log(response);
-                    if (response.status == 200) {
+                    if (response.success) {
                       setLoading(false);
-                      Notify("success", response.data.message);
+                      Notify("success", response.message);
+                      dispatch(deleteSignup())
                       navigate("/", { replace: true });
-                    } else if (response.status == 500) {
-                      setLoading(false);
-                      Notify("warning", response.statusText);
                     } else {
                       setLoading(false);
-                      Notify("error", response.data.message);
+                      Notify("error", response.message);
                     }
                   }}
                 >

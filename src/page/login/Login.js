@@ -12,7 +12,8 @@ import Authapi from "../../api/Authapi";
 import Notify from "../../core/Toast";
 import ButtonLoader from "../../core/button-loader/ButtonLoader";
 import { useDispatch } from "react-redux";
-import { authActions } from "../../store/slice/AuthSlice";
+// import { authActions } from "../../store/slice/AuthSlice";
+import { login } from "../../store/auth/AuthAction";
 
 const Login = () => {
   const [show, setShow] = useState(false);
@@ -42,15 +43,20 @@ const Login = () => {
                 if (response.success) {
                   setLoading(false);
                   Notify("success", response.message);
-
-                  dispatch(
-                    authActions.auth({
-                      username: response.data.user.username,
-                      email: response.data.user.email,
-                      profile: response.data.user.profile,
-                      token: response.data.token,
-                    })
-                  );
+                  dispatch(login({
+                    username: response.data.user.username,
+                    profile: response.data.user.profile,
+                    privacy: response.data.user.privacy_id,
+                    token: response.data.token
+                  }))
+                  // dispatch(
+                  //   authActions.auth({
+                  //     username: response.data.user.username,
+                  //     email: response.data.user.email,
+                  //     profile: response.data.user.profile,
+                  //     token: response.data.token,
+                  //   })
+                  // );
                   navigate("/");
                 } else if (response.status == 500) {
                   setLoading(false);

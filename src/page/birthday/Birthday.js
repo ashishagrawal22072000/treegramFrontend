@@ -11,9 +11,10 @@ import "./Birthday.css";
 import Notify from "../../core/Toast";
 import Authapi from "../../api/Authapi";
 import ButtonLoader from "../../core/button-loader/ButtonLoader";
-import { authActions } from "../../store/slice/AuthSlice";
+// import { authActions } from "../../store/slice/AuthSlice";
+import { register } from "../../store/auth/AuthAction";
 const Birthday = () => {
-  const signupData = useSelector((state) => state.signupSlice.signupData);
+  const signupData = useSelector((state) => state.AuthReducer.signup);
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -71,27 +72,38 @@ const Birthday = () => {
                   ...signupData,
                   dateOfBirth: `${values.day}-${values.month}-${values.year}`,
                 };
-                console.log(data);
+                // dispatch(register(data)).then((res) => {
+                //   console.log(res)
+                // }).catch((err) => {
+                //   console.log(err)
+                // })
+                const res = await dispatch(register(data))
+                console.log(res)
+                // console.log(data);
                 const response = await Authapi.signup(data);
+                console.log(response, "fgfgfgf")
                 if (response.success) {
                   setLoading(false);
                   Notify("success", response.data.message);
-                  localStorage.setItem("auth-token", response.data.token);
-                  dispatch(
-                    authActions.auth({
-                      username: response.data.user.username,
-                      email: response.data.user.email,
-                      profile: response.data.user.profile,
-                      token: response.data.token,
-                    })
-                  );
+                  dispatch(register({
+                    username: response.data.user.username,
+                    profile: response.data.user.profile,
+                    privacy: response.data.user.privacy_id,
+                    token: response.data.token
+                  }))
+                  // dispatch(
+                  //   authActions.auth({
+                  //     username: response.data.user.username,
+                  //     email: response.data.user.email,
+                  //     profile: response.data.user.profile,
+                  //     token: response.data.token,
+
+                  //   })
+                  // );
                   navigate("/confirmation", { replace: true });
-                } else if (response.status == 500) {
-                  setLoading(false);
-                  Notify("warning", response.statusText);
                 } else {
                   setLoading(false);
-                  Notify("error", response.data.message);
+                  Notify("error", response.message);
                 }
               }}
             >

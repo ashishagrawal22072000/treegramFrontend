@@ -8,7 +8,8 @@ import UserList from "../user-list/UserList";
 // import UserList from "../../core/user-list/UserList";
 
 const Home = () => {
-    const { auth } = useSelector(state => state.authSlice)
+    const { auth } = useSelector(state => state.AuthReducer)
+    // const { following } = useSelector(state => state.ListReducer)
     const [followerList, setFollowerList] = useState(false)
     console.log(process.env)
     const navigate = useNavigate()
@@ -19,7 +20,6 @@ const Home = () => {
                 <Login /> </> : <>
                 {!followerList ? <UserList setFollowerList={setFollowerList} /> :
                     <InnerNavbar />
-
                 }
 
             </>
