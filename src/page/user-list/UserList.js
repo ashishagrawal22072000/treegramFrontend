@@ -9,19 +9,19 @@ import ButtonLoader from '../../core/button-loader/ButtonLoader';
 import Notify from "../../core/Toast"
 import { RiArrowDropDownLine } from "react-icons/ri"
 import Model1 from '../../models/model1/Model1';
-import { addFollowing, getFollowingList, getUserList, updateFollowingList, updateUserList } from '../../store/list/ListAction';
+import { addFollowing, getUserList, updateUserList, setFollowingList } from '../../store/list/ListAction';
 const UserList = ({ setFollowerList }) => {
     const [id, setId] = useState('');
     const [model, setModel] = useState(false)
     const [userList, setUserList] = useState([]);
-    const [followingList, setFollowingList] = useState([])
+    // const [followingList, setFollowingList] = useState([])
     const { auth } = useSelector(state => state.AuthReducer);
     const [loading, setLoading] = useState(true)
     const [btnLoading, setBtnLoading] = useState(false)
     const [page, setPage] = useState(10)
     const navigate = useNavigate();
     const dispatch = useDispatch()
-    const { user } = useSelector(state => state.ListReducer)
+    const { user, following } = useSelector(state => state.ListReducer)
     console.log(user)
     useEffect(() => {
         async function followers() {
@@ -135,7 +135,7 @@ const UserList = ({ setFollowerList }) => {
                                     </section>
                                     <div className="btn_container">
                                         <button className="submit" onClick={() => {
-                                            if (followingList.length) setFollowerList(true)
+                                            if (following.length) setFollowerList(true)
                                         }}>Get Started</button>
                                     </div>
 

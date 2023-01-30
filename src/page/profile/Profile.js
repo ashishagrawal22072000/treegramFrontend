@@ -6,15 +6,21 @@ import { RiGridFill, RiVideoFill, RiBookmarkFill } from "react-icons/ri"
 import Post from './post/Post';
 import Saved from './saved/Saved';
 import Tagged from './tagged/Tagged';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import UserApi from '../../api/UserApi';
 import Loader from '../../core/loader/Loader';
+import { addFollowing, removeFollowing } from '../../store/list/ListAction';
+import Notify from '../../core/Toast';
 const Profile = () => {
     const { auth } = useSelector(state => state.AuthReducer)
+    const { following } = useSelector(state => state.ListReducer);
+    console.log(following)
     const [userData, setUserData] = useState({})
     const [tab, setTab] = useState(1);
     const { username } = useParams()
     const [loading, setLoading] = useState(true);
+    const [BtnLoading, setBtnLoading] = useState(false)
+    const dispatch = useDispatch();
     const showTab = () => {
         switch (tab) {
             case 1: return <Post />
@@ -27,6 +33,7 @@ const Profile = () => {
         async function getUserData() {
             const user = await UserApi.getUserProfileDetail(auth?.token, username)
             if (user.success) {
+                console.log(user.data, "elelelel")
                 setLoading(false);
                 setUserData(user.data)
             } else {
@@ -42,6 +49,32 @@ const Profile = () => {
 
     // const location = useLocation()
     console.log(window.location.pathname + "/edit", userData)
+
+    const handleFollow = async (follower_id, privacy_id) => {
+        setBtnLoading(true);
+        const response = await UserApi.followUser(auth?.token, follower_id, privacy_id == 1 ? "confirm" : "pending")
+        if (response.success) {
+            dispatch(addFollowing(response.data))
+            setBtnLoading(false)
+            // dispatch(updateUserList(following_id, true))
+            Notify("success", response.message)
+        } else {
+            setBtnLoading(false)
+            Notify("error", response.message)
+        }
+    }
+    const unfollow = async (follower_id) => {
+        setBtnLoading(true);
+        const response = await UserApi.followUser(auth?.token, follower_id, "cancel")
+        if (response.success) {
+            dispatch(removeFollowing(response.data))
+            setBtnLoading(false)
+            Notify("success", response.message)
+        } else {
+            setBtnLoading(false)
+            Notify("error", response.message)
+        }
+    }
     return (
 
         <>
@@ -60,7 +93,13 @@ const Profile = () => {
                                     <div className="profile_content">
                                         <h2>{userData?.user?.username}</h2>
                                         <br />
-                                        <NavLink to={`${window.location.pathname}/edit`}><button>Edit Profile</button></NavLink>
+                                        {auth?.username == username ? <>
+                                            <NavLink to={`${window.location.pathname}/edit`}><button>Edit Profile</button></NavLink>
+                                        </> : <>
+                                            {following?.some((ele) => ele._id == userData?.user?._id) ? <button onClick={() => unfollow(userData?.user?._id)}>
+                                                {following?.some((ele) => ele._id == userData?.user?._id && ele.follow_status == "confirm") ? "Following" : "Requested"}
+                                            </button> : <button onClick={() => handleFollow(userData?.user?._id, userData?.user?.privacy_id)}>Follow</button>}
+                                        </>}
                                     </div>
                                 </div>
                                 <div className="profile_content">
@@ -113,8 +152,13 @@ const Profile = () => {
 
                             </div>
                         </section>
-
-                        {showTab()}
+                        {userData?.user?.username == auth?.username ? <>{showTab()}</> : <>
+                            {userData?.user?.privacy_id == 2 && following.some((ele) => ele._id == userData?.user?._id && ele.follow_status == "confirm") ? <>
+                                {showTab()}
+                            </> : <>
+                                <h1>This Account is Private</h1>
+                            </>}
+                        </>}
                     </>}
                 </>}
 
