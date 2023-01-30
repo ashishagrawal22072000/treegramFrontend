@@ -9,7 +9,7 @@ import ButtonLoader from '../../core/button-loader/ButtonLoader';
 import Notify from "../../core/Toast"
 import { RiArrowDropDownLine } from "react-icons/ri"
 import Model1 from '../../models/model1/Model1';
-import { getFollowingList, getUserList, updateUserList } from '../../store/list/ListAction';
+import { addFollowing, getFollowingList, getUserList, updateFollowingList, updateUserList } from '../../store/list/ListAction';
 const UserList = ({ setFollowerList }) => {
     const [id, setId] = useState('');
     const [model, setModel] = useState(false)
@@ -26,30 +26,29 @@ const UserList = ({ setFollowerList }) => {
     useEffect(() => {
         async function followers() {
             const following = await UserApi.getFollowingList(auth?.token, auth?.username)
-            console.log("bfbfbfbf", following)
             if (following.success) {
-                // setFollowingList(following.data)
-                // dispatch(setFollowingList(following.data))
+                console.log(following.data)
                 if (following.data.length) setFollowerList(true)
-            }
+                dispatch(setFollowingList(following.data))
 
+            }
         }
         followers();
     }, [])
-    const handleScrollEffect = () => {
-        console.log(document.documentElement.scrollHeight, "scrollheight")
-        console.log(window.innerHeight, "innerheight")
-        console.log(document.documentElement.scrollTop, "scrollTop")
-        try {
-            if (window.innerHeight + document.documentElement.scrollHeight + 1 >= document.documentElement.scrollTop) {
-                setPage(page + 5)
-            }
-        } catch (err) {
-            console.log(err)
-        }
-    }
+    // const handleScrollEffect = () => {
+    //     console.log(document.documentElement.scrollHeight, "scrollheight")
+    //     console.log(window.innerHeight, "innerheight")
+    //     console.log(document.documentElement.scrollTop, "scrollTop")
+    //     try {
+    //         if (window.innerHeight + document.documentElement.scrollHeight + 1 >= document.documentElement.scrollTop) {
+    //             setPage(page + 5)
+    //         }
+    //     } catch (err) {
+    //         console.log(err)
+    //     }
+    // }
     useEffect(() => {
-        window.addEventListener("scroll", handleScrollEffect)
+        // window.addEventListener("scroll", handleScrollEffect)
         async function users() {
             const users = await UserApi.getUserList(auth?.token, page, 0)
             if (users.success) {
@@ -58,6 +57,7 @@ const UserList = ({ setFollowerList }) => {
                     return { ...ele, isFollow: false }
                 })
                 dispatch(getUserList(data))
+
             }
             // const data = users.data.data.map((ele) => {
             //     return { ...ele, isFollow: false }
@@ -73,15 +73,11 @@ const UserList = ({ setFollowerList }) => {
         console.log(following_id, "handleFollower")
         setBtnLoading(true);
 
-        const response = await UserApi.followUser(auth?.token, following_id)
+        const response = await UserApi.followUser(auth?.token, following_id, "confirm")
         if (response.success) {
-
+            dispatch(addFollowing(response.data))
             setBtnLoading(false)
-            // userList.map((user) => {
-            //     if (user._id == following_id) return user.isFollow = true
-            // })
             dispatch(updateUserList(following_id, true))
-
             Notify("success", response.message)
         } else {
             setBtnLoading(false)
@@ -139,13 +135,7 @@ const UserList = ({ setFollowerList }) => {
                                     </section>
                                     <div className="btn_container">
                                         <button className="submit" onClick={() => {
-                                            const users = user.some((ele) => {
-                                                return ele.isFollow = true
-                                            })
-                                            console.log(users)
-                                            if (users) {
-                                                setFollowerList(true)
-                                            }
+                                            if (followingList.length) setFollowerList(true)
                                         }}>Get Started</button>
                                     </div>
 

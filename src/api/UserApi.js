@@ -64,11 +64,12 @@ class UserApi {
             });
         return data;
     }
-    async followUser(token, follower_id) {
+    async followUser(token, follower_id, follow_status) {
         console.log(token, "follow token")
         const data = await Axios.post(`${process.env.REACT_APP_BASE_URL}api/v1/user/follow`,
             {
-                follower_id
+                follower_id,
+                follow_status
             }, {
             headers: {
                 "Content-Type": "application/json",

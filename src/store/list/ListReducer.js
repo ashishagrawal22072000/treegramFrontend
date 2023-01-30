@@ -1,4 +1,4 @@
-import { FOLLOWER_LIST, FOLLOWING_LIST, USER_LIST, UPDATE_USER_LIST, UPDATE_FOLLOWER_LIST, UPDATE_FOLLOWING_LIST } from "../Type"
+import { ADD_FOLLOWING, FOLLOWER_LIST, FOLLOWING_LIST, USER_LIST, UPDATE_USER_LIST, UPDATE_FOLLOWER_LIST, UPDATE_FOLLOWING_LIST, REMOVE_FOLLOWING } from "../Type"
 
 const initialState = {
     follower: [],
@@ -38,18 +38,25 @@ export default function (state = initialState, action) {
                 ...state,
                 user: updateUser
             }
-        case UPDATE_FOLLOWING_LIST:
-            const updateFollowing = state.following.filter((ele) => {
-                return ele.follow_to._id != payload.id
-            })
-            console.log(updateFollowing, payload)
+        case ADD_FOLLOWING:
+            const data = [...state.following, payload]
             return {
                 ...state,
-                following: updateFollowing
+                following: data
             }
+
+        case REMOVE_FOLLOWING:
+            const removeData = state.following.filter((ele) => {
+                if (ele._id != payload._id) return ele
+            })
+            return {
+                ...state,
+                following: removeData
+            }
+
         case UPDATE_FOLLOWER_LIST:
             const updateFollower = state.follower.filter((ele) => {
-                return ele.follow_from._id != payload.id
+                return ele._id != payload._id
             })
             return {
                 ...state,

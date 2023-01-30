@@ -5,18 +5,15 @@ import "./Model1.css"
 import Modal from 'react-modal';
 import Notify from "../../core/Toast";
 import { useDispatch, useSelector } from "react-redux";
-import { updateUserList } from "../../store/list/ListAction";
-const Model1 = ({ modalIsOpen, setIsOpen, username, setUserList, userList }) => {
+import { removeFollowing, updateUserList } from "../../store/list/ListAction";
+const Model1 = ({ modalIsOpen, setIsOpen, username }) => {
     console.log(username, "modal");
     const [userDetail, setUserDetail] = useState({})
-    const [close, setClose] = useState('block')
     const { auth } = useSelector(state => state.AuthReducer);
     const dispatch = useDispatch()
     useEffect(() => {
-        console.log("dghdgdgdgdgdgd")
         async function fetchUser() {
             const response = await UserApi.getUserBySearch(auth?.token, username);
-            console.log(response, "modeldata")
             if (response.success) {
                 setUserDetail(...response.data)
             }
@@ -37,16 +34,8 @@ const Model1 = ({ modalIsOpen, setIsOpen, username, setUserList, userList }) => 
         },
     };
 
-    // const [modalIsOpen, setIsOpen] = React.useState(false);
 
-    function openModal() {
-        setIsOpen(true);
-    }
 
-    function afterOpenModal() {
-        // references are now sync'd and can be accessed.
-        // subtitle.style.color = '#f00';
-    }
 
     function closeModal() {
         setIsOpen(false);
@@ -68,14 +57,13 @@ const Model1 = ({ modalIsOpen, setIsOpen, username, setUserList, userList }) => 
         }
     }
     const AddToUnfollow = async () => {
-        const response = await UserApi.followUser(auth?.token, userDetail._id)
+        const response = await UserApi.followUser(auth?.token, userDetail._id, "cancel")
         if (response.success) {
             Notify("success", response.message)
             dispatch(updateUserList(userDetail._id, false))
+            dispatch(removeFollowing(response.data))
             closeModal()
-            // userList.map((user) => {
-            //     if (user._id == userDetail._id) return user.isFollow = false
-            // })
+
         } else {
             Notify("error", response.message)
         }
@@ -84,7 +72,6 @@ const Model1 = ({ modalIsOpen, setIsOpen, username, setUserList, userList }) => 
         <>
             <Modal
                 isOpen={modalIsOpen}
-                onAfterOpen={afterOpenModal}
                 onRequestClose={closeModal}
                 style={customStyles}
                 contentLabel="Example Modal"
