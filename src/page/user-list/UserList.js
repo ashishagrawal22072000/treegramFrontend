@@ -18,7 +18,7 @@ const UserList = ({ setFollowerList }) => {
     const { auth } = useSelector(state => state.AuthReducer);
     const [loading, setLoading] = useState(true)
     const [btnLoading, setBtnLoading] = useState(false)
-    const [page, setPage] = useState(10)
+    const [page, setPage] = useState(20)
     const navigate = useNavigate();
     const dispatch = useDispatch()
     const { user, following } = useSelector(state => state.ListReducer)

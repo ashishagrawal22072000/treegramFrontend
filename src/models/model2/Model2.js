@@ -5,7 +5,7 @@ import "./Model2.css"
 import Modal from 'react-modal';
 import Notify from "../../core/Toast";
 import { useDispatch, useSelector } from "react-redux";
-import { updateFollowingList, updateUserList } from "../../store/list/ListAction";
+import { removeFollowing, updateFollowingList, updateUserList } from "../../store/list/ListAction";
 const Model2 = ({ modalIsOpen, setIsOpen, username, setUserList, userList }) => {
     console.log(username, "modal");
     const [userDetail, setUserDetail] = useState({})
@@ -68,10 +68,11 @@ const Model2 = ({ modalIsOpen, setIsOpen, username, setUserList, userList }) => 
     //     }
     // }
     const AddToUnfollow = async () => {
-        const response = await UserApi.followUser(auth?.token, userDetail._id)
+        const response = await UserApi.followUser(auth?.token, userDetail._id, "cancel")
         if (response.success) {
             Notify("success", response.message)
-            dispatch(updateFollowingList(userDetail._id))
+            // dispatch(updateFollowingList(userDetail._id))
+            dispatch(removeFollowing(response.data))
             closeModal()
             // userList.map((user) => {
             //     if (user._id == userDetail._id) return user.isFollow = false

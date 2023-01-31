@@ -153,7 +153,7 @@ const Profile = () => {
                             </div>
                         </section>
                         {userData?.user?.username == auth?.username ? <>{showTab()}</> : <>
-                            {userData?.user?.privacy_id == 2 && following.some((ele) => ele._id == userData?.user?._id && ele.follow_status == "confirm") ? <>
+                            {(userData?.user?.privacy_id == 2 && following.some((ele) => ele._id == userData?.user?._id && ele.follow_status == "confirm") || userData?.user?.privacy_id == 1) ? <>
                                 {showTab()}
                             </> : <>
                                 <h1>This Account is Private</h1>

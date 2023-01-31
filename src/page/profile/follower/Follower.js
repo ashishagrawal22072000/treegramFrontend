@@ -5,17 +5,18 @@ import UserApi from '../../../api/UserApi';
 import Loader from '../../../core/loader/Loader';
 import Notify from '../../../core/Toast';
 import Model2 from '../../../models/model2/Model2';
-import { setFollowerList, updateFollowerList } from '../../../store/list/ListAction';
+import { addFollowing, removeFollower, setFollowerList, updateFollowerList } from '../../../store/list/ListAction';
 import "./Follower.css"
 const Follower = () => {
     const [followerData, setFollowerData] = useState([])
     const { username } = useParams()
     const { auth } = useSelector(state => state.AuthReducer)
     const [loading, setLoading] = useState(true);
-    const { follower } = useSelector(state => state.ListReducer)
+    const { follower, following } = useSelector(state => state.ListReducer)
     const [modalIsOpen, setIsOpen] = useState(false);
     const [id, setId] = useState('');
     const dispatch = useDispatch()
+    const [btnLoading, setBtnLoading] = useState(false)
     useEffect(() => {
         async function getfollowerData() {
             const follow = await UserApi.getFollowerList(auth?.token, username)
@@ -34,6 +35,36 @@ const Follower = () => {
         }
         getfollowerData()
     }, [username])
+    const handleFollowing = async (following_id, privacy_id) => {
+        setBtnLoading(true);
+        const response = await UserApi.followUser(auth?.token, following_id, privacy_id == 1 ? "confirm" : "pending")
+        if (response.success) {
+            dispatch(addFollowing(response.data))
+            setBtnLoading(false)
+            // dispatch(updateUserList(following_id, true))
+            Notify("success", response.message)
+        } else {
+            setBtnLoading(false)
+            Notify("error", response.message)
+        }
+        // console.log(following_id, "handleFollower")
+        // // setBtnLoading(true);
+
+        // const response = await UserApi.followUser(auth?.token, following_id)
+        // if (response.success) {
+
+        //     // setBtnLoading(false)
+        //     // // userList.map((user) => {
+        //     // //     if (user._id == following_id) return user.isFollow = true
+        //     // // })
+        //     // dispatch(updateUserList(following_id, true))
+
+        //     Notify("success", response.message)
+        // } else {
+        //     // setBtnLoading(false)
+        //     Notify("error", response.message)
+        // }
+    }
     return (
         <>
             <div className='container'>
@@ -48,23 +79,18 @@ const Follower = () => {
                                         <div className='follower_container'>
                                             <div className='follower'>
                                                 <div className='follower_profile'>
-                                                    <img src={ele.follow_from?.profile} alt />
+                                                    <img src={ele?.profile} alt />
                                                 </div>
                                                 <div>
-                                                    <h3>{ele.follow_from?.username}</h3>
-                                                    <p>{ele.follow_from?.name}</p>
+                                                    <h3>{ele?.username}</h3>
+                                                    <p>{ele?.name}</p>
                                                 </div>
                                             </div>
                                             <button onClick={async () => {
-                                                // setId(ele.follow_from?.username);
-                                                // setIsOpen(true)
                                                 const response = await UserApi.DeleteFollower(auth?.token, ele._id)
                                                 if (response.success) {
                                                     Notify("success", response.message)
-                                                    dispatch(updateFollowerList(ele.follow_from?._id))
-                                                    // userList.map((user) => {
-                                                    //     if (user._id == userDetail._id) return user.isFollow = false
-                                                    // })
+                                                    dispatch(removeFollower(ele._id))
                                                 } else {
                                                     Notify("error", response.message)
                                                 }
@@ -90,7 +116,12 @@ const Follower = () => {
                                                 </div>
                                             </div>
 
-                                            <button>Follow</button>
+                                            {following.some((el) => el._id == ele._id) ? <>
+                                                <button onClick={() => {
+                                                    setId(ele?.username);
+                                                    setIsOpen(true)
+                                                }}>Following</button>
+                                            </> : <button onClick={() => handleFollowing(ele._id, ele.privacy_id)}>Follow</button>}
 
                                         </div>
                                     </>
@@ -126,7 +157,7 @@ const Follower = () => {
                 }
 
             </div>
-            {/* <Model2 username={id} modalIsOpen={modalIsOpen} setIsOpen={setIsOpen} /> */}
+            <Model2 username={id} modalIsOpen={modalIsOpen} setIsOpen={setIsOpen} />
 
         </>
 

@@ -5,7 +5,7 @@ import UserApi from '../../../api/UserApi';
 import Loader from '../../../core/loader/Loader';
 import Notify from '../../../core/Toast';
 import Model2 from '../../../models/model2/Model2';
-import { setFollowingList } from '../../../store/list/ListAction';
+import { addFollowing, setFollowingList } from '../../../store/list/ListAction';
 import "./Following.css"
 const Following = () => {
     const [followingData, setFollowingData] = useState([])
@@ -16,6 +16,7 @@ const Following = () => {
     const dispatch = useDispatch()
     const [modalIsOpen, setIsOpen] = useState(false);
     const [id, setId] = useState('');
+    const [btnLoading, setBtnLoading] = useState(false);
     useEffect(() => {
         async function getfolloweingData() {
             const following = await UserApi.getFollowingList(auth?.token, username)
@@ -36,24 +37,39 @@ const Following = () => {
         }
         getfolloweingData()
     }, [username])
-    const handleFollowing = async (following_id) => {
-        console.log(following_id, "handleFollower")
-        // setBtnLoading(true);
-
-        const response = await UserApi.followUser(auth?.token, following_id)
+    const handleFollowing = async (following_id, privacy_id) => {
+        setBtnLoading(true);
+        const response = await UserApi.followUser(auth?.token, following_id, privacy_id == 1 ? "confirm" : "pending")
         if (response.success) {
-
-            // setBtnLoading(false)
-            // // userList.map((user) => {
-            // //     if (user._id == following_id) return user.isFollow = true
-            // // })
+            dispatch(addFollowing(response.data))
+            setBtnLoading(false)
             // dispatch(updateUserList(following_id, true))
-
             Notify("success", response.message)
         } else {
-            // setBtnLoading(false)
+            setBtnLoading(false)
             Notify("error", response.message)
         }
+        // console.log(following_id, "handleFollower")
+        // // setBtnLoading(true);
+
+        // const response = await UserApi.followUser(auth?.token, following_id)
+        // if (response.success) {
+
+        //     // setBtnLoading(false)
+        //     // // userList.map((user) => {
+        //     // //     if (user._id == following_id) return user.isFollow = true
+        //     // // })
+        //     // dispatch(updateUserList(following_id, true))
+
+        //     Notify("success", response.message)
+        // } else {
+        //     // setBtnLoading(false)
+        //     Notify("error", response.message)
+        // }
+    }
+
+    const unFollow = (follower_id) => {
+        alert("fjbrhfrfr")
     }
     return (
         <>
@@ -64,23 +80,24 @@ const Following = () => {
                     {auth?.username == username ? <>
                         {!following.length ? <><h1>No Data Found</h1></> : <>
                             {following.map((ele) => {
+                                console.log(ele)
                                 return (
                                     <>
                                         <div className='follower_container'>
                                             <div className='follower'>
                                                 <div className='follower_profile'>
-                                                    <img src={ele.follow_to?.profile} alt />
+                                                    <img src={ele?.profile} alt />
                                                 </div>
                                                 <div>
-                                                    <h3>{ele.follow_to?.username}</h3>
-                                                    <p>{ele.follow_to?.name}</p>
+                                                    <h3>{ele?.username}</h3>
+                                                    <p>{ele?.name}</p>
                                                 </div>
                                             </div>
 
                                             <button onClick={() => {
-                                                setId(ele.follow_to.username);
+                                                setId(ele?.username);
                                                 setIsOpen(true)
-                                            }}>Following</button>
+                                            }}>{ele?.follow_status == "confirm" ? "Following" : "Requested"}</button>
 
                                         </div>
                                     </>
@@ -102,9 +119,12 @@ const Following = () => {
                                                     <p>{ele.name}</p>
                                                 </div>
                                             </div>
-                                            {following.includes(ele._id) ? <>
-                                                <button>Following</button>
-                                            </> : <button onClick={() => handleFollowing(ele._id)}>Follow</button>}
+                                            {following.some((el) => el._id == ele._id) ? <>
+                                                <button onClick={() => {
+                                                    setId(ele?.username);
+                                                    setIsOpen(true)
+                                                }}>Following</button>
+                                            </> : <button onClick={() => handleFollowing(ele._id, ele.privacy_id)}>Follow</button>}
                                         </div>
                                     </>
                                 )
