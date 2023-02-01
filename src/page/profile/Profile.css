@@ -37,3 +37,8 @@
 .link{
     border-bottom: 1px solid;
 }
+
+.setting_btn{
+    display: flex;
+    align-items: center;
+}

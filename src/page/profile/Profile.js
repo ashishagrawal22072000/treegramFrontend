@@ -11,6 +11,8 @@ import UserApi from '../../api/UserApi';
 import Loader from '../../core/loader/Loader';
 import { addFollowing, removeFollowing } from '../../store/list/ListAction';
 import Notify from '../../core/Toast';
+import { HiBadgeCheck } from "react-icons/hi"
+import { AiTwotoneSetting } from "react-icons/ai"
 const Profile = () => {
     const { auth } = useSelector(state => state.AuthReducer)
     const { following } = useSelector(state => state.ListReducer);
@@ -33,7 +35,6 @@ const Profile = () => {
         async function getUserData() {
             const user = await UserApi.getUserProfileDetail(auth?.token, username)
             if (user.success) {
-                console.log(user.data, "elelelel")
                 setLoading(false);
                 setUserData(user.data)
             } else {
@@ -91,10 +92,14 @@ const Profile = () => {
                                 <div className="profile">
                                     <img src={userData?.user?.profile} height={150} width={150} alt="" />
                                     <div className="profile_content">
-                                        <h2>{userData?.user?.username}</h2>
+                                        <h2>{userData?.user?.username}{userData?.user?.badge ? <span><HiBadgeCheck color="#645bff" size="20" /></span> : ""}</h2>
                                         <br />
                                         {auth?.username == username ? <>
-                                            <NavLink to={`${window.location.pathname}/edit`}><button>Edit Profile</button></NavLink>
+                                            <div className="setting_btn">
+                                                <NavLink to={`${window.location.pathname}/edit`}><button>Edit Profile</button></NavLink>
+                                                <span><NavLink to="/setting"><AiTwotoneSetting size={30} /></NavLink></span>
+                                            </div>
+
                                         </> : <>
                                             {following?.some((ele) => ele._id == userData?.user?._id) ? <button onClick={() => unfollow(userData?.user?._id)}>
                                                 {following?.some((ele) => ele._id == userData?.user?._id && ele.follow_status == "confirm") ? "Following" : "Requested"}

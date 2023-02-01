@@ -1,9 +1,16 @@
-import { REMOVE_FOLLOWER, ADD_FOLLOWING, FOLLOWER_LIST, FOLLOWING_LIST, USER_LIST, UPDATE_USER_LIST, UPDATE_FOLLOWER_LIST, UPDATE_FOLLOWING_LIST, REMOVE_FOLLOWING } from "../Type"
+import { REMOVE_SEARCH, ADD_SEARCH, REMOVE_FOLLOWER, ADD_FOLLOWING, FOLLOWER_LIST, FOLLOWING_LIST, USER_LIST, UPDATE_USER_LIST, UPDATE_FOLLOWER_LIST, UPDATE_FOLLOWING_LIST, REMOVE_FOLLOWING } from "../Type"
 
 const initialState = {
     follower: [],
     following: [],
-    user: []
+    user: [],
+    search: [{
+        "_id": "63bf83bea8d075ddca219d0a",
+        "username": "ashish",
+        "email": "ashish2@yopmail.com",
+        "profile": "http://localhost:8000/api/v1/image/1674124163743-image-3551739.jpg",
+        "badge": true
+    }],
 }
 
 export default function (state = initialState, action) {
@@ -71,6 +78,20 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 follower: updateFollower
+            }
+        case ADD_SEARCH:
+            const addSearch = [...state.search, payload];
+            return {
+                ...state,
+                search: addSearch
+            }
+        case REMOVE_SEARCH:
+            const removeSearch = state.search.filter((ele) => {
+                if (ele._id != payload) return ele
+            })
+            return {
+                ...state,
+                search: removeSearch
             }
         default:
             return state

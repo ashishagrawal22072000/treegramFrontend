@@ -12,10 +12,12 @@ import Follower from "../page/profile/follower/Follower";
 import Following from "../page/profile/following/Following";
 import Profile from "../page/profile/Profile";
 import ResetPassword from "../page/resetPassword/ResetPassword";
+import Search from "../page/search/Search";
 import Signup from "../page/signup/Signup";
 import UserList from "../page/user-list/UserList";
 import PrivateRouter from "./PrivateRouter";
 import RouteName from "./RouteName";
+import Setting from "../page/setting/Setting";
 const Router = () => {
   return (
     <div>
@@ -36,7 +38,8 @@ const Router = () => {
           <Route path={RouteName.EDITPROFILE} element={<EditProfile />} />
           <Route path={RouteName.FOLLOWER} element={<Follower />} />
           <Route path={RouteName.FOLLOWING} element={<Following />} />
-
+          <Route path={RouteName.SEARCH} element={<Search />} />
+          <Route path={RouteName.SETTING} element={<Setting />} />
         </Route>
         <Route path={RouteName.HOME} element={<Home />} />
 

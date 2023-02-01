@@ -13,5 +13,7 @@ const RouterName = {
   EDITPROFILE: "profile/:username/edit",
   FOLLOWER: "profile/:username/follower",
   FOLLOWING: "profile/:username/following",
+  SEARCH: "/search",
+  SETTING: "/setting"
 };
 export default RouterName;

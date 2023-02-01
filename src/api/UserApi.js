@@ -185,6 +185,21 @@ class UserApi {
             });
         return data;
     }
+    async searchUser(token, search) {
+        const data = await Axios.get(`${process.env.REACT_APP_BASE_URL}api/v1/user/search-user?search=${search}`, {
+            headers: {
+                "Content-Type": "application/json",
+                "authorization": token ? `Bearer ${token}` : "",
+            },
+        })
+            .then((res) => {
+                return res.data;
+            })
+            .catch((err) => {
+                return err.response.data;
+            });
+        return data;
+    }
 }
 
 export default new UserApi();

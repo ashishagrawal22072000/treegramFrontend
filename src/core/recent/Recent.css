@@ -1,0 +1,24 @@
+.recent_data{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.recent_data .user_content{
+    display: flex;
+    align-items: center;
+}
+.recent_data .user_content .user_profile{
+    height: 100px;
+    width: 100px;
+}
+.recent_data .user_content .user_profile img{
+    height: 100px;
+    width: 100px;
+}
+.recent_data .user_content .user_detail{
+    margin-left: 20px;
+    line-height: 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+}

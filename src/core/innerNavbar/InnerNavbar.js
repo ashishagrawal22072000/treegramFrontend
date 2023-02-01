@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { ImHome, ImUser } from "react-icons/im"
 import { BsSearch } from "react-icons/bs";
 import { FiYoutube } from "react-icons/fi"
-import { MdNotifications } from "react-icons/md"
+import { MdNotifications, MdExplore } from "react-icons/md"
 import "./InnerNavbar.css"
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -20,6 +20,7 @@ const InnerNavbar = () => {
                     <nav>
                         <ul>
                             <NavLink to="/"><li><ImHome size={20} color="#645bff" /></li></NavLink>
+                            <NavLink to="/exlore"><MdExplore size={20} color="#645bff" /></NavLink>
                             <NavLink to="/search"><li><BsSearch size={20} color="#645bff" /></li></NavLink>
                             <NavLink to="/reels"><li><FiYoutube size={20} color="#645bff" /></li></NavLink>
                             <NavLink to="/notification"><li><MdNotifications size={20} color="#645bff" /></li></NavLink>
