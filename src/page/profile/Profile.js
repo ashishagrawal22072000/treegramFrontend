@@ -97,7 +97,7 @@ const Profile = () => {
                                         {auth?.username == username ? <>
                                             <div className="setting_btn">
                                                 <NavLink to={`${window.location.pathname}/edit`}><button>Edit Profile</button></NavLink>
-                                                <span><NavLink to="/setting"><AiTwotoneSetting size={30} /></NavLink></span>
+                                                <span><NavLink to="/setting"><AiTwotoneSetting size={30} color={"#000"} /></NavLink></span>
                                             </div>
 
                                         </> : <>
