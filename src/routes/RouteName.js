@@ -14,6 +14,11 @@ const RouterName = {
   FOLLOWER: "profile/:username/follower",
   FOLLOWING: "profile/:username/following",
   SEARCH: "/search",
-  SETTING: "/setting"
+  SETTING: "/setting",
+  CHANGE_PASSWORD: "/setting/change-password",
+  REPORT_PROBLEM: "/setting/report-problem",
+  STATISTICS: "/setting/statistics",
+  PRIVACy: "setting/privacy",
+  THEME: "setting/theme",
 };
 export default RouterName;

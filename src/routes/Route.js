@@ -18,6 +18,7 @@ import UserList from "../page/user-list/UserList";
 import PrivateRouter from "./PrivateRouter";
 import RouteName from "./RouteName";
 import Setting from "../page/setting/Setting";
+import ChangePassword from "../page/setting/change-password/ChangePassword";
 const Router = () => {
   return (
     <div>
@@ -40,6 +41,7 @@ const Router = () => {
           <Route path={RouteName.FOLLOWING} element={<Following />} />
           <Route path={RouteName.SEARCH} element={<Search />} />
           <Route path={RouteName.SETTING} element={<Setting />} />
+          <Route path={RouteName.CHANGE_PASSWORD} element={<ChangePassword />} />
         </Route>
         <Route path={RouteName.HOME} element={<Home />} />
 

@@ -28,11 +28,11 @@ function SideNavbar() {
                                 <RxCross1 />
                             </NavLink>
                         </li>
-                        <li><NavLink to="">Change Password</NavLink></li>
-                        <li><NavLink to="">Report Problem</NavLink></li>
-                        <li><NavLink to="">Privacy</NavLink></li>
-                        <li><NavLink to="">Statistics</NavLink></li>
-                        <li><NavLink to="">Theme</NavLink></li>
+                        <li><NavLink to="/setting/change-password">Change Password</NavLink></li>
+                        <li><NavLink to="/setting/report-problem">Report Problem</NavLink></li>
+                        <li><NavLink to="/setting/statistics">Statistics</NavLink></li>
+                        <li><NavLink to="/setting/privacy">Privacy</NavLink></li>
+                        <li><NavLink to="/setting/theme">Theme</NavLink></li>
                         <li><NavLink to="">Logout</NavLink></li>
                     </ul>
                 </nav>
