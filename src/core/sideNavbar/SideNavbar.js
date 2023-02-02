@@ -5,6 +5,10 @@ import { Link, NavLink } from 'react-router-dom';
 import './SideNavbar.css';
 import { IconContext } from 'react-icons';
 import { RxHamburgerMenu, RxCross1 } from "react-icons/rx"
+import { RiLockPasswordFill } from "react-icons/ri"
+import { FiActivity } from "react-icons/fi"
+import { TbReport } from "react-icons/tb"
+
 function SideNavbar() {
     const [sidebar, setSidebar] = useState(false);
 
@@ -23,13 +27,15 @@ function SideNavbar() {
 
                 <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
                     <ul className='nav-menu-items' onClick={showSidebar}>
-                        <li className='navbar-toggle'>
+                        {/* <li className='navbar-toggle'>
                             <NavLink to='#' className='menu-bars-close'>
                                 <RxCross1 />
                             </NavLink>
-                        </li>
-                        <li><NavLink to="/setting/change-password">Change Password</NavLink></li>
-                        <li><NavLink to="/setting/report-problem">Report Problem</NavLink></li>
+                        </li> */}
+                        <li><NavLink to="/setting/change-password"><RiLockPasswordFill />Change Password</NavLink></li>
+                        <li><NavLink to="/setting/your-activity"><FiActivity />Your Activity</NavLink></li>
+                        <li><NavLink to="/setting/login-activity"><FiActivity />Login Activity</NavLink></li>
+                        <li><NavLink to="/setting/report-problem"><TbReport />Report Problem</NavLink></li>
                         <li><NavLink to="/setting/statistics">Statistics</NavLink></li>
                         <li><NavLink to="/setting/privacy">Privacy</NavLink></li>
                         <li><NavLink to="/setting/theme">Theme</NavLink></li>

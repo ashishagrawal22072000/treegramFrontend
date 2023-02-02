@@ -13,7 +13,7 @@ const ChangePassword = () => {
     const [show, setShow] = useState(false)
     return (
         <>
-            <SideNavbar />
+            {/* <SideNavbar /> */}
 
             <div className="container">
                 <section className="login">
