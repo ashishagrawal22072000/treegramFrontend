@@ -8,6 +8,7 @@ import { addSearch } from '../../store/list/ListAction';
 import "./Search.css"
 import ButtonLoader from '../../core/button-loader/ButtonLoader';
 import InnerNavbar from '../../core/innerNavbar/InnerNavbar';
+import SideNavbar from '../../core/sideNavbar/SideNavbar';
 const Search = () => {
     const [loading, setLoading] = useState(false);
     const { auth } = useSelector(state => state.AuthReducer)
@@ -40,39 +41,43 @@ const Search = () => {
 
         <>
             <div className="container">
-                <div className="search">
-                    <div className='search_input'>
-                        <input type="search" className="input_field" placeholder="Search by username, email" value={searchValue} onChange={handleChange} />
-                        {loading ? <div className="loading"><ButtonLoader style={{ color: 'black' }} /></div> : ''}
+                <SideNavbar />
+                <div className="middle">
+                    <div className="search">
+                        <div className='search_input'>
+                            <input type="search" className="input_field" placeholder="Search by username, email" value={searchValue} onChange={handleChange} />
+                            {loading ? <div className="loading"><ButtonLoader style={{ color: 'black' }} /></div> : ''}
+                        </div>
+
                     </div>
-
-                </div>
-                <hr />
-                <div className="search_container">
-                    {data && data?.map((ele) => {
-                        return (
-                            <>
-                                <div class="user_content">
-                                    <div class="user_profile">
-                                        <NavLink to={`/profile/${ele?.username}`}><img src={ele.profile} onClick={() => addSearchList(ele)} /></NavLink>
+                    <hr />
+                    <div className="search_container">
+                        {data && data?.map((ele) => {
+                            return (
+                                <>
+                                    <div class="user_content">
+                                        <div class="user_profile">
+                                            <NavLink to={`/profile/${ele?.username}`}><img src={ele.profile} onClick={() => addSearchList(ele)} /></NavLink>
+                                        </div>
+                                        <div class="user_detail">
+                                            <p className="paragraph">{ele.username}{ele.badge ? <span><HiBadgeCheck color="#645bff" size="20" /></span> : ""}</p>
+                                            <p className="paragraph">{ele.email}</p>
+                                        </div>
                                     </div>
-                                    <div class="user_detail">
-                                        <p className="paragraph">{ele.username}{ele.badge ? <span><HiBadgeCheck color="#645bff" size="20" /></span> : ""}</p>
-                                        <p className="paragraph">{ele.email}</p>
-                                    </div>
-                                </div>
-                                <br />
+                                    <br />
 
-                            </>
+                                </>
 
-                        )
-                    })}
+                            )
+                        })}
 
-                    {showRecent ? <Recent /> : <>
-                        <h2>No Result Found</h2>
-                    </>}
+                        {showRecent ? <Recent /> : <>
+                            <h2>No Result Found</h2>
+                        </>}
+                    </div>
                 </div>
-                <InnerNavbar />
+
+                {/* <InnerNavbar /> */}
             </div>
         </>
     )

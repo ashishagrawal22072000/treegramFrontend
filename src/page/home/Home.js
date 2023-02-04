@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import UserApi from "../../api/UserApi";
 import InnerNavbar from "../../core/innerNavbar/InnerNavbar";
+import SideNavbar from "../../core/sideNavbar/SideNavbar";
 import Login from "../login/Login";
 import UserList from "../user-list/UserList";
 // import UserList from "../../core/user-list/UserList";
@@ -19,7 +20,7 @@ const Home = () => {
             {!auth?.token ? <>
                 <Login /> </> : <>
                 {!followerList ? <UserList setFollowerList={setFollowerList} /> :
-                    <InnerNavbar />
+                    <SideNavbar />
                 }
 
             </>
