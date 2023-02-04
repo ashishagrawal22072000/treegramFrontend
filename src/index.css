@@ -260,7 +260,7 @@ h1{
     width: 100%;
     margin : 0 auto;
     display: grid;
-    grid-template-columns: 250px auto 20vw;
+    grid-template-columns: 250px auto 30vw;
     column-gap: 2rem;
     position: relative;
 }
@@ -268,7 +268,11 @@ h1{
     width: 250px;
     height: 100%;
 } */
-
+/* .left{
+  height: max-content;
+  position: sticky;
+  
+} */
 .left .sidebar{
     background : var(--color-white);
     /* border-radius: var(--card-border-radius); */
@@ -304,6 +308,9 @@ width: 250px;
     margin-left: 2rem;
     position: relative;
 }
+.left .sidebar .link_name{
+  color: var(--color-primary);
+}
 .left .sidebar h3{
     margin-left: 1.5rem;
     font-size : 1rem;
@@ -314,14 +321,14 @@ width: 250px;
 .left .sidebar .active img, .left .sidebar .active h3{
     color: var(--color-primary);
 }
-/* .left .sidebar .active::before{
+.left .sidebar .active::before{
     content: '';
     display: block;
     width: 0.5rem;
     height: 100%;
     position: absolute;
     background: var(--color-primary);
-} */
+}
 .left .sidebar .menu-item:first-child.active{
     border-top-left-radius: var(--card-border-radius);
     overflow: hidden;
@@ -334,7 +341,54 @@ width: 250px;
 .middle{
     padding: 30px 20px;
 }
+.right{
+  padding: 30px 20px;
+  background: var(--color-white);
+  margin: 20px;
+  height: max-content;
+}
 
+.user_content{
+  display: flex;
+    align-items: initial;
+}
+.user_content .user_profile{
+  height: 80px;
+    width: 80px;
+    border: 2px solid var(--color-primary);
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.user_content .user_profile img{
+  height: 100%;
+  width: 100%;
+}
+.user_content .user_detail{
+  display: flex;
+    flex-direction: column;
+    align-items: baseline;
+    margin-left: 20px;
+    line-height: 10px;
+}
+.user_content .user_detail .badge{
+  color: var(--color-primary);
+}
+.btn{
+  display: inline-block;
+  padding:var(--btn-padding);
+  font-weight: 500;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: all 3000ms ease;
+  font-size: 0.9rem;
+  background-color: var(--color-primary);
+  color : var(--color-light)
+}
+.btn:hover{
+  opacity: 0.7;
+}
 @media (max-width: 768px){
     .container{
         grid-template-columns: 80px auto;
@@ -351,6 +405,9 @@ width: 250px;
     }
     .left .sidebar .menu-item .link_name{
         display: none;
+    }
+    h1{
+      font-size :1.9rem
     }
 }
 @media (max-width: 600px){

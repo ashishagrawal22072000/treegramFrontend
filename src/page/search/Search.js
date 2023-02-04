@@ -40,45 +40,81 @@ const Search = () => {
     return (
 
         <>
-            <div className="container">
-                <SideNavbar />
-                <div className="middle">
-                    <div className="search">
-                        <div className='search_input'>
-                            <input type="search" className="input_field" placeholder="Search by username, email" value={searchValue} onChange={handleChange} />
-                            {loading ? <div className="loading"><ButtonLoader style={{ color: 'black' }} /></div> : ''}
+            <div className="search">
+                <div className="container">
+                    <SideNavbar />
+                    <div className="middle">
+                        <div className="search_content">
+                            <div className='search_input'>
+                                <input type="search" className="input_field" placeholder="Search by username, email" value={searchValue} onChange={handleChange} />
+                                {loading ? <div className="loading"><ButtonLoader style={{ color: 'black' }} /></div> : ''}
+                            </div>
+
+                            <hr />
+                            <div className="search_container">
+                                {data && data?.map((ele) => {
+                                    return (
+                                        <>
+                                            <div class="user_content">
+                                                <div class="user_profile">
+                                                    <NavLink to={`/profile/${ele?.username}`}><img src={ele.profile} onClick={() => addSearchList(ele)} /></NavLink>
+                                                </div>
+                                                <div class="user_detail">
+                                                    <p className="paragraph">{ele.username}{ele.badge ? <span className="badge"><HiBadgeCheck size="20" /></span> : ""}</p>
+                                                    <p className="paragraph">{ele.email}</p>
+                                                </div>
+                                            </div>
+                                            <br />
+
+                                        </>
+
+                                    )
+                                })}
+
+                                {showRecent ? <Recent /> : <>
+                                    <h2>No Result Found</h2>
+                                </>}
+                            </div>
                         </div>
 
                     </div>
-                    <hr />
-                    <div className="search_container">
-                        {data && data?.map((ele) => {
-                            return (
-                                <>
-                                    <div class="user_content">
-                                        <div class="user_profile">
-                                            <NavLink to={`/profile/${ele?.username}`}><img src={ele.profile} onClick={() => addSearchList(ele)} /></NavLink>
-                                        </div>
-                                        <div class="user_detail">
-                                            <p className="paragraph">{ele.username}{ele.badge ? <span><HiBadgeCheck color="#645bff" size="20" /></span> : ""}</p>
-                                            <p className="paragraph">{ele.email}</p>
-                                        </div>
-                                    </div>
-                                    <br />
 
-                                </>
+                    <div className="right">
+                        <h2>Suggestions</h2>
+                        <div className="suggestion">
 
-                            )
-                        })}
+                            <div class="user_content">
+                                <div class="user_profile">
+                                    <NavLink><img src="http://localhost:8000/api/v1/image/1674124163743-image-3551739.jpg" /></NavLink>
+                                </div>
+                                <div class="user_detail">
+                                    <p className="paragraph">A_12shish<span><HiBadgeCheck color="#645bff" size="20" /></span></p>
+                                    <p className="paragraph">Ashish</p>
+                                </div>
+                            </div>
+                            <button className="btn">Follow</button>
 
-                        {showRecent ? <Recent /> : <>
-                            <h2>No Result Found</h2>
-                        </>}
+
+                        </div>
+                        <div className="suggestion">
+
+                            <div class="user_content">
+                                <div class="user_profile">
+                                    <NavLink><img src="http://localhost:8000/api/v1/image/1674124163743-image-3551739.jpg" /></NavLink>
+                                </div>
+                                <div class="user_detail">
+                                    <p className="paragraph">A_12shish<span><HiBadgeCheck color="#645bff" size="20" /></span></p>
+                                    <p className="paragraph">Ashish</p>
+                                </div>
+                            </div>
+                            <button className="btn">Follow</button>
+
+
+                        </div>
                     </div>
                 </div>
-
-                {/* <InnerNavbar /> */}
             </div>
+
         </>
     )
 }

@@ -5,6 +5,7 @@ import { ImBin } from "react-icons/im"
 import "./Recent.css"
 import { removeSearch } from '../../store/list/ListAction';
 import { NavLink } from "react-router-dom"
+import Dustbin from "../../assets/images/img/delete.svg"
 const Recent = () => {
     const { search } = useSelector(state => state.ListReducer)
     const dispatch = useDispatch()
@@ -31,7 +32,8 @@ const Recent = () => {
                                             <p className="paragraph">{ele.email}</p>
                                         </div>
                                     </div>
-                                    <ImBin size={20} onClick={() => removeUser(ele._id)} />
+                                    <img src={Dustbin} width="25" height="25" onClick={() => removeUser(ele._id)} />
+                                    {/* <ImBin size={20} /> */}
                                 </div>
                             </>
                         )
