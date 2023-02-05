@@ -113,7 +113,7 @@ const Profile = () => {
                                                 <div className="profile_description2">
                                                     <NavLink to={`${window.location.pathname}/post`} className={(nav) => nav.isActive ? '.link' : ''}>
                                                         <div>
-                                                            <p>0 Post</p>
+                                                            <p>{userData?.post} Post</p>
                                                         </div>
                                                     </NavLink>
                                                     <NavLink to={`${window.location.pathname}/follower`} className={(nav) => nav.isActive ? '.link' : ''}>
