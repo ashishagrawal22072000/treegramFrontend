@@ -42,3 +42,42 @@
     display: flex;
     align-items: center;
 }
+
+.profile_container .container{
+    grid-template-columns: 250px auto;
+}
+
+
+
+.profile .profile_image img{
+    border: 2px solid var(--color-primary);
+    border-radius: 50%;
+}
+
+.user_detail1 .profile {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+}
+
+    .profile_description {
+        display: flex;
+        flex-direction: column;
+        align-items: baseline;
+       
+    }
+    .profile_description .profile_description1{
+        display: flex;
+    justify-content: space-around;
+    align-items: center;
+    grid-gap: 10px;
+    }
+    .profile_description .profile_description2{
+        display: flex;
+        grid-gap: 45px;
+    }
+    .profile_description .profile_description3{
+        display: flex;
+    flex-direction: column;
+    align-items: baseline;
+    }

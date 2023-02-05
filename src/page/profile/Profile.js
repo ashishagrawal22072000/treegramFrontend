@@ -13,6 +13,8 @@ import { addFollowing, removeFollowing } from '../../store/list/ListAction';
 import Notify from '../../core/Toast';
 import { HiBadgeCheck } from "react-icons/hi"
 import { AiTwotoneSetting } from "react-icons/ai"
+import SideNavbar from '../../core/sideNavbar/SideNavbar';
+import Setting from "../../assets/images/img/setting.svg"
 const Profile = () => {
     const { auth } = useSelector(state => state.AuthReducer)
     const { following } = useSelector(state => state.ListReducer);
@@ -79,97 +81,103 @@ const Profile = () => {
     return (
 
         <>
+            <div className="profile_container">
+                <div className="container">
+                    <SideNavbar />
+                    <div className="middle">
+                        {loading ? <>
+                            <Loader />
+                        </> : <>
+                            {!Object.keys(userData).length ? <>
+                                <h1>No Data Found</h1>
+                            </> : <>
+                                <section className="profile">
+                                    <div className="user_detail1">
+                                        <div className="profile">
+                                            <div className="profile_image">
+                                                <img src={userData?.user?.profile} height={150} width={150} alt="" />
+                                            </div>
+                                            <div className='profile_description'>
+                                                <div className="profile_description1">
+                                                    <h2>{userData?.user?.username}{userData?.user?.badge ? <span><HiBadgeCheck color="#645bff" size="20" /></span> : ""}</h2>
+                                                    {auth?.username == username ? <>
+                                                        <NavLink to={`${window.location.pathname}/edit`}><button className="btn">Edit Profile</button></NavLink>
+                                                        <p className="setting"><NavLink to="/setting"><img src={Setting} height="30" width="30" /></NavLink></p>
 
-            <div className="container">
-                {loading ? <>
-                    <Loader />
-                </> : <>
-                    {!Object.keys(userData).length ? <>
-                        <h1>No Data Found</h1>
-                    </> : <>
-                        <section className="profile">
-                            <div className="user_detail1">
-                                <div className="profile">
-                                    <img src={userData?.user?.profile} height={150} width={150} alt="" />
-                                    <div className="profile_content">
-                                        <h2>{userData?.user?.username}{userData?.user?.badge ? <span><HiBadgeCheck color="#645bff" size="20" /></span> : ""}</h2>
-                                        <br />
-                                        {auth?.username == username ? <>
-                                            <div className="setting_btn">
-                                                <NavLink to={`${window.location.pathname}/edit`}><button>Edit Profile</button></NavLink>
-                                                <span><NavLink to="/setting"><AiTwotoneSetting size={30} color={"#000"} /></NavLink></span>
+                                                    </> : <>
+                                                        {following?.some((ele) => ele._id == userData?.user?._id) ? <button className="btn" onClick={() => unfollow(userData?.user?._id)}>
+                                                            {following?.some((ele) => ele._id == userData?.user?._id && ele.follow_status == "confirm") ? "Following" : "Requested"}
+                                                        </button> : <button className="btn" onClick={() => handleFollow(userData?.user?._id, userData?.user?.privacy_id)}>Follow</button>}
+                                                    </>}
+                                                </div>
+                                                <div className="profile_description2">
+                                                    <NavLink to={`${window.location.pathname}/post`} className={(nav) => nav.isActive ? '.link' : ''}>
+                                                        <div>
+                                                            <p>0 Post</p>
+                                                        </div>
+                                                    </NavLink>
+                                                    <NavLink to={`${window.location.pathname}/follower`} className={(nav) => nav.isActive ? '.link' : ''}>
+                                                        <div>
+                                                            <p>{userData?.follower} Follower</p>
+                                                        </div>
+                                                    </NavLink>
+                                                    <NavLink to={`${window.location.pathname}/following`} className={(nav) => nav.isActive ? '.link' : ''}>
+                                                        <div>
+                                                            <p>{userData?.following} Following</p>
+                                                        </div>
+                                                    </NavLink>
+
+                                                </div>
+                                                <div className="profile_description3">
+                                                    {console.log(userData)}
+                                                    <p>{userData?.user?.website}bfghhffdfd.com</p>
+                                                    <p>{userData?.user?.bio} lorem ijwfjebfbrf mernbfjerfe ferfjerf erfjberfberjver verfyfbjer ferf ewrvgerfbe</p>
+                                                </div>
                                             </div>
 
-                                        </> : <>
-                                            {following?.some((ele) => ele._id == userData?.user?._id) ? <button onClick={() => unfollow(userData?.user?._id)}>
-                                                {following?.some((ele) => ele._id == userData?.user?._id && ele.follow_status == "confirm") ? "Following" : "Requested"}
-                                            </button> : <button onClick={() => handleFollow(userData?.user?._id, userData?.user?.privacy_id)}>Follow</button>}
-                                        </>}
+                                        </div>
+
                                     </div>
-                                </div>
-                                <div className="profile_content">
-                                    {console.log(userData)}
-                                    <p>{userData?.user?.website}</p>
-                                    <p>{userData?.user?.bio}</p>
-                                </div>
-                            </div>
 
-                            <hr />
-                            <div className="user_detail2">
-                                <NavLink to={`${window.location.pathname}/post`} className={(nav) => nav.isActive ? '.link' : ''}>
-                                    <div>
-                                        <p>0</p>
-                                        <p>Post</p>
+                                    <hr />
+
+                                    <br />
+                                    <hr />
+                                    <br />
+                                    <div className="user_detail3">
+
+                                        <div>
+                                            <RiGridFill size={20} color="#645bff" onClick={() => { setTab(1) }} />
+                                        </div>
+
+
+                                        <div>
+                                            <RiVideoFill size={20} color="#645bff" onClick={() => { setTab(2) }} />
+                                        </div>
+
+
+                                        <div>
+                                            <RiBookmarkFill size={20} color="#645bff" onClick={() => { setTab(3) }} />
+                                        </div>
+
                                     </div>
-                                </NavLink>
-                                <NavLink to={`${window.location.pathname}/follower`} className={(nav) => nav.isActive ? '.link' : ''}>
-                                    <div>
-                                        <p>{userData?.follower}</p>
-                                        <p>Follower</p>
-                                    </div>
-                                </NavLink>
-                                <NavLink to={`${window.location.pathname}/following`} className={(nav) => nav.isActive ? '.link' : ''}>
-                                    <div>
-                                        <p>{userData?.following}</p>
-                                        <p>Following</p>
-                                    </div>
-                                </NavLink>
-
-                            </div>
-                            <br />
-                            <hr />
-                            <br />
-                            <div className="user_detail3">
-
-                                <div>
-                                    <RiGridFill size={20} color="#645bff" onClick={() => { setTab(1) }} />
-                                </div>
-
-
-                                <div>
-                                    <RiVideoFill size={20} color="#645bff" onClick={() => { setTab(2) }} />
-                                </div>
-
-
-                                <div>
-                                    <RiBookmarkFill size={20} color="#645bff" onClick={() => { setTab(3) }} />
-                                </div>
-
-                            </div>
-                        </section>
-                        {userData?.user?.username == auth?.username ? <>{showTab()}</> : <>
-                            {(userData?.user?.privacy_id == 2 && following.some((ele) => ele._id == userData?.user?._id && ele.follow_status == "confirm") || userData?.user?.privacy_id == 1) ? <>
-                                {showTab()}
-                            </> : <>
-                                <h1>This Account is Private</h1>
+                                </section>
+                                {userData?.user?.username == auth?.username ? <>{showTab()}</> : <>
+                                    {(userData?.user?.privacy_id == 2 && following.some((ele) => ele._id == userData?.user?._id && ele.follow_status == "confirm") || userData?.user?.privacy_id == 1) ? <>
+                                        {showTab()}
+                                    </> : <>
+                                        <h1>This Account is Private</h1>
+                                    </>}
+                                </>}
                             </>}
                         </>}
-                    </>}
-                </>}
+                    </div>
 
 
+
+                </div>
             </div>
-            <InnerNavbar />
+
         </>
     )
 }
