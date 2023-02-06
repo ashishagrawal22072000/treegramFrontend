@@ -17,3 +17,4 @@ export const REMOVE_FOLLOWING = "REMOVE_FOLLOWING";
 export const REMOVE_FOLLOWER = "REMOVE_FOLLOWER";
 export const ADD_SEARCH = "ADD_SEARCH";
 export const REMOVE_SEARCH = "REMOVE_SEARCH";
+export const POST_LIST = "POST_LIST";

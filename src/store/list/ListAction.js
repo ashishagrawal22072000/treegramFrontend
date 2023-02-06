@@ -1,5 +1,5 @@
 import Authapi from "../../api/Authapi"
-import { REMOVE_SEARCH, ADD_SEARCH, REMOVE_FOLLOWER, ADD_FOLLOWING, UPDATE_FOLLOWER_LIST, FOLLOWER_LIST, USER_LIST, FOLLOWING_LIST, UPDATE_USER_LIST, UPDATE_FOLLOWING_LIST, REMOVE_FOLLOWING } from "../Type"
+import { POST_LIST, REMOVE_SEARCH, ADD_SEARCH, REMOVE_FOLLOWER, ADD_FOLLOWING, UPDATE_FOLLOWER_LIST, FOLLOWER_LIST, USER_LIST, FOLLOWING_LIST, UPDATE_USER_LIST, UPDATE_FOLLOWING_LIST, REMOVE_FOLLOWING } from "../Type"
 
 
 export const setFollowerList = (data) => (dispatch) => {
@@ -64,4 +64,9 @@ export const addSearch = (data) => (dispatch) => {
 
 export const removeSearch = (data) => (dispatch) => {
     return dispatch({ type: REMOVE_SEARCH, payload: data })
+}
+
+
+export const setPostList = (data) => (dispatch) => {
+    return dispatch({ type: POST_LIST, payload: data })
 }

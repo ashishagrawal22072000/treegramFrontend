@@ -1,16 +1,12 @@
-import { REMOVE_SEARCH, ADD_SEARCH, REMOVE_FOLLOWER, ADD_FOLLOWING, FOLLOWER_LIST, FOLLOWING_LIST, USER_LIST, UPDATE_USER_LIST, UPDATE_FOLLOWER_LIST, UPDATE_FOLLOWING_LIST, REMOVE_FOLLOWING } from "../Type"
+import { POST_LIST, REMOVE_SEARCH, ADD_SEARCH, REMOVE_FOLLOWER, ADD_FOLLOWING, FOLLOWER_LIST, FOLLOWING_LIST, USER_LIST, UPDATE_USER_LIST, UPDATE_FOLLOWER_LIST, UPDATE_FOLLOWING_LIST, REMOVE_FOLLOWING } from "../Type"
 
 const initialState = {
     follower: [],
     following: [],
     user: [],
-    search: [{
-        "_id": "63bf83bea8d075ddca219d0a",
-        "username": "ashish",
-        "email": "ashish2@yopmail.com",
-        "profile": "http://localhost:8000/api/v1/image/1674124163743-image-3551739.jpg",
-        "badge": true
-    }],
+    search: [],
+    post: []
+
 }
 
 export default function (state = initialState, action) {
@@ -19,18 +15,15 @@ export default function (state = initialState, action) {
     switch (type) {
 
         case FOLLOWER_LIST:
-            console.log(payload)
             return {
                 ...state, follower: payload
             }
         case FOLLOWING_LIST:
-            console.log(payload, "fbffbfggfgfgfgf")
             return {
                 ...state,
                 following: payload,
             }
         case USER_LIST:
-            console.log(payload, "fbffbfggfgfgfgf")
             return {
                 ...state,
                 user: payload,
@@ -40,7 +33,6 @@ export default function (state = initialState, action) {
                 if (ele._id == payload.id) ele.isFollow = payload.data;
                 return ele
             })
-            console.log(updateUser, "fhfhhfuehfgfhrh")
             return {
                 ...state,
                 user: updateUser
@@ -92,6 +84,13 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 search: removeSearch
+            }
+
+        case POST_LIST:
+            console.log(payload, "LIST REDUCER")
+            return {
+                ...state,
+                post: payload
             }
         default:
             return state

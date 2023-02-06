@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
 import UserApi from '../../../api/UserApi';
 import Loader from '../../../core/loader/Loader';
+import SideNavbar from '../../../core/sideNavbar/SideNavbar';
 import Notify from '../../../core/Toast';
 import Model2 from '../../../models/model2/Model2';
 import { addFollowing, setFollowingList } from '../../../store/list/ListAction';
 import "./Following.css"
+import { HiBadgeCheck } from 'react-icons/hi';
 const Following = () => {
     const [followingData, setFollowingData] = useState([])
     const { username } = useParams()
@@ -49,23 +51,7 @@ const Following = () => {
             setBtnLoading(false)
             Notify("error", response.message)
         }
-        // console.log(following_id, "handleFollower")
-        // // setBtnLoading(true);
 
-        // const response = await UserApi.followUser(auth?.token, following_id)
-        // if (response.success) {
-
-        //     // setBtnLoading(false)
-        //     // // userList.map((user) => {
-        //     // //     if (user._id == following_id) return user.isFollow = true
-        //     // // })
-        //     // dispatch(updateUserList(following_id, true))
-
-        //     Notify("success", response.message)
-        // } else {
-        //     // setBtnLoading(false)
-        //     Notify("error", response.message)
-        // }
     }
 
     const unFollow = (follower_id) => {
@@ -73,95 +59,110 @@ const Following = () => {
     }
     return (
         <>
-            <div className='container'>
-                {loading ? <>
-                    <Loader />
-                </> : <>
-                    {auth?.username == username ? <>
-                        {!following.length ? <><h1>No Data Found</h1></> : <>
-                            {following.map((ele) => {
-                                console.log(ele)
-                                return (
-                                    <>
-                                        <div className='follower_container'>
-                                            <div className='follower'>
-                                                <div className='follower_profile'>
-                                                    <img src={ele?.profile} alt />
-                                                </div>
-                                                <div>
-                                                    <h3>{ele?.username}</h3>
-                                                    <p>{ele?.name}</p>
-                                                </div>
-                                            </div>
+            <div className='following'>
+                <div className='container'>
+                    <SideNavbar />
+                    <div className="middle">
+                        {loading ? <>
+                            <Loader />
+                        </> : <>
+                            {auth?.username == username ? <>
+                                {!following.length ? <><h1>No Data Found</h1></> : <>
+                                    {following.map((ele) => {
+                                        console.log(ele)
+                                        return (
+                                            <>
+                                                <div className='follower_container'>
+                                                    <div class="user_content">
+                                                        <div class="user_profile">
+                                                            <NavLink to={`/profile/${ele?.username}`}><img src={ele.profile} /></NavLink>
+                                                        </div>
+                                                        <div class="user_detail">
+                                                            <p className="paragraph">{ele.username}{ele.badge ? <span className="badge"><HiBadgeCheck size="20" /></span> : ""}</p>
+                                                            <p className="paragraph">{ele.email}</p>
+                                                        </div>
+                                                    </div>
 
-                                            <button onClick={() => {
-                                                setId(ele?.username);
-                                                setIsOpen(true)
-                                            }}>{ele?.follow_status == "confirm" ? "Following" : "Requested"}</button>
+                                                    <button className="btn" onClick={() => {
+                                                        setId(ele?.username);
+                                                        setIsOpen(true)
+                                                    }}>{ele?.follow_status == "confirm" ? "Following" : "Requested"}</button>
 
-                                        </div>
-                                    </>
-                                )
-                            })}
+                                                </div>
+                                            </>
+                                        )
+                                    })}
+                                </>}
+                            </> : <>
+                                {!followingData.length ? <><h1>No Data Found</h1></> : <>
+                                    {followingData.map((ele) => {
+                                        return (
+                                            <>
+                                                <div className='follower_container'>
+                                                    <div className='follower'>
+                                                        <div className='follower_profile'>
+                                                            <img src={ele.profile} alt />
+                                                        </div>
+                                                        <div>
+                                                            <h3>{ele.username}</h3>
+                                                            <p>{ele.name}</p>
+                                                        </div>
+                                                    </div>
+                                                    {following.some((el) => el._id == ele._id) ? <>
+                                                        <button className='btn' onClick={() => {
+                                                            setId(ele?.username);
+                                                            setIsOpen(true)
+                                                        }}>Following</button>
+                                                    </> : <button className='btn' onClick={() => handleFollowing(ele._id, ele.privacy_id)}>Follow</button>}
+                                                </div>
+                                            </>
+                                        )
+                                    })}
+                                </>}
+                            </>}
+
                         </>}
-                    </> : <>
-                        {!followingData.length ? <><h1>No Data Found</h1></> : <>
-                            {followingData.map((ele) => {
-                                return (
-                                    <>
-                                        <div className='follower_container'>
-                                            <div className='follower'>
-                                                <div className='follower_profile'>
-                                                    <img src={ele.profile} alt />
-                                                </div>
-                                                <div>
-                                                    <h3>{ele.username}</h3>
-                                                    <p>{ele.name}</p>
-                                                </div>
-                                            </div>
-                                            {following.some((el) => el._id == ele._id) ? <>
-                                                <button onClick={() => {
-                                                    setId(ele?.username);
-                                                    setIsOpen(true)
-                                                }}>Following</button>
-                                            </> : <button onClick={() => handleFollowing(ele._id, ele.privacy_id)}>Follow</button>}
-                                        </div>
-                                    </>
-                                )
-                            })}
-                        </>}
-                    </>}
-                    {/* {!following.length ? <><h1>No Data Found</h1></> : <>
-                        {following.map((ele) => {
-                            return (
-                                <>
-                                    <div className='follower_container'>
-                                        <div className='follower'>
-                                            <div className='follower_profile'>
-                                                <img src={ele.follow_to.profile} alt />
-                                            </div>
-                                            <div>
-                                                <h3>{ele.follow_to.username}</h3>
-                                                <p>{ele.follow_to.name}</p>
-                                            </div>
-                                        </div>
-                                        {auth?.username == username ? <>
-                                            <button onClick={() => {
-                                                setId(ele.follow_to.username);
-                                                setIsOpen(true)
-                                            }}>Remove</button>
-                                        </> : <>
-                                            <button>Follow</button>
-                                        </>}
-                                    </div>
-                                </>
-                            )
-                        })}
-                    </>} */}
-                </>}
+                    </div>
+
+                    <div className="right">
+                        <h2>Suggestions</h2>
+                        <div className="suggestion">
+
+                            <div class="user_content">
+                                <div class="user_profile">
+                                    <NavLink><img src="http://localhost:8000/api/v1/image/1674124163743-image-3551739.jpg" /></NavLink>
+                                </div>
+                                <div class="user_detail">
+                                    <p className="paragraph">A_12shish<span><HiBadgeCheck color="#645bff" size="20" /></span></p>
+                                    <p className="paragraph">Ashish</p>
+                                </div>
+                            </div>
+                            <button className="btn">Follow</button>
 
 
+                        </div>
+                        <div className="suggestion">
+
+                            <div class="user_content">
+                                <div class="user_profile">
+                                    <NavLink><img src="http://localhost:8000/api/v1/image/1674124163743-image-3551739.jpg" /></NavLink>
+                                </div>
+                                <div class="user_detail">
+                                    <p className="paragraph">A_12shish<span><HiBadgeCheck color="#645bff" size="20" /></span></p>
+                                    <p className="paragraph">Ashish</p>
+                                </div>
+                            </div>
+                            <button className="btn">Follow</button>
+
+
+                        </div>
+                    </div>
+
+
+
+                </div>
             </div>
+
             <Model2 username={id} modalIsOpen={modalIsOpen} setIsOpen={setIsOpen} />
         </>
 
