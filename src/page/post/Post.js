@@ -17,6 +17,11 @@ import unfillHeart from "../../assets/images/img/unfillHeart.svg";
 import CommentIcon from "../../assets/images/img/comment.svg";
 import ShareIcon from "../../assets/images/img/share.svg";
 import BookmarkIcon from "../../assets/images/img/save.svg";
+
+import PlayIcon from "../../assets/images/img/play.svg";
+import PauseIcon from "../../assets/images/img/pause.svg";
+import VolumeIcon from "../../assets/images/img/volume.svg";
+import MuteIcon from "../../assets/images/img/mute.svg";
 import Notify from "../../core/Toast";
 import UserApi from "../../api/UserApi";
 const Post = () => {
@@ -133,7 +138,7 @@ const Post = () => {
                                                                                     return (
                                                                                         <>
                                                                                             <span className="small-tooltip">
-                                                                                                {people.username}
+                                                                                                <NavLink to={`/profile/${people?.username}`}>{people.username}</NavLink>
                                                                                             </span>
                                                                                         </>
                                                                                     );
@@ -146,15 +151,15 @@ const Post = () => {
                                                                 })}
                                                             <img
                                                                 src={media}
-
-
                                                             />
 
                                                         </div>
                                                     ) : (
-                                                        <video controls onLoad={(e) => e.target.play()}>
-                                                            <source src={media} type="video/mp4" />
-                                                        </video>
+                                                        <div className="video_controls">
+                                                            <video onClick={(e) => e.target.paused ? e.target.play() : e.target.pause()}>
+                                                                <source src={media} type="video/mp4" />
+                                                            </video>
+                                                        </div>
                                                     )}
                                                 </>
                                             );

@@ -62,8 +62,9 @@
     color: white;
     padding: 5px 20px;
     text-transform: capitalize;
-    position: relative;
-    top: 410px;
+    position: absolute;
+    top: 270px;
+    left: 203px;
   }
     .small-tooltip::after {
       content: "";
@@ -76,3 +77,16 @@
       left: 50%;
     }
   
+    .video_controls .play_btn{
+        width: 50px !important;
+        height: 50px !important;
+        position: relative;
+        top: -170px;
+    }
+    .video_controls .audio_btn{
+        width: 30px !important;
+        height: 30px !important;
+        position: fixed;
+        right: 15px;
+        bottom: 105px;
+    }
