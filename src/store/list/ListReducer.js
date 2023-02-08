@@ -1,11 +1,13 @@
-import { POST_LIST, REMOVE_SEARCH, ADD_SEARCH, REMOVE_FOLLOWER, ADD_FOLLOWING, FOLLOWER_LIST, FOLLOWING_LIST, USER_LIST, UPDATE_USER_LIST, UPDATE_FOLLOWER_LIST, UPDATE_FOLLOWING_LIST, REMOVE_FOLLOWING } from "../Type"
+import { GET_COMMENT, ADD_COMMENT, LIKE_POST, POST_LIST, REMOVE_SEARCH, ADD_SEARCH, REMOVE_FOLLOWER, ADD_FOLLOWING, FOLLOWER_LIST, FOLLOWING_LIST, USER_LIST, UPDATE_USER_LIST, UPDATE_FOLLOWER_LIST, UPDATE_FOLLOWING_LIST, REMOVE_FOLLOWING } from "../Type"
 
 const initialState = {
     follower: [],
     following: [],
     user: [],
     search: [],
-    post: []
+    post: [],
+    like: [],
+    comment: []
 
 }
 
@@ -85,12 +87,52 @@ export default function (state = initialState, action) {
                 ...state,
                 search: removeSearch
             }
+        case LIKE_POST:
+            let likes = [];
+            let posts = [];
+            const like = state.like.find((ele) => {
+                return ele == payload
+            })
 
+            if (!like) {
+                likes = [...state.like, payload]
+                posts = state.post.filter((ele) => {
+                    if (ele._id == payload) {
+                        ++ele.like_count;
+                    }
+                    return ele
+                })
+            } else {
+                likes = state.like.filter((ele) => {
+                    return ele !== payload
+                })
+                posts = state.post.filter((ele) => {
+                    if (ele._id == payload) {
+                        --ele.like_count;
+                    }
+                    return ele
+                })
+            }
+            return {
+                ...state,
+                post: posts,
+                like: likes,
+            }
         case POST_LIST:
             console.log(payload, "LIST REDUCER")
             return {
                 ...state,
                 post: payload
+            }
+        case GET_COMMENT:
+            return {
+                ...state,
+                comment: payload
+            }
+        case ADD_COMMENT:
+            return {
+                ...state,
+                comment: payload
             }
         default:
             return state

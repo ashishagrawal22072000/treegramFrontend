@@ -17,11 +17,13 @@ import Notification from "../../assets/images/img/bell.svg"
 import Analysis from "../../assets/images/img/statistics.svg"
 import Setting from "../../assets/images/img/setting.svg"
 import UserProfile from "../../assets/images/img/Vector.svg"
+import DropIcon from "../../assets/images/img/drop-down.svg"
 import { useSelector } from 'react-redux';
+import CreateModel from '../../models/createModel/CreateModel';
 
 function SideNavbar() {
     const { auth } = useSelector((state) => state.AuthReducer);
-
+    const [modelIsOpen, setIsOpen] = useState(false)
     return (
         <>
             <div className="left">
@@ -53,7 +55,7 @@ function SideNavbar() {
                     }}>
                         <span className="item"><img src={Reel} /></span><h3 className="link_name">Reels</h3>
                     </NavLink>
-                    <NavLink to="/create" className={(navlink) => {
+                    <NavLink onClick={() => setIsOpen(true)} className={(navlink) => {
                         console.log(navlink.isActive, "5")
                         return navlink.isActive ? "menu-item active" : "menu-item"
                     }}>
@@ -69,14 +71,17 @@ function SideNavbar() {
                         console.log(navlink.isActive, "7")
                         return navlink.isActive ? "menu-item active" : "menu-item"
                     }}>
-                        <span className="item"><img src={Analysis} /></span><h3 className="link_name">Analysis</h3>
+                        <span className="item analysis"><img src={Analysis} /></span><h3 className="link_name">Analysis</h3>
                     </NavLink>
-                    <NavLink to="/setting" className={(navlink) => {
-                        console.log(navlink.isActive, "8")
-                        return navlink.isActive ? "menu-item active" : "menu-item"
-                    }}>
-                        <span className="item"><img src={Setting} /></span><h3 className="link_name">Settings</h3>
-                    </NavLink>
+                    <div>
+                        <NavLink to="/setting" className={(navlink) => {
+                            console.log(navlink.isActive, "8")
+                            return navlink.isActive ? "menu-item active" : "menu-item"
+                        }}>
+                            <span className="item setting"><img src={Setting} /></span><h3 className="link_name">Settings</h3>
+                        </NavLink>
+                    </div>
+
                     <NavLink to={`/profile/${auth?.username}`} className={(navlink) => {
                         console.log(navlink.isActive, "9")
                         return navlink.isActive ? "menu-item active" : "menu-item"
@@ -86,29 +91,10 @@ function SideNavbar() {
                 </div>
             </div>
 
-            {/* <div value={{ color: '#fff' }}>
-                <div className='navbar'>
-                    <h2>Treegram</h2>
-                    <NavLink to='#' className='menu-bars'>
-                        <RxHamburgerMenu onClick={showSidebar} />
-                    </NavLink>
 
-                </div>
 
-                <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
-                    <ul className='nav-menu-items' onClick={showSidebar}>
-                        
-                        <li><NavLink to="/setting/change-password"><RiLockPasswordFill />Change Password</NavLink></li>
-                        <li><NavLink to="/setting/your-activity"><FiActivity />Your Activity</NavLink></li>
-                        <li><NavLink to="/setting/login-activity"><FiActivity />Login Activity</NavLink></li>
-                        <li><NavLink to="/setting/report-problem"><TbReport />Report Problem</NavLink></li>
-                        <li><NavLink to="/setting/statistics">Statistics</NavLink></li>
-                        <li><NavLink to="/setting/privacy">Privacy</NavLink></li>
-                        <li><NavLink to="/setting/theme">Theme</NavLink></li>
-                        <li><NavLink to="">Logout</NavLink></li>
-                    </ul>
-                </nav>
-            </div> */}
+
+            <CreateModel modalIsOpen={modelIsOpen} setIsOpen={setIsOpen} />
         </>
     );
 }

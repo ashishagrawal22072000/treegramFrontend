@@ -30,14 +30,12 @@
     display: flex;
     justify-content: center;
     position: fixed;
-    /* bottom: 100%; */
     left: -100%;
     transition: 850ms;
     z-index: 1;
   }
   
   .nav-menu.active {
-    /* top: 0; */
     left: 0;
     transition: 350ms;
   }
@@ -88,4 +86,9 @@
   a{
     color: #fff;
     font-weight: 600;
+  }
+
+  .setting .link_name img{
+    height: 20px !important;
+    width: 20px !important;
   }

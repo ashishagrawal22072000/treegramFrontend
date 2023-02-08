@@ -1,5 +1,5 @@
 import Authapi from "../../api/Authapi"
-import { POST_LIST, REMOVE_SEARCH, ADD_SEARCH, REMOVE_FOLLOWER, ADD_FOLLOWING, UPDATE_FOLLOWER_LIST, FOLLOWER_LIST, USER_LIST, FOLLOWING_LIST, UPDATE_USER_LIST, UPDATE_FOLLOWING_LIST, REMOVE_FOLLOWING } from "../Type"
+import { GET_COMMENT, ADD_COMMENT, UPDATE_LIKE_COUNT, LIKE_POST, POST_LIST, REMOVE_SEARCH, ADD_SEARCH, REMOVE_FOLLOWER, ADD_FOLLOWING, UPDATE_FOLLOWER_LIST, FOLLOWER_LIST, USER_LIST, FOLLOWING_LIST, UPDATE_USER_LIST, UPDATE_FOLLOWING_LIST, REMOVE_FOLLOWING } from "../Type"
 
 
 export const setFollowerList = (data) => (dispatch) => {
@@ -69,4 +69,19 @@ export const removeSearch = (data) => (dispatch) => {
 
 export const setPostList = (data) => (dispatch) => {
     return dispatch({ type: POST_LIST, payload: data })
+}
+
+export const likeAPost = (data) => (dispatch) => {
+    console.log(data, "LISTACTION")
+    return dispatch({ type: LIKE_POST, payload: data })
+}
+
+export const updateLikeCount = (data) => (dispatch) => {
+    return dispatch({ type: UPDATE_LIKE_COUNT, payload: data })
+}
+export const addComments = (data) => (dispatch) => {
+    return dispatch({ type: ADD_COMMENT, payload: data })
+}
+export const getComments = (data) => (dispatch) => {
+    return dispatch({ type: GET_COMMENT, payload: data })
 }

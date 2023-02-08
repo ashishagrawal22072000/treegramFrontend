@@ -6,6 +6,7 @@ import {
     addFollowing,
     getPostList,
     setPostList,
+    likeAPost
 } from "../../store/list/ListAction";
 import Dot from "../../assets/images/img/threeDot.svg";
 import "./Post.css";
@@ -24,6 +25,8 @@ import VolumeIcon from "../../assets/images/img/volume.svg";
 import MuteIcon from "../../assets/images/img/mute.svg";
 import Notify from "../../core/Toast";
 import UserApi from "../../api/UserApi";
+import CommentModel from "../../models/commentModel/CommentModel";
+import CommentContainer from "../../core/commentContainer/CommentContainer";
 const Post = () => {
     const { auth } = useSelector((state) => state.AuthReducer);
     const { post, following } = useSelector((state) => state.ListReducer);
@@ -34,11 +37,14 @@ const Post = () => {
     const videoRef = useRef();
     const [BtnLoading, setBtnLoading] = useState(false);
     const [tooltip, setToolTip] = useState(false);
+    const [showMore, setShowMore] = useState(-1);
+    const [showComment, setShowComment] = useState(-1);
     useEffect(() => {
         async function fetchPosts() {
-            const res = await feedApi.getPostList(auth?.token, 10, 0);
+            const res = await feedApi.getPostList(auth?.token, 15, 0);
             if (res.success) {
                 dispatch(setPostList(res.data));
+
             }
         }
         fetchPosts();
@@ -62,10 +68,23 @@ const Post = () => {
         }
     };
 
+
+    const [id, setId] = useState('');
+    const [modalIsOpen, setIsOpen] = useState(false);
+    const likePost = async (post_id) => {
+        const res = await feedApi.PostLike(auth?.token, post_id)
+        console.log(res);
+        if (res.success) {
+            console.log(post_id)
+            dispatch(likeAPost(post_id))
+        }
+    }
+
+
     return (
         <>
             <div className="post_container">
-                {post.map((ele) => {
+                {post.map((ele, i) => {
                     return (
                         <>
                             <div className="post">
@@ -123,13 +142,14 @@ const Post = () => {
                                         {ele?.media.map((media) => {
                                             return (
                                                 <>
-
                                                     {media.split(".")[1] == "jpg" ||
                                                         media.split(".")[1] == "jpeg" ? (
-                                                        <div onMouseEnter={(e) => setToolTip(true)}
+                                                        <div
+                                                            onMouseEnter={(e) => setToolTip(true)}
                                                             onMouseLeave={(e) => setToolTip(false)}
                                                         >
-                                                            {tooltip && ele?.tags &&
+                                                            {tooltip &&
+                                                                ele?.tags &&
                                                                 ele?.tags.map((tagele) => {
                                                                     return tagele?.tags?.map((ele) => {
                                                                         return ele.media_url == media ? (
@@ -138,7 +158,11 @@ const Post = () => {
                                                                                     return (
                                                                                         <>
                                                                                             <span className="small-tooltip">
-                                                                                                <NavLink to={`/profile/${people?.username}`}>{people.username}</NavLink>
+                                                                                                <NavLink
+                                                                                                    to={`/profile/${people?.username}`}
+                                                                                                >
+                                                                                                    {people.username}
+                                                                                                </NavLink>
                                                                                             </span>
                                                                                         </>
                                                                                     );
@@ -149,14 +173,17 @@ const Post = () => {
                                                                         );
                                                                     });
                                                                 })}
-                                                            <img
-                                                                src={media}
-                                                            />
-
+                                                            <img src={media} />
                                                         </div>
                                                     ) : (
                                                         <div className="video_controls">
-                                                            <video onClick={(e) => e.target.paused ? e.target.play() : e.target.pause()}>
+                                                            <video
+                                                                onClick={(e) =>
+                                                                    e.target.paused
+                                                                        ? e.target.play()
+                                                                        : e.target.pause()
+                                                                }
+                                                            >
                                                                 <source src={media} type="video/mp4" />
                                                             </video>
                                                         </div>
@@ -168,7 +195,7 @@ const Post = () => {
                                 </div>
                                 <div className="post_icons">
                                     <div className="post_icons1">
-                                        <img src={unfillHeart} height="30" width="30" />
+                                        <img onClick={() => likePost(ele?._id)} src={unfillHeart} height="30" width="30" />
                                         <img src={CommentIcon} height="30" width="30" />
                                         <img src={ShareIcon} height="30" width="30" />
                                     </div>
@@ -183,8 +210,47 @@ const Post = () => {
                                 ) : (
                                     ""
                                 )}
-                                <p>{ele?.content}</p>
+                                {ele.content.length > 100 ? (
+                                    <>
+                                        {showMore != -1 && showMore == i ? (
+                                            <>
+                                                <span className="content">
+                                                    {ele.content}
+                                                    <strong onClick={() => { setShowMore(-1); console.log(showMore) }}>
+                                                        hide more
+                                                    </strong>
+                                                </span>
+                                            </>
+                                        ) : (
+                                            <>
+                                                <span className="content">
+                                                    {ele?.content.slice(0, 100)}{" "}
+                                                    <strong onClick={() => { console.log(showMore); setShowMore(i) }}>
+                                                        read more
+                                                    </strong>
+                                                </span>
+                                            </>
+                                        )}
+                                    </>
+                                ) : (
+                                    <span>{ele.content}</span>
+                                )}
 
+                                {!ele.comment_status && ele.comment_count > 0 && <strong onClick={() => {
+                                    showComment == -1 ? setShowComment(i) : setShowComment(-1)
+                                }}>View All {ele.comment_count} comments</strong>}
+                                {showComment !== -1 && showComment == i ? <>
+                                    <CommentContainer post_id={ele?._id} />
+                                    <div>
+                                        <div className="user_comment">
+                                            <img src={auth?.profile} height="50px" width="50px" />
+                                            <form>
+                                                <input type="text" placeholder="Share Your Thought" />
+                                            </form>
+                                        </div>
+                                    </div>
+                                </> : ""
+                                }
                             </div>
 
                             <br />
@@ -192,6 +258,9 @@ const Post = () => {
                     );
                 })}
             </div>
+
+            <CommentModel modalIsOpen={modalIsOpen} setIsOpen={setIsOpen} post_id={id} />
+
         </>
     );
 };
