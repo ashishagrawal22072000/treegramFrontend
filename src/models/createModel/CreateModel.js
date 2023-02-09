@@ -21,9 +21,9 @@ const CreateModel = ({ modalIsOpen, setIsOpen, post_id }) => {
     function showComponent() {
         switch (step) {
             case 1:
-                return <Step1 postData={postData} setPostData={setPostData} />
+                return <Step1 postData={postData} setPostData={setPostData} step={step} setStep={setStep} />
             case 2:
-                return <Step2 postData={postData} setPostData={setPostData} />
+                return <Step2 postData={postData} setPostData={setPostData} step={step} setStep={setStep} />
         }
     }
     const customStyles = {
@@ -34,8 +34,8 @@ const CreateModel = ({ modalIsOpen, setIsOpen, post_id }) => {
             bottom: "auto",
             marginRight: "-50%",
             transform: "translate(-50%, -50%)",
-            height: "50%",
-            width: "50%",
+            height: "80%",
+            width: "80%",
         },
     };
 

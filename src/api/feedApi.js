@@ -60,6 +60,24 @@ class FeedApi {
         //     });
         // return data;
     }
+
+    async uploadFile(file) {
+        const data = await Axios.post(`${process.env.REACT_APP_BASE_URL}api/v1/upload-image`,
+            file,
+            {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            })
+            .then((res) => {
+                return res.data;
+            })
+            .catch((err) => {
+                return err.response.data;
+            });
+        return data;
+    }
+
 }
 
 export default new FeedApi();
