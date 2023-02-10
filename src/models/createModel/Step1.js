@@ -6,23 +6,22 @@ import Notify from "../../core/Toast"
 const Step1 = ({ postData, setPostData, step, setStep }) => {
     const handleChange = async (e) => {
 
-        // let formData = new FormData();
-        // _.forEach(e.target.files, file => {
-        //     console.log(file)
-        //     formData.append("file", file)
-        // })
-        console.log(e.target.files)
+        let formData = new FormData();
+        _.forEach(e.target.files, file => {
+            console.log(file)
+            formData.append("file", file)
+        })
+        // console.log(e.target.files)
         if (e.target.files.length) {
-            console.log(Object.values(e.target.files))
-            setPostData({ ...postData, media: Object.values(e.target.files) })
-            setStep(step + 1)
-            // const res = await feedApi.uploadFile(formData)
-            // if (res.success) {
-            //     setPostData({ ...postData, media: res.data })
-            //     
-            // } else {
-            //     Notify("error", res.data.message)
-            // }
+            // console.log(Object.values(e.target.files))
+            // setPostData({ ...postData, media: Object.values(e.target.files) })
+            const res = await feedApi.uploadFile(formData)
+            if (res.success) {
+                setPostData({ ...postData, media: res.data })
+                setStep(step + 1)
+            } else {
+                Notify("error", res.data.message)
+            }
         } else {
             Notify("error", "Please select a file")
         }
