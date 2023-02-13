@@ -9,6 +9,7 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.2.2",
     "dotenv": "^16.0.3",
+    "emoji-picker-react": "^4.4.7",
     "formik": "^2.2.9",
     "lodash": "^4.17.21",
     "multiselect-react-dropdown": "^2.0.25",

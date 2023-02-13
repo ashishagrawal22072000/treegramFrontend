@@ -50,6 +50,7 @@ const Step2 = ({ postData, setPostData, step, setStep }) => {
           coordinate_y: coordinate.coordinate_y,
         };
         setTags([...tags, data]);
+    setPostData({...postData, tags : [...tags, data]})
       }
     } else {
       const data = {
@@ -59,17 +60,27 @@ const Step2 = ({ postData, setPostData, step, setStep }) => {
         coordinate_y: coordinate.coordinate_y,
       };
       setTags([...tags, data]);
+    setPostData({...postData, tags : [...tags,data]})
+
     }
     setShow(false);
     setSearchValue("");
     setData([]);
   };
 
-  console.log(tags);
+  console.log(tags, postData);
 
   useEffect(() => {
     setSelectedImage(postData.media[0]);
   }, []);
+
+  const removeTags = (index) =>{
+    const tag = tags.filter((ele, i) =>{
+return i !== index
+    })
+    setTags(tag)
+    setPostData({...postData, tags : tag})
+  }
 
   return (
     <>
@@ -123,7 +134,7 @@ const Step2 = ({ postData, setPostData, step, setStep }) => {
                 }}
               />
               {tags &&
-                tags.map((el) => {
+                tags.map((el, i) => {
                   return (
                     <>
                       {el.media_url == selectedImage ? (
@@ -135,6 +146,7 @@ const Step2 = ({ postData, setPostData, step, setStep }) => {
                               top: el.coordinate_y,
                               left: el.coordinate_x,
                             }}
+                            onClick={() => {removeTags(i)}}
                           >
                             {el.username}
                           </p>

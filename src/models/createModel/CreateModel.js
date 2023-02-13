@@ -4,6 +4,7 @@ import Multistep from 'react-multistep'
 import Step1 from "./Step1";
 import Step2 from "./Step2";
 import Modal from "react-modal";
+import Step3 from "./Step3";
 const CreateModel = ({ modalIsOpen, setIsOpen, post_id }) => {
     // const steps = [
     //     { title: 'StepOne', component: <Step1 /> },
@@ -15,7 +16,13 @@ const CreateModel = ({ modalIsOpen, setIsOpen, post_id }) => {
     }, [])
 
     const [postData, setPostData] = useState({
-        media: []
+        media: [],
+        tags : [],
+        content : "",
+        location : "",
+        hashTags : [],
+        comment_status : false,
+        like_status : false,
     })
 
     function showComponent() {
@@ -24,6 +31,8 @@ const CreateModel = ({ modalIsOpen, setIsOpen, post_id }) => {
                 return <Step1 postData={postData} setPostData={setPostData} step={step} setStep={setStep} />
             case 2:
                 return <Step2 postData={postData} setPostData={setPostData} step={step} setStep={setStep} />
+            case 3:
+                return <Step3 postData={postData} setPostData={setPostData} step={step} setStep={setStep} />
         }
     }
     const customStyles = {
@@ -63,7 +72,7 @@ const CreateModel = ({ modalIsOpen, setIsOpen, post_id }) => {
             >
                 {/* <Multistep activeStep={0} steps={steps} /> */}
                 <div className="create_model">
-                    <button onClick={() => setStep(step == 2 ? 1 : step + 1)}>Next</button>
+                    <button onClick={() => setStep(step == 3 ? 1 : step + 1)}>Next</button>
                     <button onClick={() => setStep(step == 1 ? 1 : step - 1)}>Prev</button>
                     <form>
                         {showComponent()}
