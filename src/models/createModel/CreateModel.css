@@ -1,45 +1,10 @@
-/* .step1_container {
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
-    width: 100%;
-  }
-  input[type="file"] {
-    position: absolute;
-    z-index: -1;
-    top: 15px;
-    left: 20px;
-    font-size: 17px;
-    color: #b8b8b8;
-  }
-  .button-wrap {
-    position: relative;
-  }
-  .button {
-    display: inline-block;
-    background-color: #1d6355;
-    border-radius: 10px;
-    border: 4px double #cccccc;
-    color: #ffffff;
-    text-align: center;
-    font-size: 20px;
-    padding: 8px;
-    width: 100px;
-    transition: all 0.5s;
-    cursor: pointer;
-    margin: 5px;
-  }
-  .button:hover {
-    background-color: #00ab97;
-  } */
-
 
 input[type="file"]{
     display: none;
 }
 label {
     height: 50px;
-    width: 250px;
+    width: auto;
     position: absolute;
     margin: auto !important;
     top: 0;
@@ -47,7 +12,7 @@ label {
     left: 0;
     right: 0;
     display: flex;
-    background-color: var(--color-primary);
+    background-color: var(--color-white);
     color : var(--color-light);
     align-items: center;
     justify-content: center;
@@ -80,4 +45,31 @@ label {
   top: -5px;
   transform: translate(-50%, -50%);
   left: 50%;
+}
+
+.show{
+  display: block;
+}
+
+.hide{
+  display: none;
+}
+
+.create_model .model_btn{
+  display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn_icon{
+  background: none;
+}
+
+.step1_container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  grid-gap: 20px;
+  padding: 30px;
 }
