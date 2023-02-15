@@ -7,12 +7,13 @@ import Modal from "react-modal";
 import Step3 from "./Step3";
 import PreviousIcon from "../../assets/images/img/left.svg";
 import NextIcon from "../../assets/images/img/right.svg";
-import SendIcon from "../../assets/images/img/send.svg"
+import SendIcon from "../../assets/images/img/send.svg";
 const CreateModel = ({ modalIsOpen, setIsOpen, post_id }) => {
   // const steps = [
   //     { title: 'StepOne', component: <Step1 /> },
   //     { title: 'StepTwo', component: <Step2 /> },
   // ];
+  const [enable, setEnable] = useState(true);
   const [step, setStep] = useState(1);
   useEffect(() => {
     setStep(1);
@@ -37,6 +38,7 @@ const CreateModel = ({ modalIsOpen, setIsOpen, post_id }) => {
             setPostData={setPostData}
             step={step}
             setStep={setStep}
+            setEnable={setEnable}
           />
         );
       case 2:
@@ -46,6 +48,7 @@ const CreateModel = ({ modalIsOpen, setIsOpen, post_id }) => {
             setPostData={setPostData}
             step={step}
             setStep={setStep}
+            setEnable={setEnable}
           />
         );
       case 3:
@@ -55,6 +58,7 @@ const CreateModel = ({ modalIsOpen, setIsOpen, post_id }) => {
             setPostData={setPostData}
             step={step}
             setStep={setStep}
+            setEnable={setEnable}
           />
         );
     }
@@ -97,15 +101,29 @@ const CreateModel = ({ modalIsOpen, setIsOpen, post_id }) => {
         {/* <Multistep activeStep={0} steps={steps} /> */}
         <div className="create_model">
           <div className="model_btn">
-            <button style={{visibility : step == 1 ? "hidden" : "visible"}} onClick={() => setStep(step == 1 ? 1 : step - 1)}>
-              <img src={PreviousIcon} height={25} width={25} />
-            </button>
-            <button className="btn_icon" onClick={() => setStep(step == 3 ? 1 : step + 1)}>
-              {step == 3 ? <img src={SendIcon} height={25} width={25} /> : <img src={NextIcon} height={25} width={25} />}
-            </button>
+            
           </div>
 
-          <form>{showComponent()}</form>
+          <form>{showComponent()} {step >= 2 && (
+              <>
+                <button
+                  style={{ visibility: step == 2 ? "hidden" : "visible" }}
+                  onClick={() => setStep(step == 2 ? 2 : step - 1)}
+                >
+                  <img src={PreviousIcon} height={25} width={25} />
+                </button>
+                <button
+                  className="btn_icon"
+                  onClick={() => setStep(step == 3 ? 2 : step + 1)}
+                >
+                  {step == 3 ? (
+                    <img src={SendIcon} height={25} width={25} />
+                  ) : (
+                    <img src={NextIcon} height={25} width={25} />
+                  )}
+                </button>
+              </>
+            )}</form>
         </div>
       </Modal>
     </>
